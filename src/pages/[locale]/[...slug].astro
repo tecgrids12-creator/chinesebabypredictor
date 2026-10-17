@@ -1,0 +1,165 @@
+---
+/**
+ * Localized pages: /[locale]/ and /[locale]/<tool>/.
+ * Default English lives at the root, so locales here exclude 'en'.
+ * Content bodies reuse the shared page components; UI strings come from
+ * the locale dictionary and missing keys fall back to English.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import HomeBody from '@components/astro/pages/HomeBody.astro';
+import PredictorBody from '@components/astro/pages/PredictorBody.astro';
+import ChartBody from '@components/astro/pages/ChartBody.astro';
+import PlannerBody from '@components/astro/pages/PlannerBody.astro';
+import LunarAgeBody from '@components/astro/pages/LunarAgeBody.astro';
+import MayanBody from '@components/astro/pages/MayanBody.astro';
+import DueDateBody from '@components/astro/pages/DueDateBody.astro';
+import QuizBody from '@components/astro/pages/QuizBody.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import BlogListBody, { type PostCard } from '@components/astro/pages/BlogListBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { SUPPORTED_LOCALES, alternatePaths, type Locale } from '@i18n/utils';
+import { webAppSchema, faqPageSchema, orgSchema } from '@utils/schema';
+import { HOME_FAQ, CHART_FAQ } from '@content/data/editorial';
+
+export function getStaticPaths() {
+  const LOCALE_TOOLS = [
+    'chinese-gender-predictor',
+    'chinese-gender-chart',
+    'gender-planner',
+    'lunar-age-calculator',
+    'mayan-gender-predictor',
+    'due-date-calculator',
+    'gender-quiz',
+    'blog',
+  ];
+  return SUPPORTED_LOCALES.filter((l) => l !== 'en').flatMap((locale: string) => [
+    { params: { locale }, props: { slug: undefined } },
+    ...LOCALE_TOOLS.map((slug) => ({ params: { locale, slug }, props: { slug } })),
+  ]);
+}
+
+const { locale: rawLocale, slug } = Astro.params;
+const locale = (rawLocale ?? 'en') as Locale;
+const tool = slug;
+const t = getDictionary(locale);
+
+const blogPosts: PostCard[] = (await getCollection('blog'))
+  .sort((a, b) => Number(b.data.publishDate) - Number(a.data.publishDate))
+  .slice(0, 12)
+  .map((post) => ({
+    slug: post.id,
+    title: post.data.title,
+    description: post.data.description,
+    category: post.data.category,
+    publishDate: post.data.publishDate.toISOString().slice(0, 10),
+    author: post.data.author,
+  }));
+
+const enPath = !tool ? '' : `${tool}/`;
+const alternates = alternatePaths(enPath);
+
+const pageProps = {
+  home: {
+    title: t.meta.homeTitle,
+    description: t.meta.homeDesc,
+    schema: [webAppSchema({ name: 'Chinese Gender Predictor', path: '', description: t.meta.homeDesc }), orgSchema(), faqPageSchema(HOME_FAQ)],
+  },
+  'chinese-gender-predictor': {
+    title: t.meta.predictorTitle,
+    description: t.meta.predictorDesc,
+    schema: [webAppSchema({ name: 'Chinese Gender Predictor', path: 'chinese-gender-predictor/', description: t.meta.predictorDesc }), faqPageSchema(HOME_FAQ)],
+  },
+  'chinese-gender-chart': { title: t.meta.chartTitle, description: t.meta.chartDesc, schema: [faqPageSchema(CHART_FAQ)] },
+  'gender-planner': { title: t.meta.plannerTitle, description: t.meta.plannerDesc, schema: [] },
+  'lunar-age-calculator': { title: t.meta.lunarAgeTitle, description: t.meta.lunarAgeDesc, schema: [] },
+  'mayan-gender-predictor': { title: t.meta.mayanTitle, description: t.meta.mayanDesc, schema: [] },
+  'due-date-calculator': { title: t.meta.dueTitle, description: t.meta.dueDesc, schema: [] },
+  'gender-quiz': { title: t.meta.quizTitle, description: t.meta.quizDesc, schema: [] },
+  blog: { title: t.meta.blogTitle, description: t.meta.blogDesc, schema: [] },
+};
+
+const NAV_KEY_BY_SLUG: Record<string, string> = {
+  'chinese-gender-predictor': 'predictor',
+  'chinese-gender-chart': 'chart',
+  'gender-planner': 'planner',
+  'lunar-age-calculator': 'lunarAge',
+  'mayan-gender-predictor': 'mayan',
+  'due-date-calculator': 'dueDate',
+  'gender-quiz': 'quiz',
+  blog: 'blog',
+};
+
+const current = !tool ? pageProps.home : pageProps[tool];
+const crumbs = tool ? [{ label: t.nav[NAV_KEY_BY_SLUG[tool] ?? 'blog'] }] : [];
+---
+
+<BaseLayout
+  title={current.title}
+  description={current.description}
+  enPath={enPath}
+  locale={locale}
+  alternates={alternates}
+  schema={current.schema as Record<string, unknown>[]}
+>
+  {tool === undefined && <HomeBody t={t} />}
+
+  {tool === 'chinese-gender-predictor' && (
+    <>
+      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
+      <PredictorBody t={t} locale={locale} />
+    </>
+  )}
+
+  {tool === 'chinese-gender-chart' && (
+    <>
+      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
+      <ChartBody t={t} locale={locale} />
+    </>
+  )}
+
+  {tool === 'gender-planner' && (
+    <>
+      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
+      <PlannerBody t={t} locale={locale} />
+    </>
+  )}
+
+  {tool === 'lunar-age-calculator' && (
+    <>
+      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
+      <LunarAgeBody t={t} locale={locale} />
+    </>
+  )}
+
+  {tool === 'mayan-gender-predictor' && (
+    <>
+      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
+      <MayanBody t={t} locale={locale} />
+    </>
+  )}
+
+  {tool === 'due-date-calculator' && (
+    <>
+      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
+      <DueDateBody t={t} locale={locale} />
+    </>
+  )}
+
+  {tool === 'gender-quiz' && (
+    <>
+      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
+      <QuizBody t={t} locale={locale} />
+    </>
+  )}
+
+  {tool === 'blog' && (
+    <BlogListBody
+      posts={blogPosts}
+      t={{ readMore: t.blog.readMore, published: t.blog.published }}
+      locale={locale}
+      title="Chinese Gender Predictors: Guides, Charts & Honest Science"
+      subtitle={t.meta.blogDesc}
+    />
+  )}
+</BaseLayout>

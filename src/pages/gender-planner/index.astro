@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import PlannerBody from '@components/astro/pages/PlannerBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
+
+const locale = 'en';
+const t = getDictionary(locale);
+---
+
+<BaseLayout
+  title={t.meta.plannerTitle}
+  description={t.meta.plannerDesc}
+  enPath="gender-planner/"
+  locale={locale}
+  alternates={alternatePaths('gender-planner/')}
+>
+  <Breadcrumbs crumbs={[{ label: t.nav.planner }]} locale={locale} t={t} />
+  <PlannerBody t={t} locale={locale} />
+</BaseLayout>

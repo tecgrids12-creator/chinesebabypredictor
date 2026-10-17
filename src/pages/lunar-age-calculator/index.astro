@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import LunarAgeBody from '@components/astro/pages/LunarAgeBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
+
+const locale = 'en';
+const t = getDictionary(locale);
+---
+
+<BaseLayout
+  title={t.meta.lunarAgeTitle}
+  description={t.meta.lunarAgeDesc}
+  enPath="lunar-age-calculator/"
+  locale={locale}
+  alternates={alternatePaths('lunar-age-calculator/')}
+>
+  <Breadcrumbs crumbs={[{ label: t.nav.lunarAge }]} locale={locale} t={t} />
+  <LunarAgeBody t={t} locale={locale} />
+</BaseLayout>

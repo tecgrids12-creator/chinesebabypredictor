@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import ContactBody from '@components/astro/pages/ContactBody.astro';
+import { getDictionary } from '@i18n/translations';
+
+const locale = 'en';
+const t = getDictionary(locale);
+---
+
+<BaseLayout
+  title="Contact Us — Chinese Baby Predictor"
+  description="Questions, corrections, partnership requests or predictor success stories — reach the Chinese Baby Predictor team."
+  enPath="contact-us/"
+  locale={locale}
+>
+  <ContactBody t={t} locale={locale} />
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import { getDictionary } from '@i18n/translations';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+
+const locale = 'en';
+const t = getDictionary(locale);
+---
+
+<BaseLayout
+  title="404 — This Nursery Page Isn't Ready Yet"
+  description="Page not found. Head back to the Chinese gender predictor!"
+  enPath=""
+  locale={locale}
+>
+  <div class="section-shell grid min-h-[60vh] place-items-center pt-16 pb-10 text-center">
+    <div>
+      <p class="text-8xl" aria-hidden="true">🍼</p>
+      <h1 class="mt-4 font-display text-4xl font-extrabold text-plum-900 sm:text-5xl">404 — this page isn't ready yet</h1>
+      <p class="mx-auto mt-3 max-w-md text-lg text-plum-600">
+        Maybe it was still in the chart's lunar month… or simply wandered off. The predictor is just over there, though.
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-primary">🧮 {t.nav.predictor}</a>
+        <a href="/chinese-gender-chart/" class="btn-secondary">{t.nav.chart}</a>
+        <a href="/blog/" class="btn-secondary">{t.nav.blog}</a>
+      </div>
+    </div>
+  </div>
+  <RelatedTools t={t} locale={locale} />
+</BaseLayout>

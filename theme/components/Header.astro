@@ -1,0 +1,125 @@
+---
+/**
+ * Accessible sticky site header with mobile menu and language switcher.
+ */
+import { localizedPath, LOCALE_NAMES, SUPPORTED_LOCALES, type Locale } from '@i18n/utils';
+import type { Dictionary } from '@i18n/translations';
+
+interface Props { t: Dictionary; locale: Locale; }
+const { t, locale } = Astro.props;
+
+const nav = [
+  { label: t.nav.predictor, href: localizedPath('chinese-gender-predictor/', locale), emoji: '🧮' },
+  { label: t.nav.chart, href: localizedPath('chinese-gender-chart/', locale), emoji: '📊' },
+  { label: t.nav.planner, href: localizedPath('gender-planner/', locale), emoji: '🗓️' },
+  { label: t.nav.lunarAge, href: localizedPath('lunar-age-calculator/', locale), emoji: '🌕' },
+  { label: t.nav.mayan, href: localizedPath('mayan-gender-predictor/', locale), emoji: '🏛️' },
+  { label: t.nav.dueDate, href: localizedPath('due-date-calculator/', locale), emoji: '⏳' },
+  { label: t.nav.quiz, href: localizedPath('gender-quiz/', locale), emoji: '💍' },
+  { label: t.nav.blog, href: localizedPath('blog/', locale), emoji: '📖' },
+];
+---
+
+<header id="site-header" class="sticky top-0 z-50 border-b border-cream-200/80 bg-cream-50/80 backdrop-blur-md transition-shadow">
+  <div class="section-shell flex h-16 items-center justify-between gap-4">
+    <a href={localizedPath('', locale)} class="focusable flex items-center gap-2.5" aria-label="Chinese Baby Predictor — home">
+      <span class="grid h-10 w-10 place-items-center rounded-2xl text-xl shadow-soft"
+            style="background-image: linear-gradient(135deg, var(--color-girl-400), var(--color-boy-400));">👶</span>
+      <span class="font-display text-lg font-extrabold leading-none tracking-tight text-plum-900 sm:text-lg">
+        Chinese<span class="text-girl-500"> Baby</span> Predictor
+      </span>
+    </a>
+
+    <nav aria-label="Primary" class="hidden items-center gap-0.5 lg:flex">
+      {nav.slice(0, 7).map((item) => (
+        <a href={item.href} class="focusable rounded-full px-3 py-2 text-[15px] font-semibold text-plum-700 transition-colors hover:bg-girl-50 hover:text-girl-600">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      {/* language switcher */}
+      <form data-lang-switcher class="relative hidden sm:block">
+        <label class="sr-only" for="lang-select">{t.common.language}</label>
+        <select id="lang-select" data-current-locale={locale} data-current-path={Astro.url.pathname}
+                class="focusable cursor-pointer appearance-none rounded-full border border-cream-200 bg-white py-2 pl-8 pr-3 text-sm font-semibold text-plum-700 shadow-sm transition hover:border-girl-300">
+          {SUPPORTED_LOCALES.map((loc) => (
+            <option value={loc} selected={loc === locale}>{LOCALE_NAMES[loc].native}</option>
+          ))}
+        </select>
+        <span aria-hidden="true" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-sm">🌐</span>
+      </form>
+
+      <a href={localizedPath('gender-quiz/', locale)} class="focusable hidden rounded-full btn-md font-semibold transition md:inline-flex btn-secondary text-xs lg:text-sm">
+        {t.nav.quiz}
+      </a>
+
+      <button type="button" id="menu-btn" aria-expanded="false" aria-controls="mobile-menu"
+              class="focusable inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream-200 bg-white text-plum-700 shadow-sm transition hover:bg-girl-50 lg:hidden">
+        <span class="sr-only">{t.nav.menu}</span>
+        <span aria-hidden="true" class="burger-icon block h-4 w-5">
+          <span class="absolute block h-0.5 w-5 bg-current transition-all"></span>
+          <span class="absolute mt-1.5 block h-0.5 w-5 border-current bg-current transition-all"></span>
+          <span class="absolute mt-3 block h-0.5 w-5 bg-current transition-all"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  {/* mobile menu */}
+  <div id="mobile-menu" hidden class="lg:hidden">
+    <nav aria-label="Mobile" class="section-shell grid grid-cols-2 gap-2 pb-4 pt-2">
+      {nav.map((item) => (
+        <a href={item.href} class="focusable flex items-center gap-2.5 rounded-2xl border border-cream-200 bg-white px-4 py-3 font-semibold text-plum-800 shadow-sm transition hover:bg-girl-50">
+          <span aria-hidden="true">{item.emoji}</span>{item.label}
+        </a>
+      ))}
+      <div class="col-span-2 flex items-center gap-2 pt-1">
+        <label class="sr-only" for="lang-select-mobile">{t.common.language}</label>
+        <select id="lang-select-mobile" data-lang-switcher data-current-locale={locale} data-current-path={Astro.url.pathname}
+                class="focusable w-full appearance-none rounded-2xl border border-cream-200 bg-white px-4 py-3 text-sm font-semibold text-plum-800">
+          {SUPPORTED_LOCALES.map((loc) => (
+            <option value={loc} selected={loc === locale}>{LOCALE_NAMES[loc].native}</option>
+          ))}
+        </select>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .btn-md { padding-inline: 1rem; padding-block: 0.5rem; }
+</style>
+
+<script>
+  // ── Mobile menu toggle ─────────────────────────────────────────────────────
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.hidden = open;
+  });
+
+  // ── Language switcher (custom i18n routing) ────────────────────────────────
+  const TOOL_PATHS = ['chinese-gender-predictor/', 'chinese-gender-chart/', 'gender-planner/', 'lunar-age-calculator/', 'mayan-gender-predictor/', 'due-date-calculator/', 'gender-quiz/', 'blog/'];
+  document.querySelectorAll<HTMLSelectElement>('select[data-lang-switcher]').forEach((select) => {
+    select.addEventListener('change', () => {
+      const next = select.value || 'en';
+      const current = select.dataset.currentLocale || 'en';
+      const pathname = select.dataset.currentPath || '/';
+      // Strip the current locale prefix to find the English base path.
+      let base = pathname.startsWith('/') ? pathname.slice(1) : pathname;
+      if (current !== 'en') {
+        const prefix = current + '/';
+        base = base.startsWith(prefix) ? base.slice(prefix.length) : base;
+      }
+      const suffix = base === '/' || base === '' ? '' : (TOOL_PATHS.find((tool) => base.startsWith(tool)) ?? '');
+      // Localized home/tool/blog pages exist for every locale; anything else
+      // (legal, posts, …) falls back to the locale's home page.
+      const target = next === 'en' ? `/${suffix}` : `/${next}/${suffix}`;
+      window.location.href = target;
+    });
+  });
+</script>

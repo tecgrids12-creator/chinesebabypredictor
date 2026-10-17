@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import ChartBody from '@components/astro/pages/ChartBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
+import { faqPageSchema } from '@utils/schema';
+import { CHART_FAQ } from '@content/data/editorial';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const description = t.meta.chartDesc;
+---
+
+<BaseLayout
+  title={t.meta.chartTitle}
+  description={description}
+  enPath="chinese-gender-chart/"
+  locale={locale}
+  alternates={alternatePaths('chinese-gender-chart/')}
+  schema={[faqPageSchema(CHART_FAQ)]}
+>
+  <Breadcrumbs crumbs={[{ label: t.nav.chart }]} locale={locale} t={t} />
+  <ChartBody t={t} locale={locale} />
+</BaseLayout>

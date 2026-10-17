@@ -1,0 +1,24 @@
+---
+title: 'Why Every Chinese Gender Predictor Gives Different Answers'
+description: 'Two sites, same dates, opposite predictions? We expose the six conversion shortcuts that cause chart disagreements — and how our tool avoids them.'
+publishDate: 2026-02-18
+author: 'Chinese Baby Predictor Team'
+category: 'Guides'
+---
+
+If you've run your dates through two Chinese gender predictors and gotten **boy on one, girl on the other**, you're not cursed — you've met the conversion problem. The chart is one fixed grid; all disagreement lives in the *inputs*.
+
+## The six usual suspects
+
+1. **Approximate lunar ages.** Simple sites use `(year − birth year) + 1` and never check whether the birthday came before Chinese New Year — a real one- to two-year difference.
+2. **Calendar-month ≈ lunar-month theft.** Many charts just map "March → lunar month 3." Wrong at both ends: lunar month boundaries drift by days, and leap months wreck the mapping.
+3. **Leap-month handling.** Some tools silently drop leap months; a few use half-month rules. Few tell you what they did.
+4. **Due-date vs. conception assumptions.** Some subtract 266 days from the due date, others use 280 − 14 the same way on LMP — mostly equivalent, but rounding conventions fork near boundaries.
+5. **Time zone sloppiness.** Date parsing off-by-one-day errors flip lunar months near a boundary day.
+6. **Legend-excel cells.** Photos of charts re-typed by hand introduce transcription drift.
+
+## How we avoid it
+
+Our predictor uses the complete **1900–2100 lunisolar table** (the Hong-Kong-Observatory-derived dataset mirrored by serious calendar libraries) instead of approximations: exact Chinese New Year anchors, exact month sizes, explicit leap-month flagging. Every result tells you the lunar age, lunar month and leap status it used.
+
+If you must verify by hand, the Hong Kong Observatory publishes official conversion tables — but two dates into a [transparent calculator](/chinese-gender-predictor/) is faster. 🧮

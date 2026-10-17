@@ -1,0 +1,18 @@
+---
+/** Accessible FAQ accordion — native <details>/<summary>, zero JS. */
+export interface FaqItem { q: string; a: string; }
+interface Props { items: FaqItem[]; }
+const { items } = Astro.props;
+---
+
+<div class="grid gap-3 md:grid-cols-2">
+  {items.map((item, index) => (
+    <details class="faq" open={index === 0}>
+      <summary>
+        <span>{item.q}</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </summary>
+      <p class="faq-answer">{item.a}</p>
+    </details>
+  ))}
+</div>

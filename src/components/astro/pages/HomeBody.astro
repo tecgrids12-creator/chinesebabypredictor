@@ -1,0 +1,116 @@
+---
+/** Homepage body: hero + main predictor + steps + chart teaser + accuracy + FAQ. */
+import GenderPredictor from '@components/calculators/GenderPredictor.tsx';
+import InteractiveChart from '@components/calculators/InteractiveChart.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import { HOME_FAQ, COMPARISON_ROWS, HOW_TO_STEPS } from '@content/data/editorial';
+import type { Dictionary } from '@i18n/translations';
+
+interface Props { t: Dictionary; }
+const { t } = Astro.props;
+
+const predictorStrings = {
+  ...t.predictor,
+  copy: t.cta.copy,
+  copied: t.cta.copied,
+  shareLink: t.cta.shareLink,
+};
+const chartStrings = {
+  legendBoy: t.chart.legendBoy, legendGirl: t.chart.legendGirl,
+  yourCell: '', monthsLabel: '', agesLabel: '', print: t.cta.print,
+  cellHint: '', months: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+  boy: 'boy', girl: 'girl', windowLabel: '', lunarYearLabel: '', leapNote: '',
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: HOME_FAQ.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<div class="pt-10">
+  {/* ── Hero + calculator ─────────────────────────────────────────────── */}
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.05fr] lg:pt-6">
+    <div class="reveal order-2 lg:order-1">
+      <p class="chip mb-4"><span aria-hidden="true">✨</span>{t.hero.kicker}</p>
+      <h1 class="font-display text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-plum-900 sm:text-6xl">
+        {t.hero.title}<br />
+        <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">{t.hero.titleAccent}</span>
+      </h1>
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-plum-600">{t.hero.subtitle}</p>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {['🎊 ' + t.hero.trust1, '🔒 ' + t.hero.trust2, '⚡ ' + t.hero.trust3].map((chip) => (
+          <span class="chip">{chip}</span>
+        ))}
+      </div>
+      {/* floating decorative emojis */}
+      <div class="mt-10 hidden gap-4 text-4xl lg:flex" aria-hidden="true">
+        <span class="anim-floaty">🍼</span><span class="anim-floaty [animation-delay:-2s]">🎈</span><span class="anim-floaty [animation-delay:-4s]">🌸</span>
+        <span class="anim-floaty [animation-delay:-1s]">🧸</span><span class="anim-floaty [animation-delay:-3s]">💙</span><span class="anim-floaty [animation-delay:-5s]">💗</span>
+      </div>
+    </div>
+
+    <div class="order-1 lg:order-2 lg:sticky lg:top-24"><GenderPredictor client:idle strings={predictorStrings} /></div>
+  </div>
+
+  {/* ── How it works ──────────────────────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="how-title">
+    <h2 id="how-title" class="section-title text-center">{t.predictor.heading}</h2>
+    <p class="mx-auto mt-2 max-w-2xl text-center text-plum-600">{t.predictor.subheading}</p>
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      {HOW_TO_STEPS.map((step, i) => (
+        <div class="calculator-card reveal relative p-6" style={`transition-delay:${i * 90}ms`}>
+          <span class="absolute -top-4 left-6 grid h-9 w-9 place-items-center rounded-full bg-plum-800 font-display text-sm font-extrabold text-white">{i + 1}</span>
+          <p class="text-3xl" aria-hidden="true">{step.emoji}</p>
+          <h3 class="mt-2 font-display text-lg font-bold text-plum-900">{step.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-plum-600">{step.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* ── Interactive chart teaser ───────────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="chart-title">
+    <h2 id="chart-title" class="section-title text-center">{t.chart.heading}</h2>
+    <p class="mx-auto mt-2 max-w-2xl text-center text-plum-600">{t.chart.subheading}</p>
+    <div class="mt-8"><InteractiveChart client:visible strings={{...chartStrings, yourCell: '', cellHint: '', windowLabel: '', lunarYearLabel: '', leapNote: '', boy: '', girl: ''}} /></div>
+  </section>
+
+  {/* ── Accuracy / honesty section ────────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal">
+    <div class="rounded-3xl bg-gradient-to-br from-plum-800 to-plum-700 p-8 text-white shadow-lift sm:p-10">
+      <h2 class="font-display text-3xl font-bold">Accuracy: the honest 50% 💙💗</h2>
+      <p class="mt-3 max-w-3xl leading-relaxed text-white/85">
+        We tell you what others won't: set up correctly, the Chinese gender chart predicts about <strong>as accurately as a coin flip</strong> — no scientific study has produced better results, and claims of 70–93% are marketing folklore. What the chart <em>is</em>: a 700-year-old tradition that turns the wait into a party. For certainty, NIPT (~10 weeks) and the anatomy scan (18–20 weeks) remain the only trustworthy answers.
+      </p>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {COMPARISON_ROWS.map((row) => (
+          <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/15">
+            <p class="font-display font-bold">{row.method}</p>
+            <p class="mt-1 text-sm text-white/75">{row.how}</p>
+            <p class="mt-2 inline-flex rounded-full bg-white/15 px-2.5 py-1 text-xs font-bold">{row.reliability}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="/blog/how-accurate-is-the-chinese-gender-chart/" class="btn-secondary">📖 {t.cta.learnMore}</a>
+        <a href="/gender-quiz/" class="btn-secondary">💍 {t.nav.quiz}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ── FAQ ───────────────────────────────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="section-title text-center">Frequently asked questions</h2>
+    <div class="mt-6"><FaqAccordion items={HOME_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale="en" />
+</div>
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

@@ -1,0 +1,60 @@
+---
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import type { Dictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { t: Dictionary; locale: Locale; }
+const { t, locale } = Astro.props;
+---
+
+<div class="pt-10">
+  <section class="section-shell">
+    <h1 class="max-w-3xl font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
+      About <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span>
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-plum-600">
+      We built the most beautiful, most honest home for the world's favorite pregnancy ritual — with real lunar
+      mathematics underneath every playfully wrong guess.
+    </p>
+  </section>
+
+  <section class="section-shell mt-12">
+    <div class="prose-custom">
+      <h2>Why we exist</h2>
+      <p>
+        Most Chinese gender predictor sites fall into two camps: photo-of-a-chart galleries with zero interactivity, or
+        calculators with hidden, sloppy date conversion. We wanted neither. Chinese Baby Predictor pairs a
+        <strong>database-accurate lunisolar engine</strong> (full 1900–2100 tables — exact New Year anchors, month sizes
+        and leap months) with an interface designed to make the guessing genuinely fun: animated reveals, a tappable
+        chart, planning windows in real Gregorian dates, and more folklore tools than anyone else packs onto one site.
+      </p>
+      <h2>What makes our conversion different</h2>
+      <p>
+        Two mothers with the same birth date can deserve different lunar ages if one was born before Chinese New Year.
+        Most online predictors never check. Our dataset is the full Hong Kong Observatory-derived table mirrored by the
+        serious calendar libraries — and we show you the exact lunar age, lunar month and leap-month flag behind every
+        result, so you can verify rather than trust.
+      </p>
+      <h2>Our editorial honesty</h2>
+      <p>
+        The chart is a beloved tradition, <strong>not medicine</strong>. Tested, it performs exactly like a coin flip — and we
+        <a href="/blog/how-accurate-is-the-chinese-gender-chart/">published the science on our own homepage</a> anyway,
+        because you deserve the truth along with the confetti. For real answers, NIPT (~10 weeks) and the anatomy
+        ultrasound (18–20 weeks) can't be beaten.
+      </p>
+      <h2>Contact & feedback</h2>
+      <p>
+        Found a date that slips out of our converter's hands, a translation that reads oddly, or an idea for a tool?
+        We'd love to hear from you — <a href="/contact-us/">get in touch</a>.
+      </p>
+      <h2>Editorial & data policies</h2>
+      <p>
+        Predictions are computed client-side in your browser. We don't store your dates, don't use them for marketing,
+        and publish our full practices in the <a href="/privacy/">privacy policy</a>. Our medical disclaimer appears on
+        every tool because tradition without disclaimers becomes bad advice.
+      </p>
+    </div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} />
+</div>

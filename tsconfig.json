@@ -1,0 +1,21 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": true,
+    "noUnusedLocals": false,
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@content/*": ["src/content/*"],
+      "@utils/*": ["src/utils/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@theme/*": ["theme/*"],
+      "@styles/*": ["src/styles/*"]
+    },
+    "types": ["astro/client"]
+  },
+  "include": ["src/**/*", "theme/**/*"],
+  "exclude": ["dist", "node_modules"]
+}

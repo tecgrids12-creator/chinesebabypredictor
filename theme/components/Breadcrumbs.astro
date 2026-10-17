@@ -1,0 +1,35 @@
+---
+/** Breadcrumb trail + BreadcrumbList JSON-LD. */
+import type { Locale } from '@i18n/utils';
+import { localizedPath } from '@i18n/utils';
+import type { Dictionary } from '@i18n/translations';
+
+export interface Crumb { label: string; href?: string; }
+interface Props { crumbs: Crumb[]; locale: Locale; t: Dictionary; }
+const { crumbs, locale, t } = Astro.props;
+const site = Astro.site?.origin ?? 'https://chinesebabypredictor.com';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    ...(c.href ? { item: new URL(localizedPath(c.href, locale), site).href } : {}),
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class="section-shell mb-6 flex flex-wrap items-center gap-1.5 text-sm text-plum-500">
+  <a href={localizedPath('', locale)} class="focusable font-semibold transition-colors hover:text-girl-500">{t.nav.predictor}</a>
+  {crumbs.map((c) => (
+    <>
+      <span aria-hidden="true">›</span>
+      {c.href
+        ? <a href={c.href} class="focusable font-semibold transition-colors hover:text-girl-500">{c.label}</a>
+        : <span class="font-semibold text-plum-700">{c.label}</span>}
+    </>
+  ))}
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

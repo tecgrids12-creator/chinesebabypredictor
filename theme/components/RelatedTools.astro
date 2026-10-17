@@ -1,0 +1,34 @@
+---
+/** Cross-links the eight tools (internal linking + engagement). */
+import type { Locale, Dictionary } from '@i18n/utils';
+import { localizedPath } from '@i18n/utils';
+
+interface Props { t: Dictionary; locale: Locale; exclude?: string; }
+const { t, locale, exclude } = Astro.props;
+
+const tools = [
+  { emoji: '🧮', label: t.nav.predictor, desc: 'Two dates → one instant boy/girl guess with real lunar conversion.', href: 'chinese-gender-predictor/' },
+  { emoji: '📊', label: t.nav.chart, desc: 'The full interactive lunar age × month grid — tap any cell.', href: 'chinese-gender-chart/' },
+  { emoji: '🗓️', label: t.nav.planner, desc: 'Favourable months to conceive a boy or a girl, with date windows.', href: 'gender-planner/' },
+  { emoji: '🌕', label: t.nav.lunarAge, desc: 'Find your traditional virtual (lunar) age in seconds.', href: 'lunar-age-calculator/' },
+  { emoji: '🏛️', label: t.nav.mayan, desc: 'The Mayan odd/even method as a playful second opinion.', href: 'mayan-gender-predictor/' },
+  { emoji: '⏳', label: t.nav.dueDate, desc: 'Due date from your cycle or conception — plus weeks & zodiac.', href: 'due-date-calculator/' },
+  { emoji: '💍', label: t.nav.quiz, desc: '12 old wives’ tale clues and a folkloric verdict.', href: 'gender-quiz/' },
+].filter((tool) => tool.href !== exclude);
+---
+
+<div class="section-shell mt-16">
+  <h2 class="section-title text-center">{t.common.relatedTools}</h2>
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {tools.map((tool) => (
+      <a href={localizedPath(tool.href, locale)}
+         class="reveal calculator-card group flex items-start gap-4 p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-lift">
+        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-cream-100 text-2xl transition group-hover:scale-110" aria-hidden="true">{tool.emoji}</span>
+        <span>
+          <span class="block font-display text-lg font-bold text-plum-900 group-hover:text-girl-600">{tool.label}</span>
+          <span class="mt-1 block text-sm leading-relaxed text-plum-600">{tool.desc}</span>
+        </span>
+      </a>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,203 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ─── Design tokens (Tailwind v4 CSS-first config) ─────────────────────────── */
+@theme {
+  --font-display: "Baloo 2", "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Nunito", ui-rounded, system-ui, sans-serif;
+
+  --color-cream-50: #fffafa;
+  --color-cream-100: #fdf3f3;
+  --color-cream-200: #f9e9ec;
+
+  --color-plum-400: #9d7fa0;
+  --color-plum-600: #5e3a64;
+  --color-plum-700: #4a2b50;
+  --color-plum-800: #38203c;
+  --color-plum-900: #2b1830;
+
+  --color-girl-50: #fdf2f8;
+  --color-girl-100: #fce7f3;
+  --color-girl-200: #fbcfe8;
+  --color-girl-400: #f472b6;
+  --color-girl-500: #ec4899;
+  --color-girl-600: #db2777;
+  --color-girl-700: #be185d;
+
+  --color-boy-50: #eff6ff;
+  --color-boy-100: #dbeafe;
+  --color-boy-200: #bfdbfe;
+  --color-boy-400: #60a5fa;
+  --color-boy-500: #3b82f6;
+  --color-boy-600: #2563eb;
+  --color-boy-700: #1d4ed8;
+
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+
+  --shadow-soft: 0 8px 30px rgba(94, 58, 100, 0.08);
+  --shadow-lift: 0 16px 44px rgba(94, 58, 100, 0.14);
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+body { @apply bg-cream-50 text-plum-800 font-sans antialiased; }
+
+::selection { background: var(--color-girl-200); }
+
+/* Accessible focus for interactive elements */
+a, button, input, select, [tabindex]:where([tabindex]:not([tabindex="-1"])) {
+  outline-color: transparent;
+}
+.focusable:focus-visible,
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--color-boy-500);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Skip link */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100]
+         focus:rounded-full focus:bg-plum-800 focus:px-4 focus:py-2 focus:text-white;
+}
+
+/* ─── Reusable component classes ───────────────────────────────────────────── */
+.calculator-card {
+  @apply rounded-3xl bg-white border border-cream-200;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(94, 58, 100, 0.05), 0 1px 2px rgba(94, 58, 100, 0.04);
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full font-display font-bold
+         px-6 py-3 text-white transition-all duration-200
+         hover:-translate-y-0.5 active:translate-y-0;
+  background-image: linear-gradient(135deg, var(--color-girl-500), var(--color-boy-500));
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+}
+.btn-primary:hover { box-shadow: 0 12px 26px rgba(236, 72, 153, 0.4); }
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full font-display font-bold
+         px-5 py-2.5 bg-white border-2 border-girl-200 text-girl-600
+         transition-all duration-200 hover:border-girl-400 hover:text-girl-500;
+}
+
+.chip {
+  @apply inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3.5 py-1.5
+         text-sm font-semibold text-plum-700 ring-1 ring-cream-200 backdrop-blur;
+}
+
+.section-shell { @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8; }
+.section-title {
+  @apply font-display text-3xl sm:text-4xl font-bold text-plum-900 tracking-tight;
+}
+
+/* ─── Animations ───────────────────────────────────────────────────────────── */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(3deg); }
+}
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.08); }
+  66% { transform: translate(-24px, 16px) scale(0.94); }
+}
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.8) translateY(12px); }
+  70% { transform: scale(1.04) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes confetti-fall {
+  0% { transform: translate3d(var(--cx), -24px, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate3d(var(--cx), 110vh, 0) rotate(720deg); opacity: 0; }
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.35); }
+  70% { box-shadow: 0 0 0 14px rgba(236, 72, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
+}
+
+.anim-floaty { animation: floaty 6s ease-in-out infinite; }
+.anim-blob { animation: blob 18s ease-in-out infinite; }
+.anim-pop { animation: pop-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-pulse-ring { animation: pulse-ring 1.6s ease-out 2; }
+
+/* Scroll-reveal (progressive enhancement; disabled via prefers-reduced-motion) */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-floaty, .anim-blob, .anim-pop, .anim-pulse-ring { animation: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ─── Calculator responsive layout (master prompt requirement) ─────────────── */
+.calculator-inputs { @apply grid grid-cols-1 gap-5 sm:grid-cols-2; }
+@media (max-width: 640px) {
+  .calculator-inputs { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+/* ─── Gender chart styles ──────────────────────────────────────────────────── */
+.chart-grid { display: grid; grid-template-columns: 3.2rem repeat(12, minmax(0, 1fr)); position: relative; }
+@media (max-width: 640px) {
+  .chart-grid { grid-template-columns: 2.6rem repeat(12, minmax(2.2rem, 1fr)); }
+}
+.chart-boy { background: var(--color-boy-100); color: var(--color-boy-700); }
+.chart-girl { background: var(--color-girl-100); color: var(--color-girl-700); }
+.chart-cell {
+  @apply flex h-8 items-center justify-center text-[11px] font-bold cursor-pointer
+         transition-all duration-150 hover:scale-110 hover:z-10 hover:rounded-md
+         relative select-none;
+}
+.chart-cell[aria-pressed="true"] { @apply z-10 rounded-md ring-2 ring-gold-500 scale-110 font-extrabold; }
+
+/* ─── FAQ accordion ────────────────────────────────────────────────────────── */
+details.faq {
+  @apply rounded-2xl bg-white border border-cream-200 px-5 py-4 transition-colors;
+}
+details.faq[open] { @apply ring-1 ring-girl-200; }
+details.faq summary {
+  @apply flex cursor-pointer select-none items-center justify-between gap-4
+         font-display text-lg font-bold text-plum-800 list-none marker:hidden;
+}
+details.faq summary::-webkit-details-marker { display: none; }
+details.faq summary .faq-icon { @apply shrink-0 text-2xl text-girl-400 transition-transform duration-200; }
+details.faq[open] summary .faq-icon { transform: rotate(45deg); }
+details.faq .faq-answer { @apply mt-3 text-plum-700 leading-relaxed; }
+
+/* ─── Prose (blog) ─────────────────────────────────────────────────────────── */
+.prose-custom {
+  @apply prose prose-pink max-w-none;
+  --tw-prose-body: #4c3a55;
+  --tw-prose-headings: #2b1830;
+  --tw-prose-links: #be185d;
+  --tw-prose-bold: #2b1830;
+  --tw-prose-quotes: #5e3a64;
+}
+.prose-custom h2 { @apply font-display; font-family: var(--font-display); }
+
+/* ─── Print stylesheet for the chart ──────────────────────────────────────── */
+@media print {
+  header, footer, .no-print { display: none !important; }
+  .chart-cell { @apply h-6 border border-white/70; }
+  body { background: white; }
+}
+
+/* ─── Confetti pieces (CSS-driven, JS spawns spans) ───────────────────────── */
+.confetti-piece {
+  position: fixed;
+  top: 0;
+  width: 10px;
+  height: 14px;
+  z-index: 60;
+  pointer-events: none;
+  border-radius: 2px;
+  animation: confetti-fall var(--dur, 3s) cubic-bezier(0.3, 0.6, 0.6, 1) forwards;
+}

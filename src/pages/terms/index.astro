@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import { getDictionary } from '@i18n/translations';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const updated = '2026-01-10';
+---
+
+<BaseLayout
+  title="Terms of Service — Chinese Baby Predictor"
+  description="The terms of using chinesebabypredictor.com: entertainment-only predictions, no medical advice, intellectual property and acceptable use."
+  enPath="terms/"
+  locale={locale}
+>
+  <div class="pt-10">
+    <div class="section-shell prose-custom">
+      <h1 class="font-display !text-4xl font-extrabold !text-plum-900 sm:!text-5xl">Terms of Service</h1>
+      <p class="text-sm text-plum-500">Last updated: {updated}</p>
+
+      <h2>1. Entertainment only</h2>
+      <p>
+        chinesebabypredictor.com provides traditional-date-based <strong>entertainment</strong>. Predictions produced by
+        the Chinese gender chart, the Mayan predictor, our quiz, planner and every other tool on this site are folklore
+        artifacts with a roughly 50% real-world hit rate — the same as chance. <strong>Nothing on this site is medical
+        advice</strong>, and no tool here can determine or influence a baby's sex. Only qualified medical testing (such as
+        NIPT, amniocentesis, CVS or ultrasound) performed by licensed providers can determine fetal sex, and you should
+        direct all health decisions to your healthcare professional.
+      </p>
+
+      <h2>2. Acceptable use</h2>
+      <p>
+        You may use the tools freely and share result screenshots. You may not scrape the site at abusive rates, resell
+        our content as a service, attempt to interfere with other users, or use the site for any purpose that violates
+        law in your jurisdiction. Users in jurisdictions where prenatal sex determination is restricted — such as India
+        under the PCPNDT Act — acknowledge that our tools are entertainment simulations that cannot determine sex; we
+        support all laws promoting gender equality.
+      </p>
+
+      <h2>3. Intellectual property</h2>
+      <p>
+        The site's text, design, code, chart presentation and tool interfaces are © Chinese Baby Predictor. The
+        traditional Chinese gender chart itself is public-domain folklore; our fact-checked blog content, lunar
+        conversion engine and page designs remain original works. Fair use — quoting with a link — is welcome.
+      </p>
+
+      <h2>4. No warranty</h2>
+      <p>
+        The site is provided "as is". While we work hard to keep the lunar computations accurate to the underlying
+        calendar data, we make no warranty of accuracy, completeness or continuous availability, and we are not liable
+        for decisions made based on entertainment content. If a calculation looks wrong, please
+        <a href="/contact-us/">tell us</a> — we fix things fast.
+      </p>
+
+      <h2>5. Third-party services</h2>
+      <p>
+        Our contact form passes messages through a Web3Forms-compatible processor; its handling is covered in our
+        <a href="/privacy/">privacy policy</a>. We may use privacy-respecting analytics to know which tools are popular.
+      </p>
+
+      <h2>6. Changes</h2>
+      <p>
+        We may update these terms as the site evolves; material changes will update the "last updated" date. Continued
+        use after changes constitutes acceptance. This document is a lay summary, not legal advice; consult counsel for
+        specifics.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

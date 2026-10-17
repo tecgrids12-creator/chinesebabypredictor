@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import PredictorBody from '@components/astro/pages/PredictorBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+import { HOME_FAQ } from '@content/data/editorial';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const description = t.meta.predictorDesc;
+---
+
+<BaseLayout
+  title={t.meta.predictorTitle}
+  description={description}
+  enPath="chinese-gender-predictor/"
+  locale={locale}
+  alternates={alternatePaths('chinese-gender-predictor/')}
+  schema={[webAppSchema({ name: 'Chinese Gender Predictor', path: 'chinese-gender-predictor/', description }), faqPageSchema(HOME_FAQ)]}
+>
+  <Breadcrumbs crumbs={[{ label: t.nav.predictor }]} locale={locale} t={t} />
+  <PredictorBody t={t} locale={locale} />
+</BaseLayout>

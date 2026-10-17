@@ -1,0 +1,71 @@
+---
+/** Full interactive Chinese gender chart page. */
+import InteractiveChart from '@components/calculators/InteractiveChart.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import { CHART_FAQ } from '@content/data/editorial';
+import type { Dictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { t: Dictionary; locale: Locale; }
+const { t, locale } = Astro.props;
+
+const monthsEn = ['1st 🗓️', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th'];
+const chartStrings = {
+  legendBoy: t.chart.legendBoy, legendGirl: t.chart.legendGirl,
+  yourCell: t.chart.yourCell, monthsLabel: t.chart.monthsLabel, agesLabel: t.chart.agesLabel,
+  print: t.chart.print, cellHint: t.chart.cellHint, months: monthsEn,
+  boy: t.chart.legendBoy, girl: t.chart.legendGirl, windowLabel: 'Dates', lunarYearLabel: 'year', leapNote: 'Leap months are mapped to their base month and marked on results.',
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: CHART_FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<div class="pt-10">
+  <section class="section-shell">
+    <h1 class="max-w-3xl font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
+      Chinese Gender Chart <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">2026</span> — interactive & printable
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-plum-600">
+      The complete traditional grid: the mother's lunar age (rows) × the lunar month of conception (columns), blue for boys and pink for girls. Tap any cell to see its exact Gregorian window for {new Date().getUTCFullYear()} — or print a copy for the refrigerator.
+    </p>
+    <div class="mt-8"><InteractiveChart client:visible strings={chartStrings} /></div>
+  </section>
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom">
+      <h2>How to read the chart without an app</h2>
+      <p>
+        Each row is a <strong>lunar age</strong> — remember: Chinese tradition counts you as age 1 at birth and bumps you up at Chinese New
+        Year, so your lunar age is usually 1–2 years older than your Western one. Each column is a <strong>lunar month</strong> — lunar
+        months start at the new moon, so their Gregorian boundaries wander (e.g., lunar month 1 of 2026 begins Feb 17, 2026).
+        Where your row and column meet sits the verdict: blue 👦 or pink 👧.
+      </p>
+      <h2>The 2026 edition changes the calendar, never the grid</h2>
+      <p>
+        There is exactly <strong>one authentic chart</strong> — the same cells every year. "2026" changes only the date math: Chinese New
+        Year 2026 lands on <strong>February 17</strong>, and lunar months start on different Gregorian dates than in 2025 or 2027. Our
+        interactive version does that date math live, so a January 2026 conception correctly belongs to lunar year 2025's months —
+        the exact mistake handmade charts make.
+      </p>
+      <h2>Leap months (& why charts disagree)</h2>
+      <p>
+        Some lunar years have 13 months; the chart doesn't. Most predictors map a leap-month conception to its base month — we do the
+        same, but <em>flag it on your result</em> so you know which convention was applied. This single choice explains most of the
+        "two calculators gave different answers" folklore drama online.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-shell mt-14" aria-labelledby="chart-faq">
+    <h2 id="chart-faq" class="section-title text-center">Chart FAQ</h2>
+    <div class="mt-6"><FaqAccordion items={CHART_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="chinese-gender-chart/" />
+</div>
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import QuizBody from '@components/astro/pages/QuizBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
+
+const locale = 'en';
+const t = getDictionary(locale);
+---
+
+<BaseLayout
+  title={t.meta.quizTitle}
+  description={t.meta.quizDesc}
+  enPath="gender-quiz/"
+  locale={locale}
+  alternates={alternatePaths('gender-quiz/')}
+>
+  <Breadcrumbs crumbs={[{ label: t.nav.quiz }]} locale={locale} t={t} />
+  <QuizBody t={t} locale={locale} />
+</BaseLayout>

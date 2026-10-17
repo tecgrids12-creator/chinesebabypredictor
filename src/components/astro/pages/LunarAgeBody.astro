@@ -1,0 +1,57 @@
+---
+import LunarAgeCalculator from '@components/calculators/LunarAgeCalculator.tsx';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import type { Dictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { t: Dictionary; locale: Locale; }
+const { t, locale } = Astro.props;
+---
+
+<div class="pt-10">
+  <section class="section-shell grid items-start gap-10 lg:grid-cols-2">
+    <div>
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
+        Chinese <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">lunar age</span> calculator
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">
+        Your traditional Chinese age — the number the gender chart expects — computed precisely from the real lunisolar
+        tables, with your zodiac and next Lunar New Year thrown in.
+      </p>
+      <div class="mt-6 space-y-3">
+        {[
+          ['🎂', 'Age 1 at birth', 'Pregnancy time counts as life in the traditional system.'],
+          ['🏮', '+1 every Lunar New Year', 'Birthdays pass quietly; Spring Festival is the real one.'],
+          ['🌗', 'Leap months included', 'Some lunar years have 13 months — we handle all of them.'],
+        ].map(([emoji, title, text]) => (
+          <div class="calculator-card flex items-start gap-4 p-4">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-cream-100 text-xl" aria-hidden="true">{emoji}</span>
+            <span><strong class="font-display text-plum-900">{title}</strong><span class="mt-0.5 block text-sm text-plum-600">{text}</span></span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="lg:sticky lg:top-24"><LunarAgeCalculator client:idle strings={t.lunarAge} /></div>
+  </section>
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom">
+      <h2>Why is my Chinese age older than my real age?</h2>
+      <p>
+        Two rules add years. First, every baby is <strong>age 1 at birth</strong> (九天下 experimental counting aside — the womb counts).
+        Second, everyone gains a year at <strong>Chinese New Year</strong>, not on their birthday. So a mother born December 20, 1994
+        is already 2 on January 1, 1996 — two New Years have passed since her lunar birth year began. That's why the
+        chart's rows are 18–45 while typical Western ages run 17–44.
+      </p>
+      <h2>The exact formula (for the curious)</h2>
+      <p>
+        Lunar age = (lunar year of the moment − lunar birth year) + 1. The lunar birth year uses the <em>lunar</em> year that was
+        running on the day you were born: born before Chinese New Year? Your lunar birth year is one less than your
+        Gregorian one. Our calculator embeds the full 1900–2100 conversion tables — the same precision the
+        <a href="/chinese-gender-predictor/">gender predictor</a> uses.
+      </p>
+    </div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="lunar-age-calculator/" />
+</div>

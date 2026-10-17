@@ -1,0 +1,1 @@
+function a(t,e){try{return t.toLocaleDateString(e==="en"?"en-US":e,{year:"numeric",month:"long",day:"numeric"})}catch{return t.toISOString().slice(0,10)}}function u(t){const[e,n,r]=t.split("-").map(Number);return new Date(Date.UTC(e,(n??1)-1,r??1))}export{a as f,u};

@@ -1,0 +1,79 @@
+---
+/**
+ * Site footer with sitemap-style link sections, entertainment disclaimer
+ * and medical note (privacy-compliance section references it).
+ */
+import { localizedPath, type Locale, LOCALE_NAMES, SUPPORTED_LOCALES } from '@i18n/utils';
+import type { Dictionary } from '@i18n/translations';
+
+interface Props { t: Dictionary; locale: Locale; }
+const { t, locale } = Astro.props;
+const L = (path: string) => localizedPath(path, locale);
+
+const toolLinks = [
+  { label: t.nav.predictor, href: L('chinese-gender-predictor/') },
+  { label: t.nav.chart, href: L('chinese-gender-chart/') },
+  { label: t.nav.planner, href: L('gender-planner/') },
+  { label: t.nav.lunarAge, href: L('lunar-age-calculator/') },
+  { label: t.nav.mayan, href: L('mayan-gender-predictor/') },
+  { label: t.nav.dueDate, href: L('due-date-calculator/') },
+  { label: t.nav.quiz, href: L('gender-quiz/') },
+];
+const guides = [
+  { label: 'How accurate is the chart?', href: L('blog/how-accurate-is-the-chinese-gender-chart/') },
+  { label: 'Chinese Gender Calendar 2026', href: L('blog/chinese-gender-calendar-2026/') },
+  { label: 'How to calculate lunar age', href: L('blog/how-to-calculate-your-lunar-age/') },
+  { label: t.nav.blog, href: L('blog/') },
+];
+const company = [
+  { label: 'About us', href: L('about-us/') },
+  { label: 'Contact', href: L('contact-us/') },
+  { label: 'Sitemap', href: L('sitemap/') },
+];
+const legal = [
+  { label: 'Privacy', href: L('privacy/') },
+  { label: 'Terms', href: L('terms/') },
+];
+---
+
+<footer class="mt-20 border-t border-cream-200 bg-white">
+  <div class="section-shell grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
+    <div class="lg:col-span-2">
+      <a href={localizedPath('', locale)} class="focusable flex items-center gap-2.5" aria-label="Chinese Baby Predictor">
+        <span class="grid h-10 w-10 place-items-center rounded-2xl text-xl"
+              style="background-image: linear-gradient(135deg, var(--color-girl-400), var(--color-boy-400));">👶</span>
+        <span class="font-display text-lg font-extrabold text-plum-900">Chinese<span class="text-girl-500"> Baby</span> Predictor</span>
+      </a>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-plum-600">{t.footer.tagline}</p>
+      <p class="mt-4 inline-flex chip" aria-label={t.common.entertainment}>
+        <span aria-hidden="true">🎁</span>{t.common.entertainment}
+      </p>
+      <p class="mt-4 text-xs text-plum-500">
+        {SUPPORTED_LOCALES.map((l, i) => (
+          <>{i > 0 ? ' · ' : ''}<a class="focusable hover:text-girl-500" href={localizedPath('', l)}>{LOCALE_NAMES[l].native}</a></>
+        ))}
+      </p>
+    </div>
+
+    {[
+      { title: t.footer.tools, links: toolLinks },
+      { title: t.footer.guides, links: guides },
+      { title: t.footer.company, links: company },
+      { title: t.footer.legal, links: legal },
+    ].map((col) => (
+      <nav aria-label={col.title}>
+        <h2 class="font-display text-sm font-extrabold uppercase tracking-wider text-plum-400">{col.title}</h2>
+        <ul class="mt-3 space-y-2 text-sm text-plum-700">
+          {col.links.map((l) => <li><a class="focusable transition-colors hover:text-girl-500" href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+  </div>
+
+  <div class="border-t border-cream-200 bg-cream-100">
+    <div class="section-shell flex flex-col gap-2 py-5 text-center text-xs leading-relaxed text-plum-500 sm:flex-row sm:items-center sm:justify-between sm:text-left">
+      <p>© {new Date().getFullYear()} Chinese Baby Predictor · chinesebabypredictor.com</p>
+      <p class="sm:max-w-xl">{t.footer.disclaimer}</p>
+    </div>
+  </div>
+</footer>

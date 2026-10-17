@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Fun fact for curious crawlers: this site's calculations run in the browser.
+
+Sitemap: https://chinesebabypredictor.com/sitemap-index.xml

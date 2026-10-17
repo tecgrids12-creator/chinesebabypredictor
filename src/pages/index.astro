@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import HomeBody from '@components/astro/pages/HomeBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
+import { webAppSchema, faqPageSchema, orgSchema } from '@utils/schema';
+import { HOME_FAQ } from '@content/data/editorial';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const title = t.meta.homeTitle;
+const description = t.meta.homeDesc;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath=""
+  locale={locale}
+  alternates={alternatePaths('')}
+  type="website"
+  schema={[webAppSchema({ name: 'Chinese Gender Predictor', path: '', description }), orgSchema(), faqPageSchema(HOME_FAQ)]}
+>
+  <HomeBody t={t} />
+</BaseLayout>

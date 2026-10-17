@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import { getDictionary } from '@i18n/translations';
+import { localizedPath } from '@i18n/utils';
+
+const locale = 'en';
+const t = getDictionary(locale);
+
+const tools = [
+  { path: '', label: 'Chinese Gender Predictor (home)' },
+  { path: 'chinese-gender-predictor/', label: 'Predictor — full page' },
+  { path: 'chinese-gender-chart/', label: 'Interactive Gender Chart' },
+  { path: 'gender-planner/', label: 'Boy-or-Girl Planning Calendar' },
+  { path: 'lunar-age-calculator/', label: 'Lunar Age Calculator' },
+  { path: 'mayan-gender-predictor/', label: 'Mayan Gender Predictor' },
+  { path: 'due-date-calculator/', label: 'Due Date Calculator' },
+  { path: 'gender-quiz/', label: "Old Wives' Tales Quiz" },
+  { path: 'blog/', label: 'Blog' },
+  { path: 'about-us/', label: 'About us' },
+  { path: 'contact-us/', label: 'Contact us' },
+  { path: 'terms/', label: 'Terms of Service' },
+  { path: 'privacy/', label: 'Privacy Policy' },
+];
+
+const posts = (await getCollection('blog')).sort((a, b) => Number(b.data.publishDate) - Number(a.data.publishDate));
+const locales = ['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms', 'pl', 'id', 'ar', 'bg', 'tr', 'sv'];
+---
+
+<BaseLayout title="HTML Sitemap — All Pages" description="Every page and tool on chinesebabypredictor.com at a glance." enPath="sitemap/" locale={locale}>
+  <div class="pt-10">
+    <div class="section-shell">
+      <h1 class="font-display text-4xl font-extrabold text-plum-900 sm:text-5xl">Sitemap</h1>
+      <p class="mt-3 max-w-xl text-lg text-plum-600">Every tool, guide and policy page in one human-readable list.</p>
+
+      <div class="mt-8 grid gap-8 md:grid-cols-2">
+        <section class="calculator-card p-6">
+          <h2 class="font-display text-xl font-bold text-plum-900">Tools & pages</h2>
+          <ul class="mt-3 space-y-2 text-sm">
+            {tools.map((item) => (
+              <li><a class="focusable text-plum-700 hover:text-girl-600" href={`/${item.path}`}>{item.label}</a></li>
+            ))}
+          </ul>
+        </section>
+        <section class="calculator-card p-6">
+          <h2 class="font-display text-xl font-bold text-plum-900">Guides ({posts.length})</h2>
+          <ul class="mt-3 space-y-2 text-sm">
+            {posts.map((post) => (
+              <li><a class="focusable text-plum-700 hover:text-girl-600" href={`/blog/${post.id}/`}>{post.data.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      <section class="calculator-card mt-6 p-6">
+        <h2 class="font-display text-xl font-bold text-plum-900">Localized homes</h2>
+        <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+          {locales.map((loc) => (
+            <li><a class="focusable text-plum-700 hover:text-girl-600" href={localizedPath('', loc as never)}>/ {loc} /</a></li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import DueDateCalculator from '@components/calculators/DueDateCalculator.tsx';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import type { Dictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { t: Dictionary; locale: Locale; }
+const { t, locale } = Astro.props;
+---
+
+<div class="pt-10">
+  <section class="section-shell grid items-start gap-10 lg:grid-cols-2">
+    <div>
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
+        Pregnancy <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">due date</span> calculator
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">
+        Get your estimated due date (Naegele's rule), your current gestational age, trimester, and your baby's Chinese +
+        Western zodiac — then feed the date straight into the gender predictor for the fun half.
+      </p>
+      <div class="mt-6 space-y-3">
+        {[
+          ['📏', "Naegele's rule", 'Due date = first day of last period + 280 days (40 weeks).'],
+          ['🌱', 'From conception?', 'Conception + 266 days lands on the same date.'],
+          ['🐘', 'Zodiac ready', 'Babies due near Chinese New Year can belong to either zodiac year.'],
+        ].map(([emoji, title, text]) => (
+          <div class="calculator-card flex items-start gap-4 p-4">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-cream-100 text-xl" aria-hidden="true">{emoji}</span>
+            <span><strong class="font-display text-plum-900">{title}</strong><span class="mt-0.5 block text-sm text-plum-600">{text}</span></span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="lg:sticky lg:top-24"><DueDateCalculator client:idle strings={t.dueDate} /></div>
+  </section>
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom">
+      <h2>How accurate is a due date?</h2>
+      <p>
+        Only about <strong>4–5% of babies arrive exactly on their due date</strong> — the majority arrive within a two-week
+        window either side. First-time moms average ~40 weeks + 4 days. Early ultrasound (8–13 weeks) refines dating more
+        accurately than any calendar rule, so treat this as a planning anchor, not a countdown calendar.
+      </p>
+      <h2>Why conception + 266 days?</h2>
+      <p>
+        Gestational age is counted from the last period (280 days), which includes roughly two weeks before ovulation.
+        Actual fertilization-to-birth is ~266 days. Our calculator keeps both conventions straight — no off-by-two-weeks
+        folklore math. Then head to the <a href="/chinese-gender-predictor/">gender predictor</a> to see what the
+        <a href="/chinese-gender-chart/">chart</a> would guess.
+      </p>
+    </div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="due-date-calculator/" />
+</div>

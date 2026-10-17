@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import AboutBody from '@components/astro/pages/AboutBody.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import { getDictionary } from '@i18n/translations';
+import { orgSchema } from '@utils/schema';
+
+const locale = 'en';
+const t = getDictionary(locale);
+---
+
+<BaseLayout
+  title={`${t.meta.aboutTitle} — Our Story & Data Policy`}
+  description="Who we are: the data-accurate, design-obsessed, honesty-first Chinese gender predictor. Our lunar engine, editorial policy and contact channels explained."
+  enPath="about-us/"
+  locale={locale}
+  schema={orgSchema()}
+>
+  <Breadcrumbs crumbs={[{ label: 'About us' }]} locale={locale} t={t} />
+  <AboutBody t={t} locale={locale} />
+</BaseLayout>

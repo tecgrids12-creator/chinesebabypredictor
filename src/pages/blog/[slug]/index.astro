@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import { getDictionary } from '@i18n/translations';
+import { articleSchema } from '@utils/schema';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const locale = 'en';
+const t = getDictionary(locale);
+const { Content } = await render(post);
+
+const related = (await getCollection('blog'))
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => (a.data.category === post.data.category ? -1 : b.data.category === post.data.category ? 1 : 0))
+  .slice(0, 3);
+
+const dateStr = post.data.publishDate.toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  title={`${post.data.title} | Chinese Baby Predictor Blog`}
+  description={post.data.description}
+  enPath={`blog/${post.id}/`}
+  locale={locale}
+  type="article"
+  publishedTime={new Date(post.data.publishDate).toISOString()}
+  schema={articleSchema({
+    title: post.data.title,
+    description: post.data.description,
+    slug: post.id,
+    publishDate: dateStr,
+    author: post.data.author,
+  })}
+>
+  <article class="pt-10">
+    <header class="section-shell max-w-3xl">
+      <span class="rounded-full bg-girl-100 px-3.5 py-1.5 text-xs font-bold text-girl-700">{post.data.category}</span>
+      <h1 class="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-plum-900 sm:text-5xl">{post.data.title}</h1>
+      <div class="mt-4 flex flex-wrap items-center gap-3 text-sm font-semibold text-plum-500">
+        <time datetime={dateStr}>{new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <span aria-hidden="true">·</span>
+        <span>{post.data.author}</span>
+      </div>
+    </header>
+
+    <div class="section-shell mt-8">
+      <div class="calculator-card p-6 sm:p-10">
+        <div class="prose-custom">
+          <Content />
+        </div>
+      </div>
+    </div>
+
+    <section class="section-shell mt-12 max-w-4xl" aria-labelledby="more-guides">
+      <h2 id="more-guides" class="section-title">Keep exploring</h2>
+      <div class="mt-5 grid gap-4 sm:grid-cols-3">
+        {related.map((rel) => (
+          <a href={`/blog/${rel.id}/`} class="reveal calculator-card group p-5 transition hover:-translate-y-1 hover:shadow-lift">
+            <p class="text-xs font-bold uppercase tracking-wider text-girl-500">{rel.data.category}</p>
+            <p class="mt-1.5 font-display font-bold leading-snug text-plum-900 group-hover:text-girl-600">{rel.data.title}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <RelatedTools t={t} locale={locale} />
+  </article>
+</BaseLayout>

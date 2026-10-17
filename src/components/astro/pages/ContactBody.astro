@@ -1,0 +1,102 @@
+---
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import type { Dictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { t: Dictionary; locale: Locale; }
+const { t, locale } = Astro.props;
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-2">
+    <div>
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
+        Let's <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">talk</span> 💌
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">
+        Questions about the chart, a broken lunar conversion, partnership ideas or just a prediction success story —
+        drop us a line. We read everything.
+      </p>
+      <div class="mt-8 space-y-4">
+        {[
+          ['📧', 'Email', 'hello@chinesebabypredictor.com'],
+          ['🛠️', 'Bug reports', 'Lunar conversions gone wrong are the only urgent kind — please include both dates!'],
+          ['💼', 'Business & press', 'Mentions, guest posts and partnerships — same form, we triage daily.'],
+        ].map(([emoji, title, text]) => (
+          <div class="calculator-card flex items-start gap-4 p-4">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-cream-100 text-xl" aria-hidden="true">{emoji}</span>
+            <span><strong class="font-display text-plum-900">{title}</strong><span class="mt-0.5 block text-sm text-plum-600">{text}</span></span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="calculator-card p-6 sm:p-8">
+      <form id="contact-form" novalidate class="grid gap-4">
+        <div class="grid gap-1.5">
+          <label for="cf-name" class="font-display text-sm font-bold text-plum-700">Your name</label>
+          <input id="cf-name" name="name" type="text" required autocomplete="name" placeholder="Baby-ready name"
+                 class="focusable rounded-2xl border-2 border-cream-200 bg-white px-4 py-3" />
+        </div>
+        <div class="grid gap-1.5">
+          <label for="cf-email" class="font-display text-sm font-bold text-plum-700">Email</label>
+          <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com"
+                 class="focusable rounded-2xl border-2 border-cream-200 bg-white px-4 py-3" />
+        </div>
+        <div class="grid gap-1.5">
+          <label for="cf-subject" class="font-display text-sm font-bold text-plum-700">Subject <span class="text-plum-400">(optional)</span></label>
+          <input id="cf-subject" name="subject" type="text" placeholder="Prediction drama, feedback, hello"
+                 class="focusable rounded-2xl border-2 border-cream-200 bg-white px-4 py-3" />
+        </div>
+        <div class="grid gap-1.5">
+          <label for="cf-message" class="font-display text-sm font-bold text-plum-700">Message</label>
+          <textarea id="cf-message" name="message" rows="5" required
+                    class="focusable resize-y rounded-2xl border-2 border-cream-200 bg-white px-4 py-3"></textarea>
+        </div>
+        <input type="text" name="_honey" value="" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <button type="submit" class="btn-primary">📮 Send message</button>
+        <p id="cf-status" role="status" aria-live="polite" class="text-sm font-semibold"></p>
+        <p class="text-xs text-plum-500">
+          Submitting sends your message through our processor (Web3Forms-compatible). We never share or sell it — see the
+          <a href="/privacy/" class="underline">privacy policy</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <RelatedTools t={t} locale={locale} />
+</div>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('cf-status');
+  if (form && status) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = 'Sending… 🚀';
+      const data = new FormData(form);
+      if (data.get('_honey')) { status.textContent = 'Thanks! (But we suspect you are a robot 🤖)'; return; }
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: data.get('name'),
+            email: data.get('email'),
+            subject: data.get('subject'),
+            message: data.get('message'),
+          }),
+        });
+        const json: { ok?: boolean; error?: string } = await res.json().catch(() => ({}));
+        if (res.ok && json.ok) {
+          status.textContent = 'Message sent! We usually reply within a day or two. 💙';
+          form.reset();
+        } else {
+          status.textContent = json.error || 'Something went wrong — please email us directly at hello@chinesebabypredictor.com';
+        }
+      } catch {
+        status.textContent = 'Network hiccup — please try again or email hello@chinesebabypredictor.com';
+      }
+    });
+  }
+</script>

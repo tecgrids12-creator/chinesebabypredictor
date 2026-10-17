@@ -1,0 +1,78 @@
+---
+/**
+ * SEO head manager: title, description, canonical, OG/Twitter,
+ * hreflang alternates and JSON-LD structured data.
+ */
+import { SUPPORTED_LOCALES, localizedPath, getLangTag, DEFAULT_LOCALE, type Locale } from '@i18n/utils';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** English path used to build hreflang alternates, e.g. "chinese-gender-chart/" */
+  enPath?: string;
+  /** Pre-rendered hreflang alternates (used on locale pages). */
+  alternates?: Array<{ hreflang: string; href: string }>;
+  type?: 'website' | 'article' | 'WebApplication';
+  image?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  /** Page locale passed explicitly (we use custom i18n routing, not Astro's). */
+  locale?: Locale;
+}
+
+const { title, description, enPath = '', type = 'website', image, publishedTime, modifiedTime, schema } = Astro.props;
+const site = Astro.site ?? new URL('https://chinesebabypredictor.com');
+const SITE = site.origin;
+
+// The page's own locale: explicit prop (custom routing) → Astro → English.
+const pageLocale: Locale = Astro.props.locale ?? (Astro.currentLocale && Astro.currentLocale !== 'en' ? (Astro.currentLocale as Locale) : 'en');
+const isDefault = pageLocale === DEFAULT_LOCALE;
+const canonicalPath = isDefault ? enPath : `${pageLocale}/${enPath}`;
+const canonical = new URL(canonicalPath, SITE).href;
+const ogImage = image ?? new URL('/og-default.png', SITE).href;
+
+// hreflang list: every locale version of enPath (skip ones we don't render? For
+// simplicity the locale home + tool pages exist for all locales; other pages
+// advertise en + x-default only).
+const hreflangs = Astro.props.alternates ?? Astro.currentLocale
+  ? [
+    { hreflang: 'en', href: new URL(enPath === '' ? '/' : `/${enPath}`, SITE).href },
+    { hreflang: 'x-default', href: new URL(enPath === '' ? '/' : `/${enPath}`, SITE).href },
+  ]
+  : [];
+
+const jsonLd = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content="index, follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+{pageLocale !== 'en' ? <meta name="hl-locale" content={getLangTag(pageLocale)} /> : null}
+
+{hreflangs.map((h) => <link rel="alternate" hreflang={h.hreflang} href={h.href} />)}
+
+<meta property="og:site_name" content="Chinese Baby Predictor" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type === 'WebApplication' ? 'website' : type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content={getLangTag(pageLocale)} />
+{publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
+{modifiedTime ? <meta property="article:modified_time" content={modifiedTime} /> : null}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}

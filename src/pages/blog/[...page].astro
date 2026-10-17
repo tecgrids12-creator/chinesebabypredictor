@@ -1,0 +1,48 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import BlogListBody, { type PostCard } from '@components/astro/pages/BlogListBody.astro';
+import { getDictionary, type Dictionary } from '@i18n/translations';
+import { DEFAULT_LOCALE } from '@i18n/utils';
+
+export async function getStaticPaths({ paginate }: { paginate: any }) {
+  const posts = (await getCollection('blog')).sort(
+    (a, b) => Number(b.data.publishDate) - Number(a.data.publishDate),
+  );
+  return paginate(posts, { pageSize: 12 });
+}
+
+const { page } = Astro.props;
+const locale = DEFAULT_LOCALE;
+const t: Dictionary = getDictionary(locale);
+
+const posts: PostCard[] = page.data.map((post: any) => ({
+  slug: post.id,
+  title: post.data.title,
+  description: post.data.description,
+  category: post.data.category,
+  publishDate: post.data.publishDate.toISOString().slice(0, 10),
+  author: post.data.author,
+}));
+
+// silence unused render import in this file
+void render;
+---
+
+<BaseLayout
+  title={page.currentPage > 1 ? `${t.meta.blogTitle} — Page ${page.currentPage}` : t.meta.blogTitle}
+  description={t.meta.blogDesc}
+  enPath={page.currentPage > 1 ? `blog/${page.currentPage}/` : 'blog/'}
+  locale={locale}
+  type="article"
+>
+  <BlogListBody
+    posts={posts}
+    t={{ readMore: t.blog.readMore, published: t.blog.published }}
+    locale={locale}
+    pageNum={page.currentPage}
+    totalPages={page.lastPage}
+    title="Chinese Gender Predictors: Guides, Charts & Honest Science"
+    subtitle="Charts, lunar math, old wives' tales and everything else worth knowing while you guess blue or pink."
+  />
+</BaseLayout>

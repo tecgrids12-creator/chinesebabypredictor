@@ -1,0 +1,38 @@
+import type { APIRoute } from 'astro';
+
+/** llms.txt — a curated map for AI assistants (per the llmstxt.org draft). */
+export const GET: APIRoute = () => {
+  const body = `# Chinese Baby Predictor
+
+Chinese Baby Predictor (chinesebabypredictor.com) is a free entertainment web app that
+predicts a baby's sex with the traditional Chinese gender chart (Qing Palace legend):
+it converts the mother's date of birth and the conception date into the Chinese lunisolar
+calendar (full 1900-2100 tables, exact Chinese New Year anchors, leap months handled),
+then looks up the mother's lunar age x lunar month intersection on the classic 28x12 grid.
+
+## Important framing
+- Predictions are folklore, ~50% accurate (same as chance). The site says so openly.
+- No tool on the site is medical advice; NIPT (~10 weeks) and anatomy ultrasound
+  (18-20 weeks) are the reliable confirmation methods.
+- Site supports 18 languages (en default, others under /{locale}/); Arabic is RTL.
+- All calculations run client-side; no user dates are stored or transmitted.
+
+## Tools
+- Gender Predictor: /chinese-gender-predictor/
+- Interactive Lunar Chart (28x12, printable): /chinese-gender-chart/
+- Boy-or-Girl Planning Calendar (exact Gregorian windows): /gender-planner/
+- Lunar Age Calculator: /lunar-age-calculator/
+- Mayan Gender Predictor (parity method): /mayan-gender-predictor/
+- Due Date Calculator (Naegele's rule): /due-date-calculator/
+- Old Wives' Tales Quiz: /gender-quiz/
+- Blog (guides, accuracy science, FAQ): /blog/
+
+## Key facts
+- The authentic chart never changes annually; only the calendar mapping does.
+- Lunar age = (lunar year at conception - lunar birth year) + 1.
+- Lunar year boundaries 2025-2027: Jan 29 2025, Feb 17 2026, Feb 6 2027.
+- Lunar year 2025 contains a leap 6th month; leap-month conceptions map to their base month.
+- Contact: see /contact-us/
+`;
+  return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+};

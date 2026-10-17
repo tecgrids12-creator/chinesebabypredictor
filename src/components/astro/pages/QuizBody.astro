@@ -1,0 +1,53 @@
+---
+import GenderQuiz from '@components/calculators/GenderQuiz.tsx';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import type { Dictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { t: Dictionary; locale: Locale; }
+const { t, locale } = Astro.props;
+
+const quizStrings = {
+  heading: t.quiz.heading, restart: t.quiz.restart, yes: 'Yes ✓', no: 'No ✗',
+  resultBoy: t.quiz.resultBoy, resultGirl: t.quiz.resultGirl,
+  share: t.cta.shareLink, disclaimer: t.common.entertainment, progress: 'Legend verdict',
+};
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-2">
+    <div>
+      <h1 class="font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
+        Old Wives' Tales <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">gender quiz</span>
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">
+        Cravings, belly position, the ring test, dreams… Answer 12 classic folklore clues and watch the verdict meter
+        tip toward Team Blue or Team Pink. Zero accuracy, maximum fun — perfect for family debates.
+      </p>
+      <div class="mt-6 rounded-3xl bg-boy-50/60 p-5 ring-1 ring-boy-100">
+        <p class="font-display font-bold text-plum-800">💡 How the scoring works</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">
+          Each "yes" leans one point toward the side the old wives promised. A 50/50 split means even the folklore can't
+          decide — the default family outcome. Pair it with the
+          <a href="/chinese-gender-predictor/" class="font-bold text-girl-600 hover:underline">Chinese predictor</a> for a full showdown.
+        </p>
+      </div>
+    </div>
+    <div class="lg:sticky lg:top-24"><GenderQuiz client:idle strings={quizStrings} /></div>
+  </div>
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom">
+      <h2>The tales, ranked by how often people believe them</h2>
+      <p>
+        The <a href="/blog/old-wives-tales-gender-prediction/">full myth list</a> covers twenty — but the heavy hitters are
+        <em>carrying low</em>, <em>salt vs. sweet cravings</em>, <em>morning-sickness severity</em> and the legendary
+        <em>ring on a string</em>. Science's verdict is uniform: no connection to a baby's sex. The one near-truth:
+        hyperemesis gravidarum (severe sickness) correlates very weakly with female fetuses in large datasets — far too
+        faintly to bet a nursery on.
+      </p>
+    </div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="gender-quiz/" />
+</div>

@@ -1,0 +1,65 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import { getDictionary } from '@i18n/translations';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const updated = '2026-01-10';
+---
+
+<BaseLayout
+  title="Privacy Policy — Chinese Baby Predictor"
+  description="How chinesebabypredictor.com handles data: all calculations run in your browser, contact-form handling, cookies, analytics and your rights."
+  enPath="privacy/"
+  locale={locale}
+>
+  <div class="pt-10">
+    <div class="section-shell prose-custom">
+      <h1 class="font-display !text-4xl font-extrabold !text-plum-900 sm:!text-5xl">Privacy Policy</h1>
+      <p class="text-sm text-plum-500">Last updated: {updated}</p>
+
+      <h2>The short version</h2>
+      <p>
+        <strong>We can't lose your dates because we never receive them.</strong> Every calculation on this site — predictor,
+        lunar age, planner, due date, quiz — runs entirely in your browser. Nothing you type into a tool is transmitted,
+        logged, stored or sold.
+      </p>
+
+      <h2>What stays in your browser</h2>
+      <p>
+        Date inputs feed short-lived client-side code and vanish when you close the tab. The optional "was it right?"
+        poll stores your answer in local storage for your feedback only.
+      </p>
+
+      <h2>Contact form</h2>
+      <p>
+        Messages you submit go through our <strong>Web3Forms-compatible</strong> processing endpoint. We receive your name,
+        email and message solely to reply. We never share, sell or mine them. Honeypot fields (a hidden input) deter
+        spam bots. Basic rate-limiting protects the endpoint. You can always email
+        hello@chinesebabypredictor.com directly.
+      </p>
+
+      <h2>Cookies & analytics</h2>
+      <p>
+        We use no advertising cookies and no cross-site trackers. If we enable aggregate analytics, it will be
+        cookie-less (counted events like "page viewed", never personal identifiers). Your language choice may persist
+        via local storage — never via tracking cookies.
+      </p>
+
+      <h2>Children's privacy</h2>
+      <p>
+        The site is for adults celebrating pregnancies; we don't knowingly collect data from anyone under 13/16
+        (jurisdiction-dependent), and the tools don't ask for identifying information in the first place.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        Under GDPR/CCPA-style laws you can request a copy or deletion of any contact-form correspondence — email us and
+        we'll confirm both actions. Since tool usage transmits nothing, there is nothing else to inspect or erase.
+      </p>
+
+      <h2>Changes</h2>
+      <p>Material updates change the date at the top. Questions? <a href="/contact-us/">Contact us</a>.</p>
+    </div>
+  </div>
+</BaseLayout>
