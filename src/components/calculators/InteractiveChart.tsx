@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { GENDER_CHART, CHART_MIN_AGE, CHART_MAX_AGE, type Gender } from '../../utils/genderChart';
 import { lunarNewYear, monthsDays, leapMonth, leapMonthDays } from '../../utils/lunar';
+import { GlossyHeart } from './Babies';
 import { fmtDate } from './ui';
 
 const MS_PER_DAY = 86_400_000;
@@ -80,8 +81,14 @@ export default function InteractiveChart({ strings, planYear }: { strings: Chart
     <div className="calculator-card p-4 sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2 text-sm font-bold">
-          <span className="chart-boy chip rounded-full px-3 py-1">🩵 {strings.legendBoy}: {counts.b}</span>
-          <span className="chart-girl chip rounded-full px-3 py-1">🩷 {strings.legendGirl}: {counts.g}</span>
+          <span className="chart-boy chip flex items-center gap-1.5 rounded-full px-3 py-1">
+            <GlossyHeart tone="blue" className="h-4 w-4 shrink-0" />
+            {strings.legendBoy}: {counts.b}
+          </span>
+          <span className="chart-girl chip flex items-center gap-1.5 rounded-full px-3 py-1">
+            <GlossyHeart tone="pink" className="h-4 w-4 shrink-0" />
+            {strings.legendGirl}: {counts.g}
+          </span>
         </div>
         <button
           type="button"
@@ -130,7 +137,13 @@ export default function InteractiveChart({ strings, planYear }: { strings: Chart
                             isSelected ? 'ring-2 ring-gold-500' : ''
                           }`}
                         >
-                          <span aria-hidden="true">{isGirl ? '👧' : '👦'}</span>
+                          <img
+                            src={isGirl ? '/baby-girl.svg' : '/baby-boy.svg'}
+                            alt=""
+                            aria-hidden="true"
+                            draggable={false}
+                            className="mx-auto h-6 w-6 select-none sm:h-7 sm:w-7"
+                          />
                         </button>
                       </td>
                     );
@@ -144,8 +157,14 @@ export default function InteractiveChart({ strings, planYear }: { strings: Chart
 
       {detail && (
         <div aria-live="polite" className="anim-pop mt-4 rounded-2xl bg-cream-100 p-4 text-center ring-1 ring-cream-200">
-          <p className="font-display text-lg font-extrabold text-plum-900">
-            {detail.gender === 'girl' ? '👧 ' : '👦 '}
+          <p className="flex flex-wrap items-center justify-center gap-1.5 font-display text-lg font-extrabold text-plum-900">
+            <img
+              src={detail.gender === 'girl' ? '/baby-girl.svg' : '/baby-boy.svg'}
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              className="h-7 w-7 select-none"
+            />
             {strings.agesLabel} {detail.age} · {strings.monthsLabel} {strings.months[detail.month - 1] ?? detail.month} →{' '}
             {detail.gender === 'girl' ? strings.legendGirl : strings.legendBoy}
           </p>

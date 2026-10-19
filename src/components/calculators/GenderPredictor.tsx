@@ -3,10 +3,12 @@ import type { FormEvent } from 'react';
 import { lunarAgeAtConception, chartGender, solarToLunar } from '../../utils';
 import { conceptionFromLmp, conceptionFromDueDate, westernZodiac } from '../../utils/gestation';
 import { burstConfetti } from './confetti';
+import { BabyFace, GlossyHeart } from './Babies';
 import { utcDate } from './ui';
 
 export interface PredictorStrings {
   dobLabel: string; dobHint: string;
+  modeHeading: string; eventHint: string;
   modeConception: string; modeDue: string; modeLmp: string;
   conceptionLabel: string; dueLabel: string; lmpLabel: string;
   predict: string; again: string;
@@ -122,8 +124,44 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
           </p>
         )}
 
-        <div className="calculator-inputs">
-          <div>
+        {/* Step 1 — option chooser, with its own heading so nothing floats unanchored */}
+        <div>
+          <p className="mb-2.5 flex items-center gap-2 font-display text-base font-extrabold text-plum-900">
+            <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>
+            {strings.modeHeading}
+          </p>
+          <div role="tablist" aria-label={strings.modeHeading} className="grid gap-1.5 sm:grid-cols-3">
+            {(
+              [
+                { id: 'conception', label: strings.modeConception },
+                { id: 'due', label: strings.modeDue },
+                { id: 'lmp', label: strings.modeLmp },
+              ] as const
+            ).map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={mode === tab.id}
+                onClick={() => {
+                  setMode(tab.id);
+                  setResult(null);
+                }}
+                className={`focusable w-full rounded-full px-3 py-2 text-xs font-bold transition-all sm:text-sm ${
+                  mode === tab.id
+                    ? 'bg-gradient-to-r from-plum-800 to-plum-600 text-white shadow-[0_10px_20px_-8px_rgba(122,47,136,.55)]'
+                    : 'bg-cream-100 text-plum-600 ring-1 ring-cream-200 hover:bg-girl-100 hover:text-plum-800'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Step 2 — the two dates in twin panels, so both columns always match */}
+        <div className="calculator-inputs mt-6">
+          <div className="rounded-3xl bg-white/55 p-4 shadow-sm ring-1 ring-white/70 transition-colors hover:bg-white/75">
             <label htmlFor="pred-dob" className="mb-1.5 block font-display text-sm font-bold text-plum-700">
               🎂 {strings.dobLabel}
             </label>
@@ -142,32 +180,7 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
             <p id="pred-dob-hint" className="mt-1.5 text-xs text-plum-500">{strings.dobHint}</p>
           </div>
 
-          <div>
-            <div className="mb-1.5 flex flex-wrap gap-1" role="tablist" aria-label={strings.conceptionLabel}>
-              {(
-                [
-                  { id: 'conception', label: strings.modeConception },
-                  { id: 'due', label: strings.modeDue },
-                  { id: 'lmp', label: strings.modeLmp },
-                ] as const
-              ).map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={mode === tab.id}
-                  onClick={() => {
-                    setMode(tab.id);
-                    setResult(null);
-                  }}
-                  className={`focusable rounded-full px-3 py-1.5 text-xs font-bold transition-colors ${
-                    mode === tab.id ? 'bg-plum-800 text-white' : 'bg-cream-100 text-plum-600 hover:bg-girl-100'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+          <div className="rounded-3xl bg-white/55 p-4 shadow-sm ring-1 ring-white/70 transition-colors hover:bg-white/75">
             <label htmlFor="pred-event" className="mb-1.5 block font-display text-sm font-bold text-plum-700">
               {mode === 'conception' ? '🌱' : mode === 'due' ? '⏳' : '🩸'} {activeLabel}
             </label>
@@ -180,11 +193,13 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
               value={eventDate}
               onChange={(e) => setEventDate(e.target.value)}
               className="focusable w-full rounded-2xl border-2 border-cream-200 bg-white px-4 py-3 text-plum-800 shadow-sm transition-colors hover:border-girl-300 [color-scheme:light]"
+              aria-describedby="pred-event-hint"
             />
+            <p id="pred-event-hint" className="mt-1.5 text-xs text-plum-500">{strings.eventHint}</p>
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <button type="submit" className="btn-primary text-base">
             <span aria-hidden="true">✨</span>
             {strings.predict}
@@ -195,7 +210,7 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
             </button>
           )}
         </div>
-        <p className="mt-4 text-xs font-semibold text-plum-500">🍼 {strings.disclaimer}</p>
+        <p className="mt-4 text-center text-xs font-semibold text-plum-500">🍼 {strings.disclaimer}</p>
       </form>
 
       {/* Result reveal */}
@@ -209,8 +224,13 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
             }`}
           >
             <p className="font-display text-sm font-bold uppercase tracking-widest opacity-90">{strings.resultHero}</p>
-            <div className="mt-3 text-7xl sm:text-8xl" role="img" aria-label={result.gender === 'boy' ? 'a boy' : 'a girl'}>
-              {result.gender === 'boy' ? '👶💙' : '👶💗'}
+            <div
+              className="mt-4 flex items-end justify-center gap-2 sm:gap-3"
+              role="img"
+              aria-label={result.gender === 'boy' ? 'a boy' : 'a girl'}
+            >
+              <BabyFace gender={result.gender} className="h-24 w-24 drop-shadow-lg sm:h-28 sm:w-28" />
+              <GlossyHeart tone={result.gender === 'boy' ? 'blue' : 'pink'} className="h-16 w-16 drop-shadow-lg sm:h-20 sm:w-20" />
             </div>
             <h3 className="mt-2 font-display text-3xl font-extrabold sm:text-4xl">
               {result.gender === 'boy' ? strings.boyTitle : strings.girlTitle}

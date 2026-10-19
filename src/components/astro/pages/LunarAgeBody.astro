@@ -25,7 +25,7 @@ const { t, locale } = Astro.props;
           ['🌗', 'Leap months included', 'Some lunar years have 13 months — we handle all of them.'],
         ].map(([emoji, title, text]) => (
           <div class="calculator-card flex items-start gap-4 p-4">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-cream-100 text-xl" aria-hidden="true">{emoji}</span>
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl text-xl" style="border: 1px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(120deg, rgba(238,90,151,.4), rgba(126,169,249,.45)) border-box; box-shadow: 0 6px 16px -8px rgba(122,47,136,.2);" aria-hidden="true">{emoji}</span>
             <span><strong class="font-display text-plum-900">{title}</strong><span class="mt-0.5 block text-sm text-plum-600">{text}</span></span>
           </div>
         ))}

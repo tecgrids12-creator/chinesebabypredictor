@@ -71,6 +71,8 @@ const en: Dictionary = {
     subheading: 'Two dates in, one guess out. The tool converts your dates into the lunar calendar exactly like the traditional chart does.',
     dobLabel: 'Mother’s date of birth',
     dobHint: 'Used to compute your traditional lunar age',
+    modeHeading: 'Choose an Option',
+    eventHint: 'Used to compute your lunar month of conception',
     modeConception: 'Conception date', modeDue: 'Baby’s due date', modeLmp: 'Last period started',
     conceptionLabel: 'Date of conception', dueLabel: 'Baby’s due date', lmpLabel: 'First day of last period',
     predict: 'Reveal my guess ✨', again: 'Try another date',
@@ -172,7 +174,7 @@ const hi: PartialDictionary = {
   predictor: {
     heading: 'चाइनीज़ गेंडर प्रेडिक्टर',
     subheading: 'दो तारीखें डालें, एक मजेदार जवाब पाएँ — आपकी तारीखें चंद्र कैलेंडर में बदली जाएंगी।',
-    dobLabel: 'माँ की जन्म तिथि', modeConception: 'गर्भधारण की तारीख', modeDue: 'बच्चे के आने की तारीख', modeLmp: 'पिछली एम.सी. का पहला दिन',
+    dobLabel: 'माँ की जन्म तिथि', modeHeading: 'विकल्प चुनें', eventHint: 'आपके चंद्र माह की गणना के लिए', modeConception: 'गर्भधारण की तारीख', modeDue: 'बच्चे के आने की तारीख', modeLmp: 'पिछली एम.सी. का पहला दिन',
     conceptionLabel: 'गर्भधारण की तारीख', dueLabel: 'संभावित डिलीवरी की तारीख', lmpLabel: 'पिछली एम.सी. का पहला दिन',
     predict: 'जवाब दिखाएँ ✨', again: 'दोबारा आज़माएँ', resultHero: 'चंद्र कैलेंडर का अनुमान…',
     lunarAge: 'चंद्र उम्र', lunarMonth: 'चंद्र महीना', zodiac: 'बच्चे की राशि',
@@ -215,7 +217,7 @@ const es: PartialDictionary = {
   predictor: {
     heading: 'Predictor Chino del Sexo del Bebé',
     subheading: 'Dos fechas dentro, una pista fuera: las convertimos al calendario lunar con precisión.',
-    dobLabel: 'Fecha de nacimiento de la madre', modeConception: 'Fecha de concepción', modeDue: 'Fecha probable del parto', modeLmp: 'Última regla',
+    dobLabel: 'Fecha de nacimiento de la madre', modeHeading: 'Elige una opción', eventHint: 'Se usa para calcular tu mes lunar', modeConception: 'Fecha de concepción', modeDue: 'Fecha probable del parto', modeLmp: 'Última regla',
     conceptionLabel: 'Fecha de concepción', dueLabel: 'Fecha probable de parto', lmpLabel: 'Primer día del último periodo',
     predict: '¡Revelar! ✨', again: 'Probar otra fecha', resultHero: 'El calendario lunar opina…',
     lunarAge: 'Edad lunar', lunarMonth: 'Mes lunar', zodiac: 'Zodiaco chino',
@@ -258,7 +260,7 @@ const ru: PartialDictionary = {
   predictor: {
     heading: 'Китайский Календарь Пола',
     subheading: 'Две даты — один весёлый ответ; даты переводятся в лунный календарь автоматически.',
-    dobLabel: 'Дата рождения мамы', modeConception: 'Дата зачатия', modeDue: 'Предполагаемая дата родов', modeLmp: 'Первый день последнего цикла',
+    dobLabel: 'Дата рождения мамы', modeHeading: 'Выберите вариант', eventHint: 'Нужен для расчёта вашего лунного месяца', modeConception: 'Дата зачатия', modeDue: 'Предполагаемая дата родов', modeLmp: 'Первый день последнего цикла',
     conceptionLabel: 'Дата зачатия', dueLabel: 'Предполагаемая дата родов', lmpLabel: 'Первый день последнего цикла',
     predict: 'Показать ✨', again: 'Попробовать другие даты', resultHero: 'Мнение лунного календаря…',
     lunarAge: 'Лунный возраст', lunarMonth: 'Лунный месяц', zodiac: 'Знак зодиака',
@@ -297,7 +299,7 @@ const fr: PartialDictionary = {
   },
   predictor: {
     heading: 'Prédicteur Chinois du Sexe du Bébé', subheading: 'Deux dates, une réponse amusante — conversion lunaire automatique.',
-    dobLabel: 'Date de naissance de la maman', modeConception: 'Date de conception', modeDue: 'Date prévue de l’accouchement', modeLmp: 'Dernières règles',
+    dobLabel: 'Date de naissance de la maman', modeHeading: 'Choisissez une option', eventHint: 'Sert à calculer votre mois lunaire', modeConception: 'Date de conception', modeDue: 'Date prévue de l’accouchement', modeLmp: 'Dernières règles',
     conceptionLabel: 'Date de conception', dueLabel: 'Date prévue du terme', lmpLabel: 'Premier jour des dernières règles',
     predict: 'Révéler ✨', again: 'Essayer d’autres dates', resultHero: 'Le calendrier lunaire pense…',
     lunarAge: 'Âge lunaire', lunarMonth: 'Mois lunaire', zodiac: 'Signe chinois',
@@ -336,7 +338,7 @@ const de: PartialDictionary = {
   },
   predictor: {
     heading: 'Chinesischer Geschlechtsrechner', subheading: 'Zwei Daten rein, eine Antwort raus — automatisch ins Mondjahr umgerechnet.',
-    dobLabel: 'Geburtsdatum der Mutter', modeConception: 'Zeugungsdatum', modeDue: 'Voraussichtlicher Entbindungstermin', modeLmp: 'Erster Tag der letzten Periode',
+    dobLabel: 'Geburtsdatum der Mutter', modeHeading: 'Wähle eine Option', eventHint: 'Wird zur Berechnung deines Mondmonats verwendet', modeConception: 'Zeugungsdatum', modeDue: 'Voraussichtlicher Entbindungstermin', modeLmp: 'Erster Tag der letzten Periode',
     conceptionLabel: 'Zeugungsdatum', dueLabel: 'Entbindungstermin', lmpLabel: 'Erster Tag der letzten Periode',
     predict: 'Aufdecken ✨', again: 'Neues Datum testen', resultHero: 'Der Mondkalender meint…',
     lunarAge: 'Mondalter', lunarMonth: 'Mondmonat', zodiac: 'Chinesisches Sternzeichen',

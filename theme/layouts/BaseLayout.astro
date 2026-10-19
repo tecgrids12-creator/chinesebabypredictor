@@ -1,8 +1,10 @@
 ---
-/** Base layout shared by every page (theme layout per master prompt). */
+/**
+ * Base layout shared by every page (theme layout per master prompt).
+ */
 import '@styles/global.css';
-import '@fontsource-variable/baloo-2';
-import '@fontsource-variable/nunito';
+import '@fontsource-variable/fredoka';
+import '@fontsource-variable/plus-jakarta-sans';
 import Seo from '@theme/components/Seo.astro';
 import Header from '@theme/components/Header.astro';
 import Footer from '@theme/components/Footer.astro';
@@ -43,12 +45,13 @@ const t: Dictionary = getDictionary(locale);
       schema={props.schema}
     />
   </head>
-  <body class="relative min-h-screen overflow-x-clip">
-    {/* decorative floating background blobs */}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div class="anim-blob absolute -top-24 -left-24 h-96 w-96 rounded-full bg-girl-100 opacity-70 blur-3xl"></div>
-      <div class="anim-blob absolute top-1/3 -right-32 h-[26rem] w-[26rem] rounded-full bg-boy-100 opacity-60 blur-3xl [animation-delay:-6s]"></div>
-      <div class="anim-blob absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-gold-400/10 opacity-50 blur-3xl [animation-delay:-12s]"></div>
+  <body class="relative min-h-screen">
+    {/* fixed gradient aurora layer (stays put while content scrolls) */}
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div class="anim-blob absolute -top-48 -left-48 h-[38rem] w-[38rem] rounded-full bg-gradient-to-br from-girl-200/80 via-girl-100/40 to-transparent blur-3xl"></div>
+      <div class="anim-blob absolute -right-56 top-1/4 h-[34rem] w-[34rem] rounded-full bg-gradient-to-bl from-boy-200/70 via-boy-100/30 to-transparent blur-3xl [animation-delay:-6s]"></div>
+      <div class="anim-blob absolute bottom-[-12rem] left-1/3 h-[30rem] w-[30rem] rounded-full bg-gradient-to-tr from-gold-400/20 via-girl-200/15 to-transparent blur-3xl [animation-delay:-12s]"></div>
+      <div class="anim-blob absolute top-2/3 -left-32 h-96 w-96 rounded-full bg-gradient-to-tr from-boy-100/60 to-transparent blur-3xl [animation-delay:-3s]"></div>
     </div>
 
     <a href="#main" class="skip-link">{t.common.skipToContent}</a>
@@ -60,8 +63,10 @@ const t: Dictionary = getDictionary(locale);
 
     <Footer t={t} locale={locale} />
 
-    {/* scroll reveal progressive enhancement */}
+    {/* scroll reveal + interactive pointer spotlight */}
     <script>
+      import { celebrateAt } from '@components/calculators/confetti';
+
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!prefersReduced) {
         const observer = new IntersectionObserver(
@@ -77,6 +82,36 @@ const t: Dictionary = getDictionary(locale);
         );
         document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
       }
+
+      // Interactive shadows: feed pointer position to card spotlights (+ tiny
+      // parallax tilt). --mx/--my are consumed by .calculator-card::before.
+      const spotlightables = Array.from(document.querySelectorAll<HTMLElement>('.calculator-card'));
+      const onMove = (e: PointerEvent) => {
+        const el = e.target instanceof Element ? e.target.closest('.calculator-card') : null;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+        el.style.setProperty('--my', `${e.clientY - rect.top}px`);
+      };
+      window.addEventListener('pointermove', onMove, { passive: true });
+
+      // Header shadow once the page scrolls
+      const header = document.getElementById('site-header');
+      const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // 🎉 Celebration: mini confetti burst under every main button press.
+      // Works for static links/buttons and React islands (delegated listener).
+      document.addEventListener('pointerdown', (e) => {
+        if (e.target instanceof Element) {
+          const btn = e.target.closest('.btn-primary, [data-celebrate]');
+          if (btn) {
+            const r = btn.getBoundingClientRect();
+            celebrateAt(r.left + r.width / 2, r.top + r.height / 2, 30);
+          }
+        }
+      });
     </script>
   </body>
 </html>

@@ -6,24 +6,32 @@ interface Props {
   titleAccent?: string;
   subtitle: string;
   trust?: string[];
-  emoji: string;
+  emoji?: string;
 }
-const { kicker, title, titleAccent, subtitle, trust, emoji } = Astro.props;
+const { kicker, title, titleAccent, subtitle, trust } = Astro.props;
+
+const trustDots = ['linear-gradient(120deg,#dd2175,#2c63e8)', 'linear-gradient(120deg,#f59e0b,#dd2175)', 'linear-gradient(120deg,#2c63e8,#f59e0b)'];
 ---
 
 <section class="section-shell pt-10 sm:pt-14">
   {kicker && (
     <p class="mb-3 inline-flex chip">
-      <span aria-hidden="true">✨</span>{kicker}
+      <span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>{kicker}
     </p>
   )}
   <h1 class="max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-plum-900 sm:text-5xl">
-    {title}{titleAccent && <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent"> {titleAccent}</span>}
+    {title}{titleAccent && <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent"> {titleAccent}</span>}
   </h1>
+  <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true"
+        style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221, 33, 117, 0.45);"></span>
   <p class="mt-4 max-w-2xl text-lg leading-relaxed text-plum-600">{subtitle}</p>
   {trust && (
     <div class="mt-5 flex flex-wrap gap-2">
-      {trust.map((item, i) => <span class="chip"><span aria-hidden="true">{['🎊', '🔒', '⚡'][i] ?? '✓'}</span>{item}</span>)}
+      {trust.map((item, i) => (
+        <span class="chip">
+          <span aria-hidden="true" class="h-2 w-2 rounded-full" style={`background-image:${trustDots[i] ?? 'linear-gradient(120deg,#dd2175,#2c63e8)'}`}></span>{item}
+        </span>
+      ))}
     </div>
   )}
 </section>

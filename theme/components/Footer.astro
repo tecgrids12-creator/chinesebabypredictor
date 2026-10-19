@@ -1,10 +1,11 @@
 ---
 /**
- * Site footer with sitemap-style link sections, entertainment disclaimer
- * and medical note (privacy-compliance section references it).
+ * Site footer: dark plum gradient panel with aurora glow, sitemap link
+ * sections, entertainment disclaimer and medical note.
  */
 import { localizedPath, type Locale, LOCALE_NAMES, SUPPORTED_LOCALES } from '@i18n/utils';
 import type { Dictionary } from '@i18n/translations';
+import Logo from '@theme/components/Logo.astro';
 
 interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
@@ -36,21 +37,33 @@ const legal = [
 ];
 ---
 
-<footer class="mt-20 border-t border-cream-200 bg-white">
-  <div class="section-shell grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
+<footer class="relative mt-24 overflow-hidden text-white">
+  {/* dark gradient shell + aurora glows */}
+  <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-plum-900 to-[#2b0333]"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-girl-500/20 blur-3xl"></div>
+    <div class="absolute -bottom-32 -right-20 h-[28rem] w-[28rem] rounded-full bg-boy-500/15 blur-3xl"></div>
+    <div class="absolute bottom-10 left-1/2 h-64 w-64 rounded-full bg-gold-400/10 blur-3xl"></div>
+  </div>
+
+  <div class="section-shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
     <div class="lg:col-span-2">
-      <a href={localizedPath('', locale)} class="focusable flex items-center gap-2.5" aria-label="Chinese Baby Predictor">
-        <span class="grid h-10 w-10 place-items-center rounded-2xl text-xl"
-              style="background-image: linear-gradient(135deg, var(--color-girl-400), var(--color-boy-400));">👶</span>
-        <span class="font-display text-lg font-extrabold text-plum-900">Chinese<span class="text-girl-500"> Baby</span> Predictor</span>
+      <a href={localizedPath('', locale)} class="focusable group flex w-fit items-center gap-2.5" aria-label="Chinese Baby Predictor">
+        <span class="transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110">
+          <Logo size={40} uid="footer" />
+        </span>
+        <span class="font-display text-lg font-extrabold text-white">
+          Chinese<span class="bg-gradient-to-r from-girl-400 to-boy-400 bg-clip-text text-transparent"> Baby</span> Predictor
+        </span>
       </a>
-      <p class="mt-4 max-w-sm text-sm leading-relaxed text-plum-600">{t.footer.tagline}</p>
-      <p class="mt-4 inline-flex chip" aria-label={t.common.entertainment}>
-        <span aria-hidden="true">🎁</span>{t.common.entertainment}
+      <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/65">{t.footer.tagline}</p>
+      <p class="mt-5 inline-flex rounded-full px-3.5 py-1.5 text-sm font-semibold text-white/85"
+         style="border: 1px solid transparent; background: linear-gradient(rgba(255,255,255,.08), rgba(255,255,255,.08)) padding-box, linear-gradient(120deg, rgba(238,90,151,.5), rgba(126,169,249,.5)) border-box;">
+        {t.common.entertainment}
       </p>
-      <p class="mt-4 text-xs text-plum-500">
+      <p class="mt-5 text-xs leading-relaxed text-white/50">
         {SUPPORTED_LOCALES.map((l, i) => (
-          <>{i > 0 ? ' · ' : ''}<a class="focusable hover:text-girl-500" href={localizedPath('', l)}>{LOCALE_NAMES[l].native}</a></>
+          <>{i > 0 ? ' · ' : ''}<a class="focusable transition-colors hover:text-girl-300" href={localizedPath('', l)}>{LOCALE_NAMES[l].native}</a></>
         ))}
       </p>
     </div>
@@ -62,16 +75,23 @@ const legal = [
       { title: t.footer.legal, links: legal },
     ].map((col) => (
       <nav aria-label={col.title}>
-        <h2 class="font-display text-sm font-extrabold uppercase tracking-wider text-plum-400">{col.title}</h2>
-        <ul class="mt-3 space-y-2 text-sm text-plum-700">
-          {col.links.map((l) => <li><a class="focusable transition-colors hover:text-girl-500" href={l.href}>{l.label}</a></li>)}
+        <h2 class="font-display text-xs font-extrabold uppercase tracking-[0.14em] text-white/45">{col.title}</h2>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/80">
+          {col.links.map((l) => (
+            <li>
+              <a class="focusable group inline-flex items-center gap-2 transition-colors hover:text-white" href={l.href}>
+                <span aria-hidden="true" class="h-1 w-1 rounded-full bg-girl-400/60 transition-all group-hover:w-3 group-hover:bg-girl-400"></span>
+                {l.label}
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
     ))}
   </div>
 
-  <div class="border-t border-cream-200 bg-cream-100">
-    <div class="section-shell flex flex-col gap-2 py-5 text-center text-xs leading-relaxed text-plum-500 sm:flex-row sm:items-center sm:justify-between sm:text-left">
+  <div class="border-t border-white/10 bg-white/5">
+    <div class="section-shell flex flex-col gap-2 py-5 text-center text-xs leading-relaxed text-white/55 sm:flex-row sm:items-center sm:justify-between sm:text-left">
       <p>© {new Date().getFullYear()} Chinese Baby Predictor · chinesebabypredictor.com</p>
       <p class="sm:max-w-xl">{t.footer.disclaimer}</p>
     </div>

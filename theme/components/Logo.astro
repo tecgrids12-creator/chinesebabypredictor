@@ -1,0 +1,22 @@
+---
+/**
+ * Brand logo: the Vecteezy minimalist cute-baby mark (sitting baby hugging a
+ * heart, sunshine hair, sitting on the pink shadow), re-tinted to the brand
+ * palette (deep-purple ink #45024F, brand pinks). Served as a cached asset,
+ * so pages stay light when the logo repeats in header + footer.
+ * `uid` is kept for API compatibility (flat static art, no per-instance ids).
+ */
+interface Props { size?: number; uid?: string; class?: string; }
+const { size = 40, uid = 'primary', class: cls = '' } = Astro.props;
+uid;
+---
+
+<img
+  src="/baby-logo.svg"
+  width={size}
+  height={size}
+  alt=""
+  aria-hidden="true"
+  draggable="false"
+  class={`shrink-0 ${cls}`}
+/>

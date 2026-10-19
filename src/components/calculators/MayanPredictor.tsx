@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { mayanGender } from '../../utils/mayan';
 import { westernZodiac } from '../../utils/gestation';
 import { burstConfetti } from './confetti';
+import { BabyBoy, BabyGirl, GlossyHeart } from './Babies';
 import { utcDate } from './ui';
 
 export interface MayanStrings {
@@ -74,7 +75,12 @@ export default function MayanPredictor({ strings }: { strings: MayanStrings }) {
           <div className={`anim-pop mt-6 rounded-3xl p-6 text-center text-white shadow-lift ${
             result.gender === 'boy' ? 'bg-gradient-to-br from-boy-500 to-boy-400' : 'bg-gradient-to-br from-girl-500 to-girl-400'
           }`}>
-            <div className="text-6xl" aria-hidden="true">{result.gender === 'boy' ? '👦' : '👧'}</div>
+            <div aria-hidden="true" className="flex items-end justify-center gap-2">
+              {result.gender === 'boy'
+                ? <BabyBoy className="h-32 w-32 drop-shadow-lg sm:h-36 sm:w-36" />
+                : <BabyGirl className="h-32 w-32 drop-shadow-lg sm:h-36 sm:w-36" />}
+              <GlossyHeart tone={result.gender === 'boy' ? 'blue' : 'pink'} className="h-14 w-14 drop-shadow-lg" />
+            </div>
             <h3 className="mt-2 font-display text-2xl font-extrabold">{result.gender === 'boy' ? strings.boyTitle : strings.girlTitle}</h3>
             <p className="mt-2 text-sm font-bold opacity-90">
               {strings.ageLabel}: {result.age} · {strings.yearLabel}: {result.year} · {strings.parity}:{' '}

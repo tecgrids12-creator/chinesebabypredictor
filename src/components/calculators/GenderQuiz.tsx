@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { burstConfetti } from './confetti';
+import { BabyBoy, BabyGirl, GlossyHeart } from './Babies';
 
 export interface QuizStrings {
   heading: string;
@@ -60,7 +61,12 @@ export default function GenderQuiz({ strings }: { strings: QuizStrings }) {
     burstConfetti(guessed ?? 'boy');
     return (
       <div className={`calculator-card p-8 text-center ${isBoy ? 'ring-2 ring-boy-200' : 'ring-2 ring-girl-200'}`}>
-        <p className="text-6xl" aria-hidden="true">{isBoy ? '🩵' : '🩷'}</p>
+        <div aria-hidden="true" className="flex items-end justify-center gap-2">
+          {isBoy
+            ? <BabyBoy className="h-32 w-32 drop-shadow-lg" />
+            : <BabyGirl className="h-32 w-32 drop-shadow-lg" />}
+          <GlossyHeart tone={isBoy ? 'blue' : 'pink'} className="h-14 w-14 drop-shadow-lg" />
+        </div>
         <h3 className="mt-3 font-display text-3xl font-extrabold text-plum-900">
           {pct}% {isBoy ? strings.resultBoy : strings.resultGirl}
         </h3>
