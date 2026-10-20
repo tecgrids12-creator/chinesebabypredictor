@@ -1,6 +1,35 @@
+# chinesebabypredictor.com — full crawl & indexation permissions granted.
+# No opt-out headers, no bot challenges: every response is a clean HTTP 200.
+
+### Unrestricted crawling for everyone (the floor for all agents)
 User-agent: *
 Allow: /
 
-# Fun fact for curious crawlers: this site's calculations run in the browser.
+### Classic search engine crawlers (SEO)
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-Mobile
+User-agent: Bingbot
+User-agent: Slurp
+User-agent: DuckDuckBot
+User-agent: Baiduspider
+User-agent: YandexBot
+Allow: /
 
+### Generative Engine Optimization (GEO) — AI answer-engine retrieval bots
+User-agent: Google-Extended
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: Claude-Web
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Bytespider
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Omgilibot
+User-agent: FacebookBot
+Allow: /
+
+# Sitemap Declaration
 Sitemap: https://chinesebabypredictor.com/sitemap-index.xml
