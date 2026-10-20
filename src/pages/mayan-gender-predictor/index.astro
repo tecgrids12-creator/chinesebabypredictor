@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
-import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
 import MayanBody from '@components/astro/pages/MayanBody.astro';
 import { getDictionary } from '@i18n/translations';
 import { alternatePaths } from '@i18n/utils';
@@ -14,8 +13,8 @@ const t = getDictionary(locale);
   description={t.meta.mayanDesc}
   enPath="mayan-gender-predictor/"
   locale={locale}
+  crumbs={[{ label: t.nav.mayan }]},
   alternates={alternatePaths('mayan-gender-predictor/')}
 >
-  <Breadcrumbs crumbs={[{ label: t.nav.mayan }]} locale={locale} t={t} />
   <MayanBody t={t} locale={locale} />
 </BaseLayout>

@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
 import TtcPlannerBody from '@components/astro/pages/TtcPlannerBody.astro';
-import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
 import { getDictionary } from '@i18n/translations';
 import { webAppSchema, faqPageSchema } from '@utils/schema';
 import { TTC_FAQ } from '@content/data/editorial';
@@ -17,11 +16,11 @@ const description = 'Plan your pregnancy with our free Chinese Gender TTC Planne
   description={description}
   enPath="chinese-gender-planner-ttc/"
   locale={locale}
+  crumbs={[{ label: 'TTC Gender Planner' }]},
   schema={[
     webAppSchema({ name: 'Chinese Gender Planner (TTC)', path: 'chinese-gender-planner-ttc/', description }),
     faqPageSchema(TTC_FAQ),
   ]}
 >
-  <Breadcrumbs crumbs={[{ label: 'Home', href: '/' }, { label: 'TTC Gender Planner' }]} locale={locale} t={t} />
   <TtcPlannerBody t={t} />
 </BaseLayout>

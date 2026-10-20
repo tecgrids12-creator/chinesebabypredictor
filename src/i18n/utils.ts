@@ -64,6 +64,17 @@ export function localizedPath(path: string, locale: Locale): string {
   return clean === '' ? `/${locale}/` : `/${locale}/${clean}`;
 }
 
+/**
+ * Routes that exist only in EN (legal pages, the TTC planner, blog posts).
+ * A localized href to them would 404 — they always resolve to the EN canonical
+ * URL so internal links stay do-follow, redirect-free and unbroken (GEO web).
+ */
+const EN_ONLY_PATH = /^(about-us|contact-us|sitemap|privacy|terms|chinese-gender-planner-ttc)\//;
+export function safeLocalizedPath(path: string, locale: Locale): string {
+  if (EN_ONLY_PATH.test(path) || /^blog\/.+/.test(path)) return localizedPath(path, 'en');
+  return localizedPath(path, locale);
+}
+
 /** List of canonical alternates for hreflang/sitemap use. */
 export function alternatePaths(path: string): Array<{ hreflang: string; href: string }> {
   return SUPPORTED_LOCALES.map((loc) => ({

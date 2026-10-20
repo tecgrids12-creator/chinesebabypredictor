@@ -1,0 +1,72 @@
+---
+/**
+ * GEO entity web · "Related Lunar Profiles & Quick Navigation" cluster module.
+ * Rendered sitewide by BaseLayout (bottom of every article), giving each of the
+ * 185 pages four curated vertical + lateral exits: the main calculator, the TTC
+ * planner, the full chart, and the empirical study section.
+ * Tool routes are locale-aware; the TTC planner is an EN-only route and always
+ * links to its canonical EN URL (zero redirects / zero 404s).
+ */
+import type { Locale } from '@i18n/utils';
+import { localizedPath } from '@i18n/utils';
+
+interface Props { locale?: Locale; }
+const locale = Astro.props.locale ?? 'en';
+const H = (p: string) => (p === 'chinese-gender-planner-ttc/' ? '/chinese-gender-planner-ttc/' : localizedPath(p, locale));
+
+const hub = [
+  {
+    key: 'root',
+    href: H(''),
+    icon: '🏠',
+    label: 'Chinese Baby Predictor',
+    desc: 'Main calculator — the primary lunar gender engine',
+    title: 'Chinese Baby Predictor — main lunar gender calculator',
+  },
+  {
+    key: 'ttc',
+    href: H('chinese-gender-planner-ttc/'),
+    icon: '🗓️',
+    label: 'TTC Conception Calendar',
+    desc: 'Plan a boy or girl across a 12–24 month horizon',
+    title: 'Chinese gender TTC planner — 2026–2028 conception windows',
+  },
+  {
+    key: 'chart',
+    href: H('chinese-gender-chart/'),
+    icon: '📊',
+    label: 'Full 28×12 Lunar Chart',
+    desc: 'The complete interactive Qing Palace matrix',
+    title: 'Interactive 28×12 lunar gender chart — full matrix',
+  },
+  {
+    key: 'science',
+    href: `${H('')}#study-title`,
+    icon: '🔬',
+    label: 'Science & Accuracy',
+    desc: 'Folklore vs. the 2.8M-birth registry study',
+    title: '2010 Swedish population registry study — folklore vs. empirical evidence',
+  },
+] as const;
+---
+
+<section id="cluster-hub" class="section-shell mt-16" aria-labelledby="cluster-hub-title">
+  <h2 id="cluster-hub-title" class="font-display text-center text-xl font-extrabold tracking-tight text-plum-900 sm:text-2xl">
+    Related Lunar Profiles &amp; Quick Navigation
+  </h2>
+  <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    {hub.map((item) => (
+      <a
+        href={item.href}
+        data-hub={item.key}
+        title={item.title}
+        aria-label={item.title}
+        class="reveal calculator-card group block p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lift"
+      >
+        <p class="text-2xl" aria-hidden="true">{item.icon}</p>
+        <p class="mt-1.5 font-display font-bold leading-snug text-plum-900 transition-colors group-hover:text-girl-600">{item.label}</p>
+        <p class="mt-1 text-xs leading-relaxed text-plum-500">{item.desc}</p>
+      </a>
+    ))}
+  </div>
+</section>

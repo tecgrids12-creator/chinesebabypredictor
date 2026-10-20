@@ -38,6 +38,7 @@ const strings = {
   invalid: 'Please pick the mother’s date of birth first.',
   matrixNote: 'Authentic 1900–2100 lunisolar tables · Qing Palace 28×12 chart (lunar ages 18–45) · leap months (Runyue) follow the traditional half-month rule: days 1–15 → month N, days 16+ → month N+1.',
 };
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
 <div class="pt-10">
@@ -61,6 +62,7 @@ const strings = {
     </div>
     <div class="min-h-[480px]"><TtcPlanner client:idle strings={strings} /></div>
   </section>
+  <GeoLeadLinks />
 
   {/* ── How to use (3 steps) ───────────────────────────────────────────── */}
   <section class="section-shell mt-20 reveal" aria-labelledby="ttc-how-title">
@@ -185,4 +187,5 @@ const strings = {
     <span class="title-dash" aria-hidden="true"></span>
     <div class="mt-8"><FaqAccordion items={TTC_FAQ} /></div>
   </section>
+
 </div>

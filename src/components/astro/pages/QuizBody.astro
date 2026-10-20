@@ -12,6 +12,7 @@ const quizStrings = {
   resultBoy: t.quiz.resultBoy, resultGirl: t.quiz.resultGirl,
   share: t.cta.shareLink, disclaimer: t.common.entertainment, progress: 'Legend verdict',
 };
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
 <div class="pt-10">
@@ -48,6 +49,7 @@ const quizStrings = {
       </p>
     </div>
   </section>
+  <GeoLeadLinks />
 
   <RelatedTools t={t} locale={locale} exclude="gender-quiz/" />
 </div>

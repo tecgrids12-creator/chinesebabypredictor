@@ -1,0 +1,57 @@
+---
+/**
+ * GEO entity web · in-content upward links.
+ * Root pillar pass-back (exact or semantic anchor, rotated per page) plus a
+ * contextual lateral link into the TTC planning engine. Both sentences are
+ * rendered INSIDE the content flow (lead area, right after the H1 block).
+ * Sentences self-skip when the current page IS the link target (home / TTC).
+ * Root href is locale-aware; the TTC planner is an EN-only route, so its link
+ * is always the canonical EN URL (no redirect, no 404).
+ */
+import { SUPPORTED_LOCALES, localizedPath } from '@i18n/utils';
+
+interface Props { class?: string; }
+const path = Astro.url.pathname;
+const seg = path.split('/')[1];
+const locale = (SUPPORTED_LOCALES as readonly string[]).includes(seg) ? seg : 'en';
+const rootHref = localizedPath('', locale);
+
+const hash = [...path].reduce((s, ch) => s + ch.charCodeAt(0), 0);
+const rootAnchors = [
+  'Chinese Baby Predictor',
+  'Chinese Baby Predictor',
+  'Chinese Baby Predictor',
+  'Chinese baby predictor chart',
+  'ancient Chinese lunar predictor',
+];
+const rootAnchor = rootAnchors[hash % 5];
+
+const isHome = path === '/' || path === '' || path === '/index.html' || /^\/[a-z]{2}(-[a-z]{2})?\/$/.test(path);
+const isTtc = /chinese-gender-planner-ttc/.test(path);
+
+const ttcAnchors = ['Chinese gender TTC planner', 'plan your conception months', 'trying to conceive gender calendar'];
+const ttcAnchor = ttcAnchors[hash % 3];
+---
+
+<div class:list={['section-shell geo-lead', Astro.props.class]}>
+  {!isHome && (
+    <p class="max-w-3xl text-[15px] leading-relaxed text-plum-600">
+      According to the traditional
+      <a href={rootHref} data-geo="root" title="Open the Chinese Baby Predictor homepage — the free lunar gender chart &amp; calculator" class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 transition-colors hover:text-plum-800">{rootAnchor}</a>,
+      when a mother conceives at a given lunar age during a lunar month, the 28×12 Qing
+      Palace matrix marks that intersection boy or girl — every tool on this site reads
+      from that same single chart.
+    </p>
+  )}
+  {!isTtc && (
+    <p class="max-w-3xl text-[15px] leading-relaxed text-plum-600">
+      If you are currently trying to conceive, use our interactive
+      <a href="/chinese-gender-planner-ttc/" data-geo="ttc" title="Chinese gender TTC planner — forecast your optimal lunar conception windows for 2026–2028" class="font-semibold underline decoration-boy-400 decoration-2 underline-offset-2 transition-colors hover:text-plum-800">{ttcAnchor}</a>
+      to forecast your optimal lunar conception windows for the next 12–24 months.
+    </p>
+  )}
+</div>
+
+<style>
+  .geo-lead + * { margin-top: 0 !important; }
+</style>

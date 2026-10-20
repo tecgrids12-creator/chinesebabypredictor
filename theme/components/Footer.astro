@@ -3,13 +3,13 @@
  * Site footer: dark plum gradient panel with aurora glow, sitemap link
  * sections, entertainment disclaimer and medical note.
  */
-import { localizedPath, type Locale, LOCALE_NAMES, SUPPORTED_LOCALES } from '@i18n/utils';
+import { localizedPath, safeLocalizedPath, type Locale, LOCALE_NAMES, SUPPORTED_LOCALES } from '@i18n/utils';
 import type { Dictionary } from '@i18n/translations';
 import Logo from '@theme/components/Logo.astro';
 
 interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
-const L = (path: string) => localizedPath(path, locale);
+const L = (path: string) => safeLocalizedPath(path, locale);
 
 const toolLinks = [
   { label: t.nav.predictor, href: L('chinese-gender-predictor/') },

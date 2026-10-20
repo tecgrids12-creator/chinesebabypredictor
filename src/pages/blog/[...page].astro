@@ -35,6 +35,7 @@ void render;
   enPath={page.currentPage > 1 ? `blog/${page.currentPage}/` : 'blog/'}
   locale={locale}
   type="article"
+  crumbs={page.currentPage > 1 ? [{ label: 'Blog', href: 'blog/' }, { label: `Page ${page.currentPage}` }] : [{ label: 'Blog' }]}
 >
   <BlogListBody
     posts={posts}

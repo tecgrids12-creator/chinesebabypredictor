@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
 import { getDictionary } from '@i18n/translations';
 import { localizedPath } from '@i18n/utils';
@@ -27,7 +28,13 @@ const posts = (await getCollection('blog')).sort((a, b) => Number(b.data.publish
 const locales = ['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms', 'pl', 'id', 'ar', 'bg', 'tr', 'sv'];
 ---
 
-<BaseLayout title="HTML Sitemap — All Pages" description="Every page and tool on chinesebabypredictor.com at a glance." enPath="sitemap/" locale={locale}>
+<BaseLayout
+  title="HTML Sitemap — All Pages"
+  description="Every page and tool on chinesebabypredictor.com at a glance."
+  enPath="sitemap/"
+  locale={locale}
+  crumbs={[{ label: 'Sitemap' }]}
+>
   <div class="pt-10">
     <div class="section-shell">
       <h1 class="font-display text-4xl font-extrabold text-plum-900 sm:text-5xl">Sitemap</h1>
@@ -42,6 +49,7 @@ const locales = ['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms
             ))}
           </ul>
         </section>
+  <GeoLeadLinks />
         <section class="calculator-card p-6">
           <h2 class="font-display text-xl font-bold text-plum-900">Guides ({posts.length})</h2>
           <ul class="mt-3 space-y-2 text-sm">
@@ -50,6 +58,7 @@ const locales = ['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms
             ))}
           </ul>
         </section>
+
       </div>
 
       <section class="calculator-card mt-6 p-6">
@@ -60,6 +69,7 @@ const locales = ['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms
           ))}
         </ul>
       </section>
+
     </div>
   </div>
 </BaseLayout>

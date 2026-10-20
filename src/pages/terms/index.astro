@@ -1,4 +1,5 @@
 ---
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
 import { getDictionary } from '@i18n/translations';
 
@@ -12,10 +13,12 @@ const updated = '2026-01-10';
   description="The terms of using chinesebabypredictor.com: entertainment-only predictions, no medical advice, intellectual property and acceptable use."
   enPath="terms/"
   locale={locale}
+  crumbs={[{ label: 'Terms of Use' }]},
 >
   <div class="pt-10">
     <div class="section-shell prose-custom">
       <h1 class="font-display !text-4xl font-extrabold !text-plum-900 sm:!text-5xl">Terms of Service</h1>
+  <GeoLeadLinks />
       <p class="text-sm text-plum-500">Last updated: {updated}</p>
 
       <h2>1. Entertainment only</h2>

@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
-import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 import RelatedTools from '@theme/components/RelatedTools.astro';
 import { getDictionary } from '@i18n/translations';
 import { articleSchema } from '@utils/schema';
@@ -32,6 +32,7 @@ const dateStr = post.data.publishDate.toISOString().slice(0, 10);
   description={post.data.description}
   enPath={`blog/${post.id}/`}
   locale={locale}
+  crumbs={[{ label: 'Blog', href: 'blog/' }, { label: post.data.title }]},
   type="article"
   publishedTime={new Date(post.data.publishDate).toISOString()}
   schema={articleSchema({
@@ -52,6 +53,7 @@ const dateStr = post.data.publishDate.toISOString().slice(0, 10);
         <span>{post.data.author}</span>
       </div>
     </header>
+    <GeoLeadLinks />
 
     <div class="section-shell mt-8">
       <div class="calculator-card p-6 sm:p-10">

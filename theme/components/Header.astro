@@ -2,7 +2,7 @@
 /**
  * Accessible sticky site header with mobile menu and language switcher.
  */
-import { localizedPath, LOCALE_NAMES, SUPPORTED_LOCALES, type Locale } from '@i18n/utils';
+import { safeLocalizedPath, LOCALE_NAMES, SUPPORTED_LOCALES, type Locale } from '@i18n/utils';
 import type { Dictionary } from '@i18n/translations';
 import Logo from '@theme/components/Logo.astro';
 
@@ -10,15 +10,15 @@ interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
 
 const nav = [
-  { label: t.nav.predictor, href: localizedPath('chinese-gender-predictor/', locale) },
-  { label: t.nav.chart, href: localizedPath('chinese-gender-chart/', locale) },
-  { label: t.nav.planner, href: localizedPath('gender-planner/', locale) },
-  { label: 'TTC Planner', href: localizedPath('chinese-gender-planner-ttc/', locale) },
-  { label: t.nav.lunarAge, href: localizedPath('lunar-age-calculator/', locale) },
-  { label: t.nav.mayan, href: localizedPath('mayan-gender-predictor/', locale) },
-  { label: t.nav.dueDate, href: localizedPath('due-date-calculator/', locale) },
-  { label: t.nav.quiz, href: localizedPath('gender-quiz/', locale) },
-  { label: t.nav.blog, href: localizedPath('blog/', locale) },
+  { label: t.nav.predictor, href: safeLocalizedPath('chinese-gender-predictor/', locale) },
+  { label: t.nav.chart, href: safeLocalizedPath('chinese-gender-chart/', locale) },
+  { label: t.nav.planner, href: safeLocalizedPath('gender-planner/', locale) },
+  { label: 'TTC Planner', href: safeLocalizedPath('chinese-gender-planner-ttc/', locale) },
+  { label: t.nav.lunarAge, href: safeLocalizedPath('lunar-age-calculator/', locale) },
+  { label: t.nav.mayan, href: safeLocalizedPath('mayan-gender-predictor/', locale) },
+  { label: t.nav.dueDate, href: safeLocalizedPath('due-date-calculator/', locale) },
+  { label: t.nav.quiz, href: safeLocalizedPath('gender-quiz/', locale) },
+  { label: t.nav.blog, href: safeLocalizedPath('blog/', locale) },
 ];
 ---
 
@@ -47,7 +47,7 @@ const nav = [
       </div>
 
       {/* centered brand */}
-      <a href={localizedPath('', locale)} class="focusable group flex items-center gap-2 sm:gap-2.5" aria-label="Chinese Baby Predictor — home">
+      <a href={safeLocalizedPath('', locale)} class="focusable group flex items-center gap-2 sm:gap-2.5" aria-label="Chinese Baby Predictor — home">
         <span class="transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110 group-active:scale-95">
           <Logo size={42} uid="header" class="h-9 w-9 sm:h-[42px] sm:w-[42px]" />
         </span>
@@ -59,7 +59,7 @@ const nav = [
       {/* right slot: quiz CTA + mobile burger */}
       <div class="flex items-center justify-end gap-2">
         <div class="hidden md:block">
-          <a href={localizedPath('gender-quiz/', locale)} class="focusable rounded-full btn-md font-semibold transition btn-secondary text-xs lg:text-sm">
+          <a href={safeLocalizedPath('gender-quiz/', locale)} class="focusable rounded-full btn-md font-semibold transition btn-secondary text-xs lg:text-sm">
             {t.nav.quiz}
           </a>
         </div>

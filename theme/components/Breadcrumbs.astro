@@ -22,7 +22,8 @@ const jsonLd = {
 ---
 
 <nav aria-label="Breadcrumb" class="section-shell mb-6 flex flex-wrap items-center gap-1.5 text-sm text-plum-500">
-  <a href={localizedPath('', locale)} class="focusable font-semibold transition-colors hover:text-girl-500">{t.nav.predictor}</a>
+  {/* Critical rule: the root crumb is always the exact primary entity anchor. */}
+  <a href={localizedPath('', locale)} class="focusable font-semibold transition-colors hover:text-girl-500" title="Chinese Baby Predictor — free lunar gender chart & calculator">Chinese Baby Predictor</a>
   {crumbs.map((c) => (
     <>
       <span aria-hidden="true">›</span>

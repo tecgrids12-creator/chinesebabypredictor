@@ -9,6 +9,8 @@ import Seo from '@theme/components/Seo.astro';
 import Header from '@theme/components/Header.astro';
 import Footer from '@theme/components/Footer.astro';
 import TrustCard from '@theme/components/TrustCard.astro';
+import Breadcrumbs, { type Crumb } from '@theme/components/Breadcrumbs.astro';
+import ClusterHub from '@theme/components/ClusterHub.astro';
 import { getDir, getLangTag, DEFAULT_LOCALE, type Locale } from '@i18n/utils';
 import { getDictionary, type Dictionary } from '@i18n/translations';
 
@@ -21,6 +23,8 @@ export interface Props {
   image?: string;
   publishedTime?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
+  /** Sitewide GEO entity web: automatic breadcrumb trail + BreadcrumbList JSON-LD. */
+  crumbs?: Crumb[];
 }
 
 const props = Astro.props;
@@ -62,10 +66,14 @@ const t: Dictionary = getDictionary(locale);
       {/* Every page's self-contained content is an <article> (article > section
           > h2/h3), so answer engines can lift blocks cleanly. */}
       <article class="relative">
+        {/* Automated breadcrumb trail + BreadcrumbList JSON-LD (entity web root). */}
+        {props.crumbs?.length ? <Breadcrumbs crumbs={props.crumbs} locale={locale} t={t} /> : null}
         <slot />
       </article>
     </main>
 
+    {/* Horizontal sibling / topical cluster hub (GEO entity web). */}
+    <ClusterHub locale={locale} />
     <TrustCard />
     <Footer t={t} locale={locale} />
 

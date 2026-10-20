@@ -10,6 +10,7 @@ import type { Locale } from '@i18n/utils';
 interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
 const predictorStrings = { ...t.predictor, copy: t.cta.copy, copied: t.cta.copied, shareLink: t.cta.shareLink };
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
 <div class="pt-10">
@@ -50,6 +51,7 @@ const predictorStrings = { ...t.predictor, copy: t.cta.copy, copied: t.cta.copie
       ))}
     </div>
   </section>
+  <GeoLeadLinks />
 
   <section class="section-shell mt-14">
     <div class="prose-custom">

@@ -15,7 +15,6 @@ import LunarAgeBody from '@components/astro/pages/LunarAgeBody.astro';
 import MayanBody from '@components/astro/pages/MayanBody.astro';
 import DueDateBody from '@components/astro/pages/DueDateBody.astro';
 import QuizBody from '@components/astro/pages/QuizBody.astro';
-import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
 import BlogListBody, { type PostCard } from '@components/astro/pages/BlogListBody.astro';
 import { getDictionary } from '@i18n/translations';
 import { SUPPORTED_LOCALES, alternatePaths, type Locale } from '@i18n/utils';
@@ -99,6 +98,7 @@ const crumbs = tool ? [{ label: t.nav[NAV_KEY_BY_SLUG[tool] ?? 'blog'] }] : [];
   description={current.description}
   enPath={enPath}
   locale={locale}
+  crumbs={crumbs},
   alternates={alternates}
   schema={current.schema as Record<string, unknown>[]}
 >
@@ -106,49 +106,42 @@ const crumbs = tool ? [{ label: t.nav[NAV_KEY_BY_SLUG[tool] ?? 'blog'] }] : [];
 
   {tool === 'chinese-gender-predictor' && (
     <>
-      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
       <PredictorBody t={t} locale={locale} />
     </>
   )}
 
   {tool === 'chinese-gender-chart' && (
     <>
-      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
       <ChartBody t={t} locale={locale} />
     </>
   )}
 
   {tool === 'gender-planner' && (
     <>
-      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
       <PlannerBody t={t} locale={locale} />
     </>
   )}
 
   {tool === 'lunar-age-calculator' && (
     <>
-      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
       <LunarAgeBody t={t} locale={locale} />
     </>
   )}
 
   {tool === 'mayan-gender-predictor' && (
     <>
-      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
       <MayanBody t={t} locale={locale} />
     </>
   )}
 
   {tool === 'due-date-calculator' && (
     <>
-      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
       <DueDateBody t={t} locale={locale} />
     </>
   )}
 
   {tool === 'gender-quiz' && (
     <>
-      <Breadcrumbs crumbs={crumbs} locale={locale} t={t} />
       <QuizBody t={t} locale={locale} />
     </>
   )}

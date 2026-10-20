@@ -18,6 +18,7 @@ const chartStrings = {
   boy: t.chart.legendBoy, girl: t.chart.legendGirl, windowLabel: 'Dates', lunarYearLabel: 'year', leapNote: 'Leap months are mapped to their base month and marked on results.',
 };
 
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
 <div class="pt-10">
@@ -30,6 +31,7 @@ const chartStrings = {
     </p>
     <div class="mt-8"><InteractiveChart client:idle strings={chartStrings} /></div>
   </section>
+  <GeoLeadLinks />
 
   <section class="section-shell mt-14">
     <div class="prose-custom">
