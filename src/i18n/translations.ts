@@ -24,8 +24,8 @@ export interface Dictionary {
 
 const en: Dictionary = {
   meta: {
-    homeTitle: 'Chinese Gender Predictor & Baby Gender Calendar 2026 | Boy or Girl?',
-    homeDesc: 'Free Chinese gender predictor: enter your dates and instantly see if the ancient lunar chart predicts a boy or a girl. Interactive chart, lunar age calculator & fun planner.',
+    homeTitle: 'Chinese Baby Predictor: Accurate Lunar Gender Chart & Calculator',
+    homeDesc: 'Use our free Chinese baby predictor and interactive lunar calendar. Accurately converts your Gregorian dates to predict baby’s gender instantly.',
     predictorTitle: 'Chinese Gender Predictor 2026 – Boy or Girl Baby Calculator',
     predictorDesc: 'Our accurate Chinese gender predictor converts your dates to the lunar calendar and reads the traditional chart for you. Try the free baby gender calculator now.',
     chartTitle: 'Chinese Gender Chart 2026 – Interactive Boy or Girl Chart',
@@ -61,13 +61,13 @@ const en: Dictionary = {
   },
   hero: {
     kicker: 'Based on the 700-year-old lunar chart · 2026 edition',
-    title: 'Is your baby a boy',
-    titleAccent: 'or a girl?',
+    title: 'Chinese Baby Predictor &',
+    titleAccent: 'Lunar Gender Chart',
     subtitle: 'Enter two dates and let the legendary Chinese gender calendar guess who’s on the way — with real lunar-calendar conversion, an interactive chart and a playful planner.',
     trust1: '100% free', trust2: 'No sign-up', trust3: 'Instant result',
   },
   predictor: {
-    heading: 'Chinese Gender Predictor',
+    heading: 'How Does the Chinese Baby Predictor Work?',
     subheading: 'Two dates in, one guess out. The tool converts your dates into the lunar calendar exactly like the traditional chart does.',
     dobLabel: 'Mother’s date of birth',
     dobHint: 'Used to compute your traditional lunar age',
@@ -87,7 +87,7 @@ const en: Dictionary = {
     poll: 'Was it right?', pollYes: 'Correct ✓', pollNo: 'Not yet ✗', pollThanks: 'Thanks for sharing!',
   },
   chart: {
-    heading: 'The Chinese Gender Chart',
+    heading: 'Interactive Chinese Baby Gender Chart',
     subheading: 'Mother’s lunar age (rows) × lunar month of conception (columns). Tap any cell to see the prediction.',
     legendBoy: 'Boy', legendGirl: 'Girl', print: 'Print chart', yourCell: 'Your cell',
     cellHint: 'Cell', monthsLabel: 'Lunar month of conception', agesLabel: 'Mother’s lunar age',

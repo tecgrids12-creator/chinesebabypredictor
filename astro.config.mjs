@@ -12,6 +12,11 @@ export default defineConfig({
   output: 'static',
   adapter: vercel(),
   trailingSlash: 'always',
+  build: {
+    // Inline the (small) CSS bundle into every page: removes the render-blocking
+    // stylesheet request, first-paint stable, no FOUC / CLS.
+    inlineStylesheets: 'always',
+  },
   integrations: [react(), mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

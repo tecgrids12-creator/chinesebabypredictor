@@ -18,11 +18,6 @@ const chartStrings = {
   boy: t.chart.legendBoy, girl: t.chart.legendGirl, windowLabel: 'Dates', lunarYearLabel: 'year', leapNote: 'Leap months are mapped to their base month and marked on results.',
 };
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: CHART_FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-};
 ---
 
 <div class="pt-10">
@@ -72,4 +67,3 @@ const faqSchema = {
 
   <RelatedTools t={t} locale={locale} exclude="chinese-gender-chart/" />
 </div>
-<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

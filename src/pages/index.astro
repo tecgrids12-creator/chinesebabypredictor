@@ -3,7 +3,7 @@ import BaseLayout from '@theme/layouts/BaseLayout.astro';
 import HomeBody from '@components/astro/pages/HomeBody.astro';
 import { getDictionary } from '@i18n/translations';
 import { alternatePaths } from '@i18n/utils';
-import { webAppSchema, faqPageSchema, orgSchema } from '@utils/schema';
+import { webAppSchema, faqPageSchema, orgSchema, breadcrumbSchema } from '@utils/schema';
 import { HOME_FAQ } from '@content/data/editorial';
 
 const locale = 'en';
@@ -19,7 +19,12 @@ const description = t.meta.homeDesc;
   locale={locale}
   alternates={alternatePaths('')}
   type="website"
-  schema={[webAppSchema({ name: 'Chinese Gender Predictor', path: '', description }), orgSchema(), faqPageSchema(HOME_FAQ)]}
+  schema={[
+    webAppSchema({ name: 'Chinese Baby Predictor', path: '', description }),
+    orgSchema(),
+    breadcrumbSchema([{ name: 'Chinese Baby Predictor', path: '' }]),
+    faqPageSchema(HOME_FAQ),
+  ]}
 >
   <HomeBody t={t} />
 </BaseLayout>

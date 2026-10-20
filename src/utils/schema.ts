@@ -1,6 +1,20 @@
 /** JSON-LD builders shared by pages (schema.org structured data). */
 import type { FaqItem } from '../content/data/editorial';
 
+/** Root home hierarchy: single-crumbs trail Homepage → current tool. */
+export function breadcrumbSchema(items: Array<{ name: string; path: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: `https://chinesebabypredictor.com/${item.path}`,
+    })),
+  };
+}
+
 export function faqPageSchema(items: FaqItem[]) {
   return {
     '@context': 'https://schema.org',
@@ -20,7 +34,7 @@ export function webAppSchema(opts: { name: string; path: string; description: st
     name: opts.name,
     url: `https://chinesebabypredictor.com/${opts.path}`,
     applicationCategory: 'HealthApplication',
-    operatingSystem: 'Any (web browser)',
+    operatingSystem: 'All',
     browserRequirements: 'Requires JavaScript',
     description: opts.description,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
