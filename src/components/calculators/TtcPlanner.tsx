@@ -230,19 +230,27 @@ export default function TtcPlanner({ strings }: { strings: TtcStrings }) {  cons
                   { id: 'girl', label: strings.girlLabel, on: 'border-girl-500 bg-girl-100 text-girl-700 shadow-[0_10px_22px_-8px_rgba(221,33,117,.65)]' },
                   { id: 'both', label: strings.bothLabel, on: 'border-plum-600 bg-cream-100 text-plum-800 shadow-[0_10px_22px_-8px_rgba(122,47,136,.6)]' },
                 ] as const
-              ).map((opt) => (
-                <button
-                  key={opt.id}
-                  type="button"
-                  aria-pressed={want === opt.id}
-                  onClick={() => setWant(opt.id)}
-                  className={`focusable rounded-2xl border-2 px-2 py-2.5 font-display text-xs font-bold transition-all duration-300 ease-out hover:-translate-y-0.5 sm:text-sm ${
-                    want === opt.id ? opt.on : 'border-cream-200 bg-white text-plum-600 hover:border-girl-300'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
+              ).map((opt) => {
+                // stack emoji above the word so long labels ("Overview") can
+                // never overflow the narrow third column
+                const spaceAt = opt.label.indexOf(' ');
+                const icon = spaceAt === -1 ? opt.label : opt.label.slice(0, spaceAt);
+                const text = spaceAt === -1 ? '' : opt.label.slice(spaceAt + 1);
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    aria-pressed={want === opt.id}
+                    onClick={() => setWant(opt.id)}
+                    className={`focusable flex flex-col items-center gap-0.5 rounded-2xl border-2 px-1 py-2 font-display text-[11px] font-bold leading-tight transition-all duration-300 ease-out hover:-translate-y-0.5 [overflow-wrap:anywhere] sm:text-xs ${
+                      want === opt.id ? opt.on : 'border-cream-200 bg-white text-plum-600 hover:border-girl-300'
+                    }`}
+                  >
+                    <span aria-hidden="true" className="text-base leading-none">{icon}</span>
+                    <span className="text-center">{text}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
