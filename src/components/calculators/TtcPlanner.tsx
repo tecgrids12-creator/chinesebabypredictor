@@ -287,6 +287,9 @@ export default function TtcPlanner({ strings }: { strings: TtcStrings }) {  cons
             <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {cards.map((c, i) => {
                 const match = want === 'both' || c.gender === want;
+                // Lunar New Year transition: this window is the first one inside
+                // a new lunar year → the mother's 虚岁 increments here.
+                const isNewLunarYear = i > 0 && c.lunarYear > cards[i - 1].lunarYear;
                 return (
                   <div
                     key={`${c.start.getTime()}-${c.month}-${i}`}
@@ -302,6 +305,16 @@ export default function TtcPlanner({ strings }: { strings: TtcStrings }) {  cons
                       <span>{c.start.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' })} {c.start.getUTCFullYear()}</span>
                       <span className="text-[11px] font-bold opacity-85">{c.emoji}</span>
                     </p>
+                    {isNewLunarYear && (
+                      <p className="mt-1">
+                        <span
+                          title="In Chinese reckoning, lunar age increments on Lunar New Year, not your Gregorian birthday."
+                          className="inline-flex items-center gap-1 rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-600"
+                        >
+                          🎉 Turns Lunar Age {c.lunarAge} (Lunar New Year)
+                        </span>
+                      </p>
+                    )}
                     <p className="mt-0.5 text-sm font-semibold opacity-95">
                       {strings.lunarMonth} {c.month}{c.isLeap ? '*' : ''}{c.split === 'first' ? ` · ${strings.leapFirstHalf}` : c.split === 'second' ? ` · ${strings.leapSecondHalf}` : ''} · {c.lunarYear} {c.animal} year
                     </p>
