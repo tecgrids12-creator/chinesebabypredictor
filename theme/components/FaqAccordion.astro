@@ -9,7 +9,9 @@ const { items } = Astro.props;
   {items.map((item, index) => (
     <details class="faq" open={index === 0}>
       <summary>
-        <span>{item.q}</span>
+        {/* H3 inside summary: gives the FAQ a clean h2 > h3 heading hierarchy
+            that answer engines lift (question heading + answer directly below). */}
+        <h3 class="faq-question">{item.q}</h3>
         <span class="faq-icon" aria-hidden="true">+</span>
       </summary>
       <p class="faq-answer">{item.a}</p>

@@ -28,7 +28,7 @@ const chartStrings = {
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-plum-600">
       The complete traditional grid: the mother's lunar age (rows) × the lunar month of conception (columns), blue for boys and pink for girls. Tap any cell to see its exact Gregorian window for {new Date().getUTCFullYear()} — or print a copy for the refrigerator.
     </p>
-    <div class="mt-8"><InteractiveChart client:visible strings={chartStrings} /></div>
+    <div class="mt-8"><InteractiveChart client:idle strings={chartStrings} /></div>
   </section>
 
   <section class="section-shell mt-14">

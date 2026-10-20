@@ -294,6 +294,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .chart-girl:hover { box-shadow: 0 10px 20px -6px rgba(221, 33, 117, 0.55); }
 .chart-cell[aria-pressed="true"] { @apply z-10 rounded-md ring-2 ring-gold-500 scale-110 font-extrabold; }
 
+/* ─── Phase 2: calculation crosshair (highlight row/column/cell) ─────────── */
+.chart-age-col { position: sticky; left: 0; z-index: 12; }
+thead .chart-age-col { z-index: 20; }
+.chart-x-on .chart-cell { opacity: 0.3; filter: saturate(0.35); }
+.chart-x-hit { opacity: 0.95 !important; filter: none !important; }
+.chart-x-cell {
+  opacity: 1 !important;
+  filter: none !important;
+  z-index: 5;
+  transform: scale(1.06);
+  border-radius: 8px;
+  box-shadow: 0 0 0 3px var(--color-gold-500), 0 12px 24px -8px rgba(69, 2, 79, 0.45);
+}
+.chart-x-row-head,
+.chart-x-col-head { background: linear-gradient(135deg, #dd2175, #2c63e8) !important; color: #fff !important; }
+.chart-cell, .chart-x-cell { @apply transition-all duration-300; }
+
 /* ─── FAQ accordion ────────────────────────────────────────────────────────── */
 details.faq {
   position: relative;
@@ -317,6 +334,14 @@ details.faq summary {
          font-display text-lg font-bold text-plum-800 list-none marker:hidden;
 }
 details.faq summary::-webkit-details-marker { display: none; }
+/* h3-in-summary: strip UA heading styles so it renders exactly like the old span */
+details.faq summary .faq-question {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
 details.faq summary .faq-icon { @apply shrink-0 text-2xl text-girl-400 transition-transform duration-200; }
 details.faq[open] summary .faq-icon { transform: rotate(45deg); }
 details.faq .faq-answer { @apply mt-3 text-plum-700 leading-relaxed; }

@@ -85,6 +85,21 @@ const en: Dictionary = {
     invalidConception: 'The conception date should be after the mother’s date of birth.',
     disclaimer: 'Entertainment only — a 50/50 folk tradition, not medicine.',
     poll: 'Was it right?', pollYes: 'Correct ✓', pollNo: 'Not yet ✗', pollThanks: 'Thanks for sharing!',
+    /* top-level dual mode (Phase 1) */
+    topPredict: 'Predict Baby’s Gender', topPlan: 'TTC Planning Calendar',
+    /* plan mode */
+    planWant: 'Desired baby gender', planBoy: 'Boy 💙', planGirl: 'Girl 💗',
+    planCompute: 'Find Best Months', planResult: 'Best conception windows in the next 18 months',
+    planLeap: 'leap month', planWindow: 'Window', planNone: 'No favourable windows in the next 18 months — open the full planning calendar for other years.',
+    planMini: 'Next 18 months at a glance', planBest: 'best to try', planWhite: 'pause',
+    /* transparency drawer */
+    showCalc: 'Show the Calculation', hideCalc: 'Hide the Calculation',
+    stepDob: 'Gregorian DOB → western age at conception',
+    stepLunar: 'Chinese New Year conversion → lunar (virtual) age',
+    stepMonth: 'Gregorian conception date → lunar month',
+    stepCell: 'Coordinate lookup on the Qing Palace chart',
+    /* share card */
+    shareCard: 'Share Your Result', shareCardSaved: 'CARD SAVED!',
   },
   chart: {
     heading: 'Interactive Chinese Baby Gender Chart',

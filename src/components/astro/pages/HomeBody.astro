@@ -59,6 +59,20 @@ const stepDots = ['#dd2175', '#2c63e8', '#f59e0b'];
     <div class="lg:sticky lg:top-24 min-h-[480px]"><GenderPredictor client:idle strings={predictorStrings} /></div>
   </div>
 
+  {/* ── What is it (GEO answer block: direct, liftable definition) ─────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="what-title">
+    <h2 id="what-title" class="section-title text-center">What Is the Chinese Baby Predictor?</h2>
+    <span class="title-dash" aria-hidden="true"></span>
+    <p class="mx-auto mt-4 max-w-3xl text-pretty text-center leading-relaxed text-plum-600">
+      The <strong>Chinese Baby Predictor</strong> is a free online tool that estimates whether a baby
+      is likely to be a <strong>boy or a girl</strong> using the ancient Chinese gender chart — a
+      700-year-old lunar table credited to Qing Dynasty imperial scholars. Enter the mother's date of
+      birth and the conception date: the calculator converts both to the Chinese lunar calendar and
+      instantly reads the traditional prediction. It is a cultural tradition for entertainment,
+      not a medical test — for a certain answer, ask your licensed healthcare provider.
+    </p>
+  </section>
+
   {/* ── How it works ──────────────────────────────────────────────────── */}
   <section class="section-shell mt-20 reveal" aria-labelledby="how-title">
     <h2 id="how-title" class="section-title text-center">{t.predictor.heading}</h2>
@@ -110,7 +124,7 @@ const stepDots = ['#dd2175', '#2c63e8', '#f59e0b'];
     <h2 id="chart-title" class="section-title text-center">{t.chart.heading}</h2>
     <span class="title-dash" aria-hidden="true"></span>
     <p class="mx-auto mt-4 max-w-2xl text-center text-plum-600">{t.chart.subheading}</p>
-    <div class="mt-8 min-h-[480px]"><InteractiveChart client:visible strings={{...chartStrings, yourCell: '', cellHint: '', windowLabel: '', lunarYearLabel: '', leapNote: '', boy: '', girl: ''}} /></div>
+    <div class="mt-8 min-h-[480px]"><InteractiveChart client:idle strings={{...chartStrings, yourCell: '', cellHint: '', windowLabel: '', lunarYearLabel: '', leapNote: '', boy: '', girl: ''}} /></div>
   </section>
 
   {/* ── Accuracy / honesty section ────────────────────────────────────── */}
@@ -144,6 +158,143 @@ const stepDots = ['#dd2175', '#2c63e8', '#f59e0b'];
           <a href="/gender-quiz/" class="btn-secondary">💍 {t.nav.quiz}</a>
         </div>
       </div>
+    </div>
+  </section>
+
+  {/* ── Phase 3 · Comparison: other early prediction theories ─────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="theories-title">
+    <h2 id="theories-title" class="section-title text-center">Chinese Baby Predictor vs. Other Early Prediction Theories</h2>
+    <span class="title-dash" aria-hidden="true"></span>
+    <p class="mx-auto mt-4 max-w-2xl text-center text-plum-600">Every popular “early boy or girl” method, side by side — from pre-conception folklore to clinical genetic testing.</p>
+    <div class="mt-8 overflow-x-auto rounded-3xl bg-white/70 shadow-soft ring-1 ring-cream-200">
+      <table class="w-full min-w-[720px] border-collapse text-left text-sm">
+        <caption class="sr-only">Comparison of early baby gender prediction methods</caption>
+        <thead>
+          <tr class="bg-plum-800 text-white">
+            <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Method</th>
+            <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Earliest usable</th>
+            <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Scientific accuracy</th>
+            <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Basis</th>
+          </tr>
+        </thead>
+        <tbody class="text-plum-700">
+          <tr class="border-t border-cream-200 bg-girl-50/60">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Chinese Baby Predictor</th>
+            <td class="px-4 py-3">Pre-conception (planning) &amp; any week of pregnancy</td>
+            <td class="px-4 py-3">~50% — folklore, a coin flip</td>
+            <td class="px-4 py-3">Lunisolar astrology: mother’s lunar age × lunar month of conception</td>
+          </tr>
+          <tr class="border-t border-cream-200">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Ramzi Theory</th>
+            <td class="px-4 py-3">~6 weeks (first ultrasound)</td>
+            <td class="px-4 py-3">Not established — no large replication</td>
+            <td class="px-4 py-3">Which side of the uterus the placenta sits on</td>
+          </tr>
+          <tr class="border-t border-cream-200 bg-girl-50/60">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Nub Theory</th>
+            <td class="px-4 py-3">12 weeks</td>
+            <td class="px-4 py-3">Claims vary ~70–90%, sonographer-trained</td>
+            <td class="px-4 py-3">Angle of the genital tubercle on ultrasound</td>
+          </tr>
+          <tr class="border-t border-cream-200">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Skull Theory</th>
+            <td class="px-4 py-3">12 weeks</td>
+            <td class="px-4 py-3">Unverified ≈ 50%</td>
+            <td class="px-4 py-3">Shape/roundness of the skull on the sonogram</td>
+          </tr>
+          <tr class="border-t border-cream-200 bg-girl-50/60">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">NIPT (cell-free DNA)</th>
+            <td class="px-4 py-3">~10 weeks</td>
+            <td class="px-4 py-3">~99% (clinical test)</td>
+            <td class="px-4 py-3">Analysis of fetal DNA circulating in the mother’s blood</td>
+          </tr>
+          <tr class="border-t border-cream-200">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Anatomy ultrasound</th>
+            <td class="px-4 py-3">18–20 weeks</td>
+            <td class="px-4 py-3">~99% (clinical test)</td>
+            <td class="px-4 py-3">Visual of the baby’s genitals on screen</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mx-auto mt-4 max-w-2xl text-center text-sm text-plum-600">
+      Only the bottom two rows are medicine; the top four are guesses — that is exactly why our tool prints an honest 50/50 disclaimer.
+      Want the fun route instead? <a class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-800" href="/gender-quiz/">Take the wives' tales quiz →</a>
+    </p>
+  </section>
+
+  {/* ── Phase 3 · Leap months (Runyue) ────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="leap-title">
+    <h2 id="leap-title" class="section-title text-center">How Leap Months (Runyue 闰月) Affect Your Prediction</h2>
+    <span class="title-dash" aria-hidden="true"></span>
+    <div class="mx-auto mt-6 grid max-w-4xl gap-5 md:grid-cols-2">
+      <div class="calculator-card p-6">
+        <h3 class="font-display text-lg font-bold text-plum-900">Why other calculators disagree</h3>
+        <p class="mt-2 text-sm leading-relaxed text-plum-600">
+          The Chinese lunisolar calendar inserts an <strong>intercalary (leap) month</strong> about seven times
+          every nineteen years, so a year has 13 months. Many simpler baby-gender calculators treat that extra month
+          as a bare number — others ignore it. When the same conception date is mapped to a different month number,
+          the same couple gets <em>two different predictions</em>. Our converter does not guess: it maps the leap
+          month against the official 1900–2100 lunisolar tables and shows the leap flag in your result.
+        </p>
+      </div>
+      <div class="calculator-card p-6">
+        <h3 class="font-display text-lg font-bold text-plum-900">The traditional half-month rule</h3>
+        <p class="mt-2 text-sm leading-relaxed text-plum-600">
+          Classic practice assigns a conception that falls in a leap month by halves:
+        </p>
+        <ol class="mt-2 grid list-decimal gap-1.5 pl-4 text-sm leading-relaxed text-plum-600">
+          <li><strong>First half</strong> of the leap month (day 1 to ~15) → counted as month&nbsp;N, the month it repeats.</li>
+          <li><strong>Second half</strong> (day ~16 onward) → counted as month&nbsp;N+1, the month that follows.</li>
+        </ol>
+        <p class="mt-2 text-xs text-plum-500">Example: a conception in leap 6月’s second half is read as month 7 on the chart. Not every modern calculator follows this convention — that is the “conflicting results” you see.</p>
+      </div>
+    </div>
+    <p class="mx-auto mt-5 max-w-3xl text-center text-sm text-plum-600">
+      Jump straight to the <a class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-800" href="/chinese-gender-chart/">interactive chart</a> or
+      <a class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-800" href="/lunar-age-calculator/">lunar age calculator</a> to see both halves of any leap month mapped for you.
+    </p>
+  </section>
+
+  {/* ── Phase 3 · Swedish registry study breakdown ─────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="study-title">
+    <h2 id="study-title" class="section-title text-center">The Swedish Registry Scientific Study Breakdown</h2>
+    <span class="title-dash" aria-hidden="true"></span>
+    <div class="mx-auto mt-6 max-w-3xl space-y-4 text-pretty leading-relaxed text-plum-700">
+      <p>
+        The largest empirical test of the lunar gender chart is a population-based study by
+        <strong>Eduardo Villamor and colleagues</strong> analysing Swedish national birth-register data covering
+        roughly <strong>2.8 million births</strong>. Each mother’s lunar age and the lunar month of conception were
+        reproduced exactly as the traditional chart prescribes, then compared against the baby’s actual sex.
+      </p>
+      <div class="grid gap-3 sm:grid-cols-3">
+        <div class="rounded-2xl bg-white/70 px-4 py-3 text-center shadow-soft ring-1 ring-cream-200">
+          <p class="font-display text-2xl font-extrabold text-plum-900">~2.8M</p>
+          <p class="text-xs font-semibold text-plum-600">births analysed</p>
+        </div>
+        <div class="rounded-2xl bg-white/70 px-4 py-3 text-center shadow-soft ring-1 ring-cream-200">
+          <p class="font-display text-2xl font-extrabold text-plum-900">≈ 50.0%</p>
+          <p class="text-xs font-semibold text-plum-600">observed chart accuracy</p>
+        </div>
+        <div class="rounded-2xl bg-white/70 px-4 py-3 text-center shadow-soft ring-1 ring-cream-200">
+          <p class="font-display text-2xl font-extrabold text-plum-900">1 : 1</p>
+          <p class="text-xs font-semibold text-plum-600">natural X : Y odds</p>
+        </div>
+      </div>
+      <p>
+        The result was statistically indistinguishable from a fair coin — about <strong>50.0% accuracy</strong>,
+        with no lunar month or age row performing meaningfully above chance. That is not a design flaw: male
+        sperm carry an X, half carry a Y chromosome, so biology fixes the chances of each conception at roughly
+        even odds <em>before any calendar is consulted</em>. No lookup table can move that probability — which is
+        why charts that promise 93% have no mechanism to back it up. We print the study’s conclusion in our own
+        results because an honest tool earns long-term trust.
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/20618730/"
+          rel="nofollow noopener noreferrer"
+          target="_blank"
+          class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-800"
+        >Read the study abstract on PubMed →</a>
+      </p>
     </div>
   </section>
 

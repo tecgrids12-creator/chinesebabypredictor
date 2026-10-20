@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { GENDER_CHART, CHART_MIN_AGE, CHART_MAX_AGE, type Gender } from '../../utils/genderChart';
-import { lunarNewYear, monthsDays, leapMonth, leapMonthDays } from '../../utils/lunar';
+import { lunarNewYear, monthsDays, leapMonth, leapMonthDays, solarToLunar } from '../../utils/lunar';
 import { GlossyHeart } from './Babies';
 import { fmtDate } from './ui';
 
@@ -29,6 +29,29 @@ interface HoverDetail {
 export default function InteractiveChart({ strings, planYear }: { strings: ChartStrings; planYear?: number }) {
   const targetYear = planYear ?? new Date().getUTCFullYear();
   const [selected, setSelected] = useState<{ age: number; month: number } | null>(null);
+
+  /* Phase 2 crosshair: row/column/cell highlight fed by the calculator island.
+     Restored from the last calculation via sessionStorage + live CustomEvent. */
+  const [crosshair, setCrosshair] = useState<{ age: number; month: number } | null>(null);
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('cbp-cell');
+      if (saved) {
+        const d = JSON.parse(saved) as { age?: number; month?: number };
+        if (d.age && d.month) setCrosshair({ age: d.age, month: d.month });
+      }
+    } catch { /* ignore */ }
+    const onCell = (e: Event) => {
+      const d = (e as CustomEvent).detail as { age?: number; month?: number };
+      if (d?.age && d?.month) {
+        setCrosshair({ age: d.age, month: d.month });
+        const el = document.querySelector<HTMLButtonElement>(`[data-cell="${d.age}-${d.month}"]`);
+        el?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+      }
+    };
+    window.addEventListener('cbp-cell', onCell);
+    return () => window.removeEventListener('cbp-cell', onCell);
+  }, []);
 
   // Precise lunar-month windows for the target year (derived from the lunar tables)
   const windowsByMonth = useMemo(() => {
@@ -89,6 +112,11 @@ export default function InteractiveChart({ strings, planYear }: { strings: Chart
             <GlossyHeart tone="pink" className="h-4 w-4 shrink-0" />
             {strings.legendGirl}: {counts.g}
           </span>
+          {crosshair && (
+            <span className="chip flex items-center gap-1.5 rounded-full bg-gradient-to-r from-girl-500 to-boy-500 px-3 py-1 text-white">
+              ✦ {strings.agesLabel} {crosshair.age} · {strings.monthsLabel} {crosshair.month}
+            </span>
+          )}
         </div>
         <button
           type="button"
@@ -99,16 +127,22 @@ export default function InteractiveChart({ strings, planYear }: { strings: Chart
         </button>
       </div>
 
-      <div className="overflow-x-auto pb-2">
-        <table className="w-full min-w-[640px] border-separate border-spacing-0.5" aria-label={`${strings.agesLabel} × ${strings.monthsLabel}`}>
+      <div className={`overflow-x-auto pb-2 ${crosshair ? 'chart-x-on' : ''}`}>
+        <table className="w-full min-w-[720px] border-separate border-spacing-0.5" aria-label={`${strings.agesLabel} × ${strings.monthsLabel}`}>
           <caption className="sr-only">{strings.monthsLabel}</caption>
           <thead>
             <tr>
-              <th scope="col" className="rounded-xl bg-plum-800 py-2 font-display text-[11px] text-white sm:text-xs">
+              <th scope="col" className="chart-age-col rounded-xl bg-plum-800 py-2 font-display text-[11px] text-white sm:text-xs">
                 {strings.agesLabel}
               </th>
               {Array.from({ length: 12 }, (_, i) => (
-                <th scope="col" key={i} className="rounded-xl bg-boy-50 py-2 font-display text-xs font-bold text-boy-700">
+                <th
+                  scope="col"
+                  key={i}
+                  className={`rounded-xl bg-boy-50 py-2 font-display text-xs font-bold text-boy-700 ${
+                    crosshair?.month === i + 1 ? 'chart-x-col-head' : ''
+                  }`}
+                >
                   {strings.months[i] ?? i + 1}
                 </th>
               ))}
@@ -119,22 +153,30 @@ export default function InteractiveChart({ strings, planYear }: { strings: Chart
               const age = CHART_MIN_AGE + idx;
               return (
                 <tr key={age}>
-                  <th scope="row" className="rounded-xl bg-plum-800 py-1.5 text-center font-display text-xs font-bold text-white">
+                  <th
+                    scope="row"
+                    className={`chart-age-col rounded-xl bg-plum-800 py-1.5 text-center font-display text-xs font-bold text-white ${
+                      crosshair?.age === age ? 'chart-x-row-head' : ''
+                    }`}
+                  >
                     {age}
                   </th>
                   {rowStr.split('').map((cell, mIdx) => {
                     const isGirl = cell === 'G';
                     const month = mIdx + 1;
                     const isSelected = selected?.age === age && selected?.month === month;
+                    const isXCell = crosshair?.age === age && crosshair?.month === month;
+                    const isXHit = crosshair && (crosshair.age === age || crosshair.month === month);
                     return (
                       <td key={month} className="p-0">
                         <button
                           type="button"
                           aria-pressed={isSelected}
                           aria-label={`${strings.agesLabel} ${age}, ${strings.monthsLabel} ${month}: ${isGirl ? strings.legendGirl : strings.legendBoy}`}
+                          data-cell={`${age}-${month}`}
                           onClick={() => setSelected(isSelected ? null : { age, month })}
                           className={`chart-cell focusable w-full ${isGirl ? 'chart-girl' : 'chart-boy'} ${
-                            isSelected ? 'ring-2 ring-gold-500' : ''
+                            isSelected ? 'ring-2 ring-gold-500' : isXCell ? 'chart-x-cell' : isXHit ? 'chart-x-hit' : ''
                           }`}
                         >
                           <img
