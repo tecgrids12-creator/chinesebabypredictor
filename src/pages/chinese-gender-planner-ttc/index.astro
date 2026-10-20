@@ -1,0 +1,27 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import TtcPlannerBody from '@components/astro/pages/TtcPlannerBody.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import { getDictionary } from '@i18n/translations';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+import { TTC_FAQ } from '@content/data/editorial';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const title = 'Chinese Gender Planner: TTC Calendar for Boy or Girl (2026-2027)';
+const description = 'Plan your pregnancy with our free Chinese Gender TTC Planner. Select your birthdate and desired gender to find optimal lunar conception windows for 2026-2027.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath="chinese-gender-planner-ttc/"
+  locale={locale}
+  schema={[
+    webAppSchema({ name: 'Chinese Gender Planner (TTC)', path: 'chinese-gender-planner-ttc/', description }),
+    faqPageSchema(TTC_FAQ),
+  ]}
+>
+  <Breadcrumbs crumbs={[{ label: 'Home', href: '/' }, { label: 'TTC Gender Planner' }]} locale={locale} t={t} />
+  <TtcPlannerBody t={t} />
+</BaseLayout>

@@ -58,6 +58,26 @@ export const CHART_FAQ: FaqItem[] = [
   },
 ];
 
+/** TTC planner page FAQ — mirrors the FAQPage JSON-LD exactly. */
+export const TTC_FAQ: FaqItem[] = [
+  {
+    q: 'Can you use the Chinese gender calendar to plan conceiving a boy or girl?',
+    a: 'You can use it for lighthearted planning, yes. The chart maps your lunar age and the lunar month of conception to a boy or girl cell, so our TTC planner shows you which upcoming lunar months the tradition marks “boy” or “girl.” There is no scientific evidence the calendar changes outcomes — treat it as fun framing for real conception timing, which is driven by ovulation.',
+  },
+  {
+    q: 'How do I calculate my best conception months for a girl?',
+    a: 'Enter your date of birth, choose “Baby Girl,” and pick a planning year. The planner converts your birthday into lunar age, walks the lunar months of that year, and lists every window whose Qing Palace chart cell reads girl — each with its exact Gregorian date range, such as “Lunar month 4, June 12 – July 10.” Conception windows at the start of a lunar month leave the most room for the early days of the following month, too.',
+  },
+  {
+    q: 'What is the difference between the Chinese calendar and the Shettles Method for gender swaying?',
+    a: 'The Chinese calendar is folklore: an astrological lookup table that ignores your cycle and claims roughly 50% accuracy. The Shettles Method is a timing theory: it claims that intercourse 2–4 days before ovulation favours girls and intercourse close to ovulation favours boys, based on X/Y sperm motility differences. Shettles remains scientifically debated (~75% cited by supporters, often criticized), while the calendar’s observational accuracy is a coin flip. Neither replaces medical counselling.',
+  },
+  {
+    q: 'Does timing intercourse with the lunar calendar guarantee baby gender?',
+    a: 'No. No calendar can guarantee, or even reliably shift, a baby’s sex. Each conception is biologically 50/50 — half of the father’s sperm carry X chromosomes and half carry Y. The lunar planner is a charming way to organize trying-to-conceive months, and only medical procedures (like PGD/IVF embryo screening) can select sex with near-certainty.',
+  },
+];
+
 export const COMPARISON_ROWS = [
   { method: 'Chinese gender chart 🇨🇳', how: 'Lunar age × lunar month lookup', reliability: '~50% (chance)' },
   { method: 'Mayan calendar 🇲🇽', how: 'Parity of mom’s age vs. conception year', reliability: '~50% (chance)' },

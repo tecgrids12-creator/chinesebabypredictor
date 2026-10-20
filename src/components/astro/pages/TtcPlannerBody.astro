@@ -1,0 +1,188 @@
+---
+/** TTC Gender Planner page body: hero + interactive planner + GEO content sections. */
+import TtcPlanner from '@components/calculators/TtcPlanner.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
+import type { Dictionary } from '@i18n/translations';
+import { TTC_FAQ } from '@content/data/editorial';
+
+interface Props { t: Dictionary; }
+const { t } = Astro.props;
+
+const strings = {
+  dobLabel: 'Mother’s date of birth',
+  dobHint: 'Pick a date to see your live lunar age (虚岁) instantly.',
+  ageNow: 'Lunar age today',
+  ageInYear: 'age you’ll carry',
+  wantLabel: 'Desired baby gender',
+  boyLabel: '💙 Baby Boy',
+  girlLabel: '💖 Baby Girl',
+  bothLabel: '🌟 Overview',
+  yearLabel: 'Planning horizon',
+  compute: 'Show My Windows',
+  headline: 'Conception windows for',
+  optimalBoy: 'OPTIMAL FOR BOY',
+  optimalGirl: 'OPTIMAL FOR GIRL',
+  lunarMonth: 'Lunar Month',
+  lunarAgeLabel: 'Lunar age',
+  windowLabel: 'Window',
+  leapFirstHalf: 'leap · 1st half',
+  leapSecondHalf: 'leap · 2nd half',
+  skipLabel: 'try another month',
+  none: 'No windows calculated yet.',
+  newLunarYear: '老虎',
+  save: 'Save My Planning Calendar',
+  saved: 'CALENDAR SAVED!',
+  print: 'Print',
+  footnote: '',
+  invalid: 'Please pick the mother’s date of birth first.',
+  matrixNote: 'Authentic 1900–2100 lunisolar tables · Qing Palace 28×12 chart (lunar ages 18–45) · leap months (Runyue) follow the traditional half-month rule: days 1–15 → month N, days 16+ → month N+1.',
+};
+---
+
+<div class="pt-10">
+  {/* ── Hero + planner ─────────────────────────────────────────────────── */}
+  <section class="section-shell grid items-start gap-10 lg:grid-cols-[1.05fr_1fr] lg:pt-6" aria-labelledby="ttc-hero-title">
+    <div class="reveal">
+      <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Trying to Conceive · 2026–2028 planner</p>
+      <h1 id="ttc-hero-title" class="font-display pt-2 text-[2.4rem] font-extrabold leading-[1.12] tracking-tight text-plum-900 sm:text-5xl">
+        The Chinese Gender Planner <span class="inline-block bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text pb-1 text-transparent">for TTC Parents</span>
+      </h1>
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-plum-600">
+        Pick your birthdate and the gender you're hoping for — the ancient lunar chart
+        returns <strong>exact conception windows</strong> with dates, lunar months and your
+        traditional lunar age for every month of 2026, 2027 and 2028.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-2">
+        <span class="chip">✅ 100% free &amp; instant</span>
+        <span class="chip">🗂️ Exact lunar tables 1900–2100</span>
+        <span class="chip">💙💖 Boy / Girl overview</span>
+      </div>
+    </div>
+    <div class="min-h-[480px]"><TtcPlanner client:idle strings={strings} /></div>
+  </section>
+
+  {/* ── How to use (3 steps) ───────────────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="ttc-how-title">
+    <h2 id="ttc-how-title" class="section-title text-center">How to Use the Chinese Gender Calendar for TTC (Trying to Conceive)</h2>
+    <span class="title-dash" aria-hidden="true"></span>
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <div class="calculator-card p-6">
+        <p class="text-3xl" aria-hidden="true">🎂</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-plum-900">1 · Find your lunar age</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">
+          The chart runs on your traditional (虚岁) lunar age — one year old at birth, +1 each Lunar
+          New Year. The planner computes it live as you type your birthday, for today and for the year you're planning.
+        </p>
+      </div>
+      <div class="calculator-card p-6">
+        <p class="text-3xl" aria-hidden="true">🗂️</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-plum-900">2 · Target gender months</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">
+          See every lunar month of your planning year marked <strong class="text-boy-600">BOY</strong> or
+          <strong class="text-girl-600">GIRL</strong>. Choose your baby's gender to glow only your
+          optimal months, or keep the full overview and frame your journey month by month.
+        </p>
+      </div>
+      <div class="calculator-card p-6">
+        <p class="text-3xl" aria-hidden="true">🩸</p>
+        <h3 class="mt-2 font-display text-lg font-bold text-plum-900">3 · Align with ovulation</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">
+          Lunar month ≠ ovulation day. Take a favourable window, watch your cycle, and time
+          intercourse around ovulation inside that date range — then let the folklore do the fun part.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Shettles comparison table ─────────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="ttc-shettles-title">
+    <h2 id="ttc-shettles-title" class="section-title text-center">Chinese Gender Calendar vs. The Shettles Method: Folklore vs. Biology</h2>
+    <span class="title-dash" aria-hidden="true"></span>
+    <p class="mx-auto mt-4 max-w-2xl text-center text-plum-600">How the lunar table stacks against the timing theories you'll meet in TTC forums — one honest, side-by-side view.</p>
+    <div class="mt-8 overflow-x-auto rounded-3xl bg-white/70 shadow-soft ring-1 ring-cream-200">
+      <table class="w-full min-w-[760px] border-collapse text-left text-sm">
+        <caption class="sr-only">Gender-swaying theories compared with the Chinese lunar calendar</caption>
+        <thead>
+          <tr class="bg-plum-800 text-white">
+            <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Theory / Method</th>
+            <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Working principle</th>
+            <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Scientific validation</th>
+            <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Recommended use</th>
+          </tr>
+        </thead>
+        <tbody class="text-plum-700">
+          <tr class="border-t border-cream-200 bg-girl-50/60">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Chinese Lunar Calendar</th>
+            <td class="px-4 py-3">Astrological lunar harmony: mother's lunar age × lunar conception month</td>
+            <td class="px-4 py-3">Folklore — ≈50% (chance level)</td>
+            <td class="px-4 py-3">Lighthearted planning &amp; bonding</td>
+          </tr>
+          <tr class="border-t border-cream-200">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Shettles Method</th>
+            <td class="px-4 py-3">Timing: intercourse days before ovulation for girls, at ovulation for boys (X/Y sperm speed theory)</td>
+            <td class="px-4 py-3">Debated observational evidence</td>
+            <td class="px-4 py-3">Discuss with your clinician first</td>
+          </tr>
+          <tr class="border-t border-cream-200 bg-girl-50/60">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Babydust Method</th>
+            <td class="px-4 py-3">Vaginal pH management across the cycle</td>
+            <td class="px-4 py-3">Anecdotal, unproven</td>
+            <td class="px-4 py-3">Caution — unverified claims</td>
+          </tr>
+          <tr class="border-t border-cream-200">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Ericsson Method</th>
+            <td class="px-4 py-3">Albumin column separation of X/Y sperm</td>
+            <td class="px-4 py-3">Not reliably established</td>
+            <td class="px-4 py-3">Clinical setting only</td>
+          </tr>
+          <tr class="border-t border-cream-200 bg-girl-50/60">
+            <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">PGT-IVF (embryo screening)</th>
+            <td class="px-4 py-3">Genetic embryo screening before transfer</td>
+            <td class="px-4 py-3">~99%+ (clinical)</td>
+            <td class="px-4 py-3">Medical counselling — regulated use</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {/* ── 50/50 biology ──────────────────────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="ttc-bio-title">
+    <h2 id="ttc-bio-title" class="section-title text-center">Understanding Sperm Genetics: Why Every Conception is 50/50</h2>
+    <span class="title-dash" aria-hidden="true"></span>
+    <div class="mx-auto mt-6 max-w-3xl space-y-4 text-pretty leading-relaxed text-plum-700">
+      <p>
+        A baby's chromosomal sex is decided the instant one sperm meets the egg — and by
+        <strong>biology, not calendars</strong>. Every sperm carries either an X or a Y chromosome,
+        produced in roughly equal numbers, so each conception begins at approximately even odds
+        no matter what the lunar month says.
+      </p>
+      <p>
+        The chart's observed performance confirms this: the largest empirical test yet — a
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/20618730/"
+          rel="nofollow noopener noreferrer"
+          target="_blank"
+          class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-800"
+        >population-registry study of Sweden's 2.8 million births (Villamor et al., 2010)</a> —
+        found the traditional lunar method matched natural variation at about <strong>50.0%</strong>,
+        exactly the coin-flip rate chromosomes predict. Use the planner to organise your
+        trying-to-conceive months and savour tradition. For a scientifically certain answer,
+        NIPT (~10 weeks) and the 18–20 week anatomy scan are the only reliable ways to know.
+      </p>
+      <div class="rounded-2xl bg-white/70 p-5 text-sm shadow-soft ring-1 ring-cream-200">
+        <p class="font-display text-plum-900"><strong>Natural odds worth knowing:</strong> worldwide, about
+        <strong>105 boys are born for every 100 girls</strong> — a slight natural tilt that no calendar,
+        chart or folklore can move. ✨</p>
+      </div>
+    </div>
+  </section>
+
+  {/* ── FAQ ────────────────────────────────────────────────────────────── */}
+  <section class="section-shell mt-20 reveal" aria-labelledby="ttc-faq-title">
+    <h2 id="ttc-faq-title" class="section-title text-center">Frequently Asked Questions for TTC Parents</h2>
+    <span class="title-dash" aria-hidden="true"></span>
+    <div class="mt-8"><FaqAccordion items={TTC_FAQ} /></div>
+  </section>
+</div>
