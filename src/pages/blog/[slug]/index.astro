@@ -4,10 +4,12 @@ import BaseLayout from '@theme/layouts/BaseLayout.astro';
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 import RelatedTools from '@theme/components/RelatedTools.astro';
 import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
 import { articleSchema } from '@utils/schema';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  // EN posts only (bare ids); translated posts are served from /<locale>/blog/.
+  const posts = (await getCollection('blog')).filter((post) => !post.id.includes('/'));
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
@@ -20,7 +22,7 @@ const t = getDictionary(locale);
 const { Content } = await render(post);
 
 const related = (await getCollection('blog'))
-  .filter((p) => p.id !== post.id)
+  .filter((p) => !p.id.includes('/') && p.id !== post.id)
   .sort((a, b) => (a.data.category === post.data.category ? -1 : b.data.category === post.data.category ? 1 : 0))
   .slice(0, 3);
 
@@ -32,6 +34,7 @@ const dateStr = post.data.publishDate.toISOString().slice(0, 10);
   description={post.data.description}
   enPath={`blog/${post.id}/`}
   locale={locale}
+  alternates={alternatePaths(`blog/${post.id}/`)}
   crumbs={[{ label: 'Blog', href: 'blog/' }, { label: post.data.title }]},
   type="article"
   publishedTime={new Date(post.data.publishDate).toISOString()}

@@ -62,6 +62,11 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
   const [cardMsg, setCardMsg] = useState(false);
 
   const today = new Date().toISOString().slice(0, 10);
+  // In "Baby's due date" mode the expected date is naturally in the future,
+  // so cap the calendar ~2 years ahead instead of today.
+  const eventMax = mode === 'due'
+    ? new Date(Date.now() + 730 * 86400000).toISOString().slice(0, 10)
+    : today;
 
   const predict = useCallback(
     (e: FormEvent) => {
@@ -396,7 +401,7 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
                 type="date"
                 required
                 min="1940-01-01"
-                max={today}
+                max={eventMax}
                 value={eventDate}
                 onChange={(e) => setEventDate(e.target.value)}
                 className="focusable w-full rounded-2xl border-2 border-cream-200 bg-white px-4 py-3 text-plum-800 shadow-sm transition-colors hover:border-girl-300 [color-scheme:light]"

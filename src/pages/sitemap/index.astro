@@ -24,7 +24,9 @@ const tools = [
   { path: 'privacy/', label: 'Privacy Policy' },
 ];
 
-const posts = (await getCollection('blog')).sort((a, b) => Number(b.data.publishDate) - Number(a.data.publishDate));
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.id.includes('/'))
+  .sort((a, b) => Number(b.data.publishDate) - Number(a.data.publishDate));
 const locales = ['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms', 'pl', 'id', 'ar', 'bg', 'tr', 'sv'];
 ---
 

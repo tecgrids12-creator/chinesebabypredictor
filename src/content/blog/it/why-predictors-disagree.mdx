@@ -1,0 +1,24 @@
+---
+title: 'Perché ogni predittore cinese del sesso dà risposte diverse'
+description: 'Due siti, stesse date, previsioni opposte? Sveliamo le sei scorciatoie di conversione che causano le discordanze della tabella — e come il nostro strumento le evita.'
+publishDate: 2026-02-18
+author: 'Team Chinese Baby Predictor'
+category: 'Guide'
+---
+
+Se hai passato le tue date a due predittori cinesi del sesso e hai ottenuto **ragazzo in uno, ragazza nell'altro**, non sei maledetto/a — hai incontrato il problema di conversione. La tabella è una griglia fissa; tutto il disaccordo vive nelle *input*.
+
+## I sei soliti sospetti
+
+1. **Età lunari approssimate.** I siti semplici usano `(anno − anno di nascita) + 1` e non controllano mai se il compleanno è arrivato prima del Capodanno cinese — una differenza reale da uno a due anni.
+2. **Mese di calendario spacciato per mese lunare.** Molte tabelle mappano semplicemente "marzo → mese lunare 3". Sbagliato da entrambe le estremità: i confini dei mesi lunari slittano di giorni, e i mesi intercalari devastano la mappatura.
+3. **Gestione del mese intercalare.** Alcuni strumenti scartano in silenzio i mesi intercalari; pochi usano regole di mezzo mese. Quasi nessuno ti dice cosa ha fatto.
+4. **Presupposti data presunta vs. concezione.** Alcuni sottraggono 266 giorni dalla data presunta, altri usano 280 − 14 allo stesso modo a partire dall'ultimo ciclo — per lo più equivalenti, ma le convenzioni di arrotondamento divergono vicino ai confini.
+5. **Fuso orario trascurato.** Errori di un giorno nell'analisi delle date capovolgono i mesi lunari vicino a un giorno di confine.
+6. **Celle ricopiate a mano.** Le foto delle tabelle ridigitate a mano introducono derive di trascrizione.
+
+## Come lo evitiamo
+
+Il nostro predittore usa la **tabella lunisolare completa 1900–2100** (il set di dati derivato dall'Osservatorio di Hong Kong, ripreso dalle librerie di calendario serie) invece delle approssimazioni: ancore esatte del Capodanno cinese, dimensioni esatte dei mesi, marcatura esplicita dei mesi intercalari. Ogni risultato ti dice l'età lunare, il mese lunare e lo stato intercalare che ha usato.
+
+Se proprio devi verificare a mano, l'Osservatorio di Hong Kong pubblica tabelle di conversione ufficiali — ma due date in un [calcolatore trasparente](/it/chinese-gender-predictor/) è più veloce. 🧮

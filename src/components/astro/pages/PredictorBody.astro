@@ -3,13 +3,24 @@
 import GenderPredictor from '@components/calculators/GenderPredictor.tsx';
 import FaqAccordion from '@theme/components/FaqAccordion.astro';
 import RelatedTools from '@theme/components/RelatedTools.astro';
-import { HOME_FAQ, HOW_TO_STEPS } from '@content/data/editorial';
+import { HOME_FAQ } from '@content/data/editorial';
 import type { Dictionary } from '@i18n/translations';
 import type { Locale } from '@i18n/utils';
+import { safeLocalizedPath } from '@i18n/utils';
 
 interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
-const predictorStrings = { ...t.predictor, copy: t.cta.copy, copied: t.cta.copied, shareLink: t.cta.shareLink };
+const g = t.geo;
+const p = t.predictor;
+const predictorStrings = { ...p, copy: t.cta.copy, copied: t.cta.copied, shareLink: t.cta.shareLink };
+const predictorPath = safeLocalizedPath('chinese-gender-predictor/', locale);
+
+const howSteps = [
+  { emoji: '🎂', title: g.howStep1Title, text: g.howStep1Text },
+  { emoji: '🌱', title: g.howStep2Title, text: g.howStep2Text },
+  { emoji: '✨', title: g.howStep3Title, text: g.howStep3Text },
+];
+const faqItems = t.faqHome ?? HOME_FAQ;
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
@@ -18,7 +29,7 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
     <div>
       <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>{t.hero.kicker}</p>
       <h1 class="font-display text-[2.5rem] font-extrabold leading-[1.12] text-plum-900 sm:text-5xl">
-        {t.predictor.heading} <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">2026</span>
+        {p.heading} <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">2026</span>
       </h1>
       <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
       <p class="mt-4 text-lg leading-relaxed text-plum-600">{t.hero.subtitle}</p>
@@ -35,13 +46,10 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
   </div>
 
   <section class="section-shell mt-16" aria-labelledby="pred-how">
-    <h2 id="pred-how" class="section-title">How this predictor works (the honest version)</h2>
-    <p class="mt-3 max-w-3xl leading-relaxed text-plum-600">
-      Most "traditional charts" online quietly fudge the two calendar conversions the method depends on. Ours uses the
-      official-range 1900–2100 lunisolar tables: exact Chinese New Year anchors, month sizes and leap months. Here's the flow:
-    </p>
+    <h2 id="pred-how" class="section-title">{p.predHowTitle}</h2>
+    <p class="mt-3 max-w-3xl leading-relaxed text-plum-600">{p.predHowIntro}</p>
     <div class="mt-6 grid gap-4 md:grid-cols-3">
-      {HOW_TO_STEPS.map((step, i) => (
+      {howSteps.map((step, i) => (
         <div class="calculator-card p-6">
           <span class="grid h-8 w-8 place-items-center rounded-full font-display text-sm font-extrabold text-white" style={`background-image: linear-gradient(135deg, ${['#dd2175', '#2c63e8', '#f59e0b'][i]}); box-shadow: 0 8px 18px -6px rgba(221,33,117,.5);`}>{i + 1}</span>
           <p class="mt-3 text-3xl" aria-hidden="true">{step.emoji}</p>
@@ -55,32 +63,18 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 
   <section class="section-shell mt-14">
     <div class="prose-custom">
-      <h2>Chinese gender prediction, decoded</h2>
-      <p>
-        The <strong>Chinese gender predictor</strong> — friends call it the Chinese baby calendar, pregnancy chart or Qing Palace chart
-        (清宫图) — matches a mother's <strong>lunar age</strong> with the <strong>lunar month of conception</strong> on a fixed grid of
-        boy/girl cells. Predictions don't use Western dates, which is exactly where every calculator earns its keep: a mother
-        born before Chinese New Year, a conception in the tail of a lunar year, or a leap month can each flip the cell.
-      </p>
-      <h2>Three input modes, one instant answer</h2>
-      <p>
-        Know the exact <em>conception date</em>? Use it. Working from the <em>due date</em>? We subtract 266 days. Only remember the
-        <em>first day of your last period</em>? We add 14 days to estimate ovulation. Whichever you choose, the lunar conversion is
-        computed live and displayed beside your result so you can sanity-check the guesschart yourself.
-      </p>
-      <h2>What the result tells you</h2>
-      <p>
-        Every prediction card shows the <strong>lunar age</strong> the chart used, the precise <strong>lunar month</strong> (with a leap-month
-        asterisk when relevant), the baby's <strong>Chinese zodiac</strong>, and the baby's Western sign by estimate — a genuinely personal
-        read of the 700-year legend. It's a beloved <em>tradition</em>, not a test: for real answers, NIPT from ~10 weeks or an
-        anatomy ultrasound at 18–20 weeks.
-      </p>
+      <h2>{p.decode1Title}</h2>
+      <p><Fragment set:html={p.decode1Body} /></p>
+      <h2>{p.decode2Title}</h2>
+      <p><Fragment set:html={p.decode2Body} /></p>
+      <h2>{p.decode3Title}</h2>
+      <p><Fragment set:html={p.decode3Body} /></p>
     </div>
   </section>
 
   <section class="section-shell mt-14" aria-labelledby="pred-faq">
-    <h2 id="pred-faq" class="section-title text-center">Predictor FAQ</h2>
-    <div class="mt-6"><FaqAccordion items={HOME_FAQ} /></div>
+    <h2 id="pred-faq" class="section-title text-center">{p.faqTitle}</h2>
+    <div class="mt-6"><FaqAccordion items={faqItems} /></div>
   </section>
 
   <RelatedTools t={t} locale={locale} exclude="chinese-gender-predictor/" />

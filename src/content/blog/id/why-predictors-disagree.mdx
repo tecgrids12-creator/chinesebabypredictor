@@ -1,0 +1,24 @@
+---
+title: 'Kenapa Setiap Prediktor Gender China Memberi Jawaban Berbeda'
+description: 'Dua situs, tanggal yang sama, prediksi berlawanan? Kami bongkar enam jalan pintas konversi yang bikin tabel bertengkar — dan bagaimana alat kami menghindarinya.'
+publishDate: 2026-02-18
+author: 'Tim Chinese Baby Predictor'
+category: 'Panduan'
+---
+
+Kalau kamu sudah menjalankan tanggal-tanggalmu lewat dua prediktor gender China dan mendapat **laki-laki di satu sini, perempuan di sana**, kamu tidak kutuk — kamu baru saja bertemu dengan masalah konversi. Tabelnya satu kisi yang tetap; semua ketidakcocokan hidup di *input*-nya.
+
+## Enam tersangka yang paling sering
+
+1. **Umur qamari yang asal-asalan.** Situs-situs sederhana pakai `(tahun − tahun lahir) + 1` dan tak pernah mengecek apakah tanggal lahirnya jatuh sebelum Tahun Baru Imlek — perbedaan nyata satu sampai dua tahun.
+2. **Bulan masehi dipakai curang sebagai bulan qamari.** Banyak tabel begitu saja memetakan "Maret → bulan qamari 3." Salahnya dari dua ujung: batas bulan qamari itu bergeser beberapa hari, dan bulan kabisat tidak mengacaukan pemetaan.
+3. **Penanganan bulan kabisat.** Sebagian alat diam-diam membuang bulan kabisat; segelintir lain pakai aturan setengah bulan. Yang kenapa diajari? Nyaris tidak ada.
+4. **Asumsi tanggal persalinan vs. pembuahan.** Ada yang mengurangi 266 hari dari tanggal persalinan, ada yang memakai 280 − 14 dari haid terakhir — hasilnya umumnya setara, tapi konvensi pembulatan bercabang di dekat batas.
+5. **Zona waktu yang ceroboh.** Kesalahan parsing tanggal meleset satu hari bisa membalik bulan qamari di dekat hari batas.
+6. **Tabel hasil foto yang diketik ulang.** Foto tabel yang diketik ulang manual menyelipkan cacat transkripsi.
+
+## Bagaimana kami menghindarinya
+
+Prediktor kami memakai **tabel lunisolar lengkap 1900–2100** (dataset yang diturunkan dari Observatorium Hong Kong, cermin dari pustaka kalender yang serius), bukan pendekatan kasar: titik jangkar Tahun Baru Imlek yang eksak, ukuran bulan yang eksak, dan penandaan bulan kabisat yang eksplisit. Setiap hasil memberitahumu umur qamari, bulan qamari, dan status kabisat yang dipakai.
+
+Kalau memang mau verifikasi manual, Observatorium Hong Kong menerbitkan tabel konversi resmi — tapi dua tanggal masuk ke [kalkulator yang transparan](/id/chinese-gender-predictor/) itu lebih cepat. 🧮

@@ -11,11 +11,16 @@ describe('i18n fallbacks', () => {
   });
 
   it('merges missing keys from English for every locale', () => {
-    const expectedLocales = ['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms', 'pl', 'id', 'ar', 'bg', 'tr', 'sv'] as const;
+    const expectedLocales = ['hi', 'es', 'ru', 'fr', 'nl', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms', 'pl', 'id', 'ar', 'bg', 'tr', 'sv'] as const;
     for (const loc of expectedLocales) {
       const d = getDictionary(loc);
       // Untranslated keys fall back to English values
-      expect(d.planner.compute).toBe('Compute windows');
+      if (loc === 'es') expect(d.planner.compute).toBe('Calcular ventanas');
+      else if (loc === 'nl') expect(d.planner.compute).toBe('Vensters berekenen');
+      else if (loc === 'hi') expect(d.planner.compute).toBe('खिड़कियाँ निकालें');
+      else if (loc === 'fr') expect(d.planner.compute).toBe('Calculer les fenêtres');
+      else if (loc === 'ru') expect(d.planner.compute).toBe('Рассчитать окна');
+      else expect(d.planner.compute).toBe('Compute windows');
       expect(d.common.entertainment.length).toBeGreaterThan(5);
       // Localized keys take precedence
       if (loc === 'es') expect(d.chart.legendGirl).toBe('Niña');
@@ -37,9 +42,9 @@ describe('routing utilities', () => {
     expect(getDir('sv')).toBe('ltr');
   });
 
-  it('builds 18 hreflang alternates', () => {
+  it('builds 19 hreflang alternates', () => {
     const alts = alternatePaths('gender-quiz/');
-    expect(alts.length).toBe(18);
+    expect(alts.length).toBe(19);
     const map = Object.fromEntries(alts.map((a) => [a.hreflang, a.href]));
     expect(map.en).toBe('/gender-quiz/');
     expect(map.ar).toBe('/ar/gender-quiz/');

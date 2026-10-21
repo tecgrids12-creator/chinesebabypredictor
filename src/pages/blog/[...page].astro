@@ -6,9 +6,10 @@ import { getDictionary, type Dictionary } from '@i18n/translations';
 import { DEFAULT_LOCALE } from '@i18n/utils';
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
-  const posts = (await getCollection('blog')).sort(
-    (a, b) => Number(b.data.publishDate) - Number(a.data.publishDate),
-  );
+  // Only EN-language posts paginate here; translated posts live under /<locale>/blog/.
+  const posts = (await getCollection('blog'))
+    .filter((post) => !post.id.includes('/'))
+    .sort((a, b) => Number(b.data.publishDate) - Number(a.data.publishDate));
   return paginate(posts, { pageSize: 12 });
 }
 

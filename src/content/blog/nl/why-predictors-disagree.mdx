@@ -1,0 +1,24 @@
+---
+title: 'Waarom elke Chinese gendercalculator andere antwoorden geeft'
+description: 'Twee sites, zelfde data, tegengestelde uitslagen? We tonen de zes omrekeningssnelkoppelingen die tabellen laten twisten — en hoe onze tool ze ontwijkt.'
+publishDate: 2026-02-18
+author: 'Team Chinese Baby Predictor'
+category: 'Gidsen'
+---
+
+Heb je je data door twee Chinese gendercalculators gehaald en kreeg je **jongen bij de één, meisje bij de ander**, dan ben je niet vervloekt — je bent de omrekenkwestie tegengekomen. De tabel is één vast raster; alle meningsverschil schuilt in de *invoer*.
+
+## De zes vaste verdachten
+
+1. **Benaderde lunare leeftijden.** Eenvoudige sites rekenen `(jaar − geboortejaar) + 1` en controleren nooit of de geboorte vóór Chinees Nieuwjaar viel — een echt verschil van één à twee jaar.
+2. **Kalendermaand ≈ lunare maand-diefstal.** Veel tabellen mappen gewoon "maart → lunare maand 3". Fout aan beide uiteinden: grenzen van lunare maanden schuiven dagen op, en schrikkelmaanden verpesten die afbeelding.
+3. **Schrikkelmaand-afhandeling.** Sommige tools gooien schrikkelmaanden stilzwijgend weg; enkelen hanteren een halve-maandregel. Zelden vertelt men wat er gebeurd is.
+4. **Uitgerekende datum vs. conceptie-aannames.** Sommigen trekken 266 dagen af van de uitgerekende datum, anderen rekenen 280 − 14 op dezelfde manier toegepast op de LMP — grotendeels equivalent, maar afrondingsconventies splitten vlak bij grenzen.
+5. **Tijdzone-slordigheid.** Datumparsen met een foutje van één dag wisselt lunare maanden vlak bij een grensdag.
+6. **Excel-cellen van legendes.** Foto's van tabellen, met de hand opnieuw getikt, brengen overschrijfdrift binnen.
+
+## Hoe wij dit vermijden
+
+Onze calculator gebruikt de volledige **1900–2100-lunisolaire tabel** (de dataset afgeleid van het Hongkong-Observatorium, door serieuze kalenderbibliotheken gespiegeld) in plaats van benaderingen: exacte Chinees-Nieuwjaar-ankers, exacte maandenmaten, expliciete schrikkelmaandmarkering. Elk resultaat vertelt je de lunare leeftijd, lunare maand en schrikkelstatus die het gebruikte.
+
+Wil je met de hand verifiëren: het Hong Kong Observatory publiceert officiële omrekentabellen — maar twee data in een [doorzichtige calculator](/nl/chinese-gender-predictor/) is sneller. 🧮

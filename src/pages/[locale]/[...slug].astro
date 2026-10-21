@@ -43,11 +43,22 @@ const locale = (rawLocale ?? 'en') as Locale;
 const tool = slug;
 const t = getDictionary(locale);
 
-const blogPosts: PostCard[] = (await getCollection('blog'))
-  .sort((a, b) => Number(b.data.publishDate) - Number(a.data.publishDate))
+// Localized blog listing: posts written in this locale first, EN fallback for
+// locales without a translated blog (tier-2 locales).
+// Ids of translated posts are '<locale>/<slug>' (files under src/content/blog/<locale>/).
+const allPosts = await getCollection('blog');
+const localePosts = allPosts
+  .filter((post) => (post.id.includes('/') ? post.id.split('/')[0] : 'en') === locale)
+  .sort((a, b) => Number(b.data.publishDate) - Number(a.data.publishDate));
+const listingPosts = localePosts.length > 0
+  ? localePosts
+  : allPosts.filter((post) => !post.id.includes('/'))
+    .sort((a, b) => Number(b.data.publishDate) - Number(a.data.publishDate));
+
+const blogPosts: PostCard[] = listingPosts
   .slice(0, 12)
   .map((post) => ({
-    slug: post.id,
+    slug: post.id.split('/').pop()!,
     title: post.data.title,
     description: post.data.description,
     category: post.data.category,
@@ -62,14 +73,14 @@ const pageProps = {
   home: {
     title: t.meta.homeTitle,
     description: t.meta.homeDesc,
-    schema: [webAppSchema({ name: 'Chinese Gender Predictor', path: '', description: t.meta.homeDesc }), orgSchema(), faqPageSchema(HOME_FAQ)],
+    schema: [webAppSchema({ name: 'Chinese Gender Predictor', path: '', description: t.meta.homeDesc }), orgSchema(), faqPageSchema(t.faqHome ?? HOME_FAQ)],
   },
   'chinese-gender-predictor': {
     title: t.meta.predictorTitle,
     description: t.meta.predictorDesc,
-    schema: [webAppSchema({ name: 'Chinese Gender Predictor', path: 'chinese-gender-predictor/', description: t.meta.predictorDesc }), faqPageSchema(HOME_FAQ)],
+    schema: [webAppSchema({ name: 'Chinese Gender Predictor', path: 'chinese-gender-predictor/', description: t.meta.predictorDesc }), faqPageSchema(t.faqHome ?? HOME_FAQ)],
   },
-  'chinese-gender-chart': { title: t.meta.chartTitle, description: t.meta.chartDesc, schema: [faqPageSchema(CHART_FAQ)] },
+  'chinese-gender-chart': { title: t.meta.chartTitle, description: t.meta.chartDesc, schema: [faqPageSchema(t.faqChart ?? CHART_FAQ)] },
   'gender-planner': { title: t.meta.plannerTitle, description: t.meta.plannerDesc, schema: [] },
   'lunar-age-calculator': { title: t.meta.lunarAgeTitle, description: t.meta.lunarAgeDesc, schema: [] },
   'mayan-gender-predictor': { title: t.meta.mayanTitle, description: t.meta.mayanDesc, schema: [] },
@@ -98,11 +109,11 @@ const crumbs = tool ? [{ label: t.nav[NAV_KEY_BY_SLUG[tool] ?? 'blog'] }] : [];
   description={current.description}
   enPath={enPath}
   locale={locale}
-  crumbs={crumbs},
+  crumbs={crumbs}
   alternates={alternates}
   schema={current.schema as Record<string, unknown>[]}
 >
-  {tool === undefined && <HomeBody t={t} />}
+  {tool === undefined && <HomeBody t={t} locale={locale} />}
 
   {tool === 'chinese-gender-predictor' && (
     <>
@@ -151,7 +162,7 @@ const crumbs = tool ? [{ label: t.nav[NAV_KEY_BY_SLUG[tool] ?? 'blog'] }] : [];
       posts={blogPosts}
       t={{ readMore: t.blog.readMore, published: t.blog.published }}
       locale={locale}
-      title="Chinese Gender Predictors: Guides, Charts & Honest Science"
+      title={t.meta.blogTitle}
       subtitle={t.meta.blogDesc}
     />
   )}

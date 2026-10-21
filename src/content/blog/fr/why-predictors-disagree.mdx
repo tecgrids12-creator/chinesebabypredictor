@@ -1,0 +1,24 @@
+---
+title: 'Pourquoi chaque prédicteur chinois donne des réponses différentes'
+description: 'Deux sites, mêmes dates, pronostics opposés ? Nous dévoilons les six raccourcis de conversion qui font tourner les tableaux — et comment notre outil les esquive.'
+publishDate: 2026-02-18
+author: 'Équipe Chinese Baby Predictor'
+category: 'Guides'
+---
+
+Si vous avez passé vos dates dans deux prédicteurs chinois et obtenu **garçon sur l'un, fille sur l'autre**, vous n'êtes pas maudit — vous avez rencontré le problème de conversion. Le tableau est une grille fixe ; tout le désaccord habite dans les *entrées*.
+
+## Les six suspects habituels
+
+1. **Âges lunaires approximatifs.** Les sites simples utilisent `(année − année de naissance) + 1` et ne vérifient jamais si la naissance précédait le Nouvel An chinois — soit 1 à 2 ans d'écart réel.
+2. **Vol du mois calendaire pour mois lunaire.** Beaucoup de tableaux font juste « mars → mois lunaire 3 ». Faux aux deux bouts : les frontières des mois lunaires dérivent de quelques jours, et les mois intercalaires sabordent la correspondance.
+3. **Gestion du mois intercalaire.** Certains outils éliminent silencieusement les mois intercalaires ; quelques-uns appliquent des règles de demi-mois. Peu vous disent ce qu'ils ont fait.
+4. **Hypothèses date prévue vs. conception.** Les uns soustraient 266 jours de la date prévue, les autres utilisent 280 − 14 de la même façon depuis les dernières règles — à peu près équivalent, mais les conventions d'arrondi se scindent près des frontières.
+5. **Sloppiness des fuseaux horaires.** Les erreurs de parse d'un jour près font basculer les mois lunaires près d'un jour frontière.
+6. **Cellules Excel de légende.** Les photos de tableaux retapées à la main introduisent des dérives de transcription.
+
+## Comment nous l'évitons
+
+Notre prédicteur utilise la **table lunisolaire complète 1900–2100** (l'ensemble dérivé de l'Observatoire de Hong Kong, ce même miroir que les bibliothèques sérieuses de calendriers) au lieu d'approximations : ancres exactes du Nouvel An chinois, longueurs exactes des mois, marquage explicite du mois intercalaire. Chaque résultat indique l'âge lunaire, le mois lunaire et le statut intercalaire employés.
+
+Si vous devez vérifier à la main, l'Observatoire de Hong Kong publie les tables officielles de conversion — mais deux dates dans une [calculatrice transparente](/fr/chinese-gender-predictor/) va plus vite. 🧮

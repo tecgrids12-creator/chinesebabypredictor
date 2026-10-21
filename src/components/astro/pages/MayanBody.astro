@@ -3,9 +3,11 @@ import MayanPredictor from '@components/calculators/MayanPredictor.tsx';
 import RelatedTools from '@theme/components/RelatedTools.astro';
 import type { Dictionary } from '@i18n/translations';
 import type { Locale } from '@i18n/utils';
+import { safeLocalizedPath } from '@i18n/utils';
 
 interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
+const m = { ...t.mayan, vsBody: (t.mayan.vsBody ?? '').replaceAll('{predictorPath}', safeLocalizedPath('chinese-gender-predictor/', locale)) };
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
@@ -13,36 +15,25 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
   <section class="section-shell grid items-start gap-10 lg:grid-cols-2">
     <div>
       <h1 class="font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
-        Mayan <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">gender predictor</span>
+        <Fragment set:html={m.h1} />
       </h1>
-      <p class="mt-4 text-lg leading-relaxed text-plum-600">
-        The pyramid people's answer to the Chinese chart: the Mayan method compares the <strong>parity</strong> (odd or even) of the
-        mother's age at conception with the parity of the conception year — no lunar math required.
-      </p>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">{m.intro}</p>
       <div class="mt-6 rounded-3xl bg-cream-100 p-5 ring-1 ring-cream-200">
-        <p class="font-display font-bold text-plum-800">🏛️ The rule, as widely circulated</p>
-        <p class="mt-1.5 text-sm font-semibold leading-relaxed text-plum-600">{t.mayan.rule}</p>
-        <p class="mt-2 text-xs text-plum-500">Source variants exist (some swap the verdict) — like all folklore, consistency isn't its strong suit. Estimated accuracy: ~50%.</p>
+        <p class="font-display font-bold text-plum-800">{m.ruleTitle}</p>
+        <p class="mt-1.5 text-sm font-semibold leading-relaxed text-plum-600">{m.rule}</p>
+        <p class="mt-2 text-xs text-plum-500">{m.ruleFoot}</p>
       </div>
     </div>
-    <div class="lg:sticky lg:top-24"><MayanPredictor client:idle strings={t.mayan} /></div>
+    <div class="lg:sticky lg:top-24"><MayanPredictor client:idle strings={m} /></div>
   </section>
   <GeoLeadLinks />
 
   <section class="section-shell mt-14">
     <div class="prose-custom">
-      <h2>Mayan vs. Chinese: which to trust?</h2>
-      <p>
-        Neither, medically — both converge to a coin flip when tested. But they disagree often, which makes running both a
-        genuinely fun duel: if the <a href="/chinese-gender-predictor/">Chinese chart</a> and the Mayan parity rule agree, folklore wins
-        the family table for a night; if they clash, the debate extends beautifully to delivery day.
-      </p>
-      <h2>Where the Mayans fit in the tradition</h2>
-      <p>
-        Unlike the chart (which claims Qing palace origins), the "Mayan predictor" as internet folklore is likely a 20th-century
-        creation loosely inspired by the Maya vigesimal (base-20) love of numbers — no confirmed ancient manuscript survives.
-        Its parity rule is deterministic, meaning it's honest about being arithmetic roulette.
-      </p>
+      <h2>{m.vsTitle}</h2>
+      <p><Fragment set:html={m.vsBody} /></p>
+      <h2>{m.originTitle}</h2>
+      <p><Fragment set:html={m.originBody} /></p>
     </div>
   </section>
 

@@ -6,12 +6,15 @@
  * planner, the full chart, and the empirical study section.
  * Tool routes are locale-aware; the TTC planner is an EN-only route and always
  * links to its canonical EN URL (zero redirects / zero 404s).
+ * Labels/descriptions come from the `geo` dictionary (deep EN fallback).
  */
 import type { Locale } from '@i18n/utils';
 import { localizedPath } from '@i18n/utils';
+import { getDictionary } from '@i18n/translations';
 
 interface Props { locale?: Locale; }
 const locale = Astro.props.locale ?? 'en';
+const g = getDictionary(locale).geo;
 const H = (p: string) => (p === 'chinese-gender-planner-ttc/' ? '/chinese-gender-planner-ttc/' : localizedPath(p, locale));
 
 const hub = [
@@ -20,31 +23,31 @@ const hub = [
     href: H(''),
     icon: '🏠',
     label: 'Chinese Baby Predictor',
-    desc: 'Main calculator — the primary lunar gender engine',
+    desc: g.hub1Desc,
     title: 'Chinese Baby Predictor — main lunar gender calculator',
   },
   {
     key: 'ttc',
     href: H('chinese-gender-planner-ttc/'),
     icon: '🗓️',
-    label: 'TTC Conception Calendar',
-    desc: 'Plan a boy or girl across a 12–24 month horizon',
+    label: g.hub2Label,
+    desc: g.hub2Desc,
     title: 'Chinese gender TTC planner — 2026–2028 conception windows',
   },
   {
     key: 'chart',
     href: H('chinese-gender-chart/'),
     icon: '📊',
-    label: 'Full 28×12 Lunar Chart',
-    desc: 'The complete interactive Qing Palace matrix',
+    label: g.hub3Label,
+    desc: g.hub3Desc,
     title: 'Interactive 28×12 lunar gender chart — full matrix',
   },
   {
     key: 'science',
     href: `${H('')}#study-title`,
     icon: '🔬',
-    label: 'Science & Accuracy',
-    desc: 'Folklore vs. the 2.8M-birth registry study',
+    label: g.hub4Label,
+    desc: g.hub4Desc,
     title: '2010 Swedish population registry study — folklore vs. empirical evidence',
   },
 ] as const;
@@ -52,7 +55,7 @@ const hub = [
 
 <section id="cluster-hub" class="section-shell mt-16" aria-labelledby="cluster-hub-title">
   <h2 id="cluster-hub-title" class="font-display text-center text-xl font-extrabold tracking-tight text-plum-900 sm:text-2xl">
-    Related Lunar Profiles &amp; Quick Navigation
+    {g.hubTitle}
   </h2>
   <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
     {hub.map((item) => (

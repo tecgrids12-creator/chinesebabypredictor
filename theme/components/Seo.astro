@@ -32,15 +32,16 @@ const canonicalPath = isDefault ? enPath : `${pageLocale}/${enPath}`;
 const canonical = new URL(canonicalPath, SITE).href;
 const ogImage = image ?? new URL('/og-default.png', SITE).href;
 
-// hreflang list: every locale version of enPath (skip ones we don't render? For
-// simplicity the locale home + tool pages exist for all locales; other pages
-// advertise en + x-default only).
-const hreflangs = Astro.props.alternates ?? Astro.currentLocale
-  ? [
-    { hreflang: 'en', href: new URL(enPath === '' ? '/' : `/${enPath}`, SITE).href },
-    { hreflang: 'x-default', href: new URL(enPath === '' ? '/' : `/${enPath}`, SITE).href },
-  ]
-  : [];
+// hreflang list: explicit alternates when provided (locale pages build the
+// full per-locale list); otherwise en + x-default pointing at this enPath.
+const selfUrl = new URL(enPath === '' ? '/' : `/${enPath}`, SITE).href;
+const fallbackAlternates = [
+  { hreflang: 'en', href: selfUrl },
+  { hreflang: 'x-default', href: selfUrl },
+];
+const hreflangs = Astro.props.alternates && Astro.props.alternates.length > 0
+  ? Astro.props.alternates
+  : fallbackAlternates;
 
 const jsonLd = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 ---

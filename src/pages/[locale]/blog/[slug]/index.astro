@@ -1,0 +1,97 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import { getDictionary } from '@i18n/translations';
+import { SUPPORTED_LOCALES, alternatePaths, type Locale } from '@i18n/utils';
+import { articleSchema } from '@utils/schema';
+
+/**
+ * Localized blog posts: src/content/blog/<locale>/<slug>.mdx renders at
+ * /<locale>/blog/<slug>/. This static route takes priority over the
+ * [locale]/[...slug] catch-all for these deeper paths.
+ */
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return SUPPORTED_LOCALES.filter((l) => l !== 'en').flatMap((locale: string) =>
+    posts
+      .filter((post) => post.id.startsWith(`${locale}/`))
+      .map((post) => ({
+        params: { locale, slug: post.id.split('/').pop()! },
+        props: { post },
+      })),
+  );
+}
+
+const { locale: rawLocale, slug } = Astro.params;
+const locale = (rawLocale ?? 'en') as Locale;
+const t = getDictionary(locale);
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+// Related posts in the same language (same-category first), like the EN page.
+const related = (await getCollection('blog'))
+  .filter((p) => p.id.startsWith(`${locale}/`) && p.id !== post.id)
+  .sort((a, b) => (a.data.category === post.data.category ? -1 : b.data.category === post.data.category ? 1 : 0))
+  .slice(0, 3);
+
+const dateStr = post.data.publishDate.toISOString().slice(0, 10);
+const dateTags: Record<string, string> = {
+  es: 'es-ES', fr: 'fr-FR', nl: 'nl-NL', ru: 'ru-RU', hi: 'hi-IN',
+  it: 'it-IT', pt: 'pt-BR', pl: 'pl-PL', ar: 'ar-EG', tr: 'tr-TR', id: 'id-ID',
+};
+---
+
+<BaseLayout
+  title={`${post.data.title} | Chinese Baby Predictor`}
+  description={post.data.description}
+  enPath={`blog/${slug}/`}
+  alternates={alternatePaths(`blog/${slug}/`)}
+  locale={locale}
+  crumbs={[{ label: t.nav.blog, href: 'blog/' }, { label: post.data.title }]}
+  type="article"
+  publishedTime={new Date(post.data.publishDate).toISOString()}
+  schema={articleSchema({
+    title: post.data.title,
+    description: post.data.description,
+    slug: `${locale}/blog/${slug}`,
+    publishDate: dateStr,
+    author: post.data.author,
+  })}
+>
+  <article class="pt-10">
+    <header class="section-shell max-w-3xl">
+      <span class="rounded-full bg-girl-100 px-3.5 py-1.5 text-xs font-bold text-girl-700">{post.data.category}</span>
+      <h1 class="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-plum-900 sm:text-5xl">{post.data.title}</h1>
+      <div class="mt-4 flex flex-wrap items-center gap-3 text-sm font-semibold text-plum-500">
+        <time datetime={dateStr}>{new Date(dateStr).toLocaleDateString(dateTags[locale] ?? 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <span aria-hidden="true">·</span>
+        <span>{post.data.author}</span>
+      </div>
+    </header>
+    <GeoLeadLinks />
+
+    <div class="section-shell mt-8">
+      <div class="calculator-card p-6 sm:p-10">
+        <div class="prose-custom">
+          <Content />
+        </div>
+      </div>
+    </div>
+
+    <section class="section-shell mt-12 max-w-4xl" aria-labelledby="more-guides">
+      <h2 id="more-guides" class="section-title">{t.exploreTitle ?? 'Keep exploring'}</h2>
+      <div class="mt-5 grid gap-4 sm:grid-cols-3">
+        {related.map((rel) => (
+          <a href={`/${locale}/blog/${rel.id.split('/').pop()}/`} class="reveal calculator-card group p-5 transition hover:-translate-y-1 hover:shadow-lift">
+            <p class="text-xs font-bold uppercase tracking-wider text-girl-500">{rel.data.category}</p>
+            <p class="mt-1.5 font-display font-bold leading-snug text-plum-900 group-hover:text-girl-600">{rel.data.title}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <RelatedTools t={t} locale={locale} />
+  </article>
+</BaseLayout>

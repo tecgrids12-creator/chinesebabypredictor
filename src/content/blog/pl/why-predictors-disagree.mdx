@@ -1,0 +1,24 @@
+---
+title: 'Dlaczego każdy chiński predyktor płci daje inne wyniki'
+description: 'Dwa serwisy, te same daty, przeciwne prognozy? Obalamy sześć skrótów konwersji, które powodują spory o tabliczki — i jak nasze narzędzie ich unika.'
+publishDate: 2026-02-18
+author: 'Zespół Chinese Baby Predictor'
+category: 'Poradniki'
+---
+
+Jeśli przepuściłeś swoje daty przez dwa chińskie predyktory płci i uzyskałeś **chłopca u jednego, dziewczynkę u drugiego**, nie jesteś przeklęty — dopadł cię problem konwersji. Tabliczka to jedna stała siatka; cały spór tkwi w *danych wejściowych*.
+
+## Sześciu zwykłych podejrzanych
+
+1. **Przybliżone wieki księżycowe.** Proste serwisy używają wzoru `(rok − rok urodzenia) + 1` i nigdy nie sprawdzają, czy urodziny wypadły przed chińskim Nowym Rokiem — to rzeczywista różnica od jednego do dwóch lat.
+2. **Podmiana miesiąca kalendarzowego na miesiąc księżycowy.** Wiele tabliczek po prostu mapuje „marzec → miesiąc księżycowy 3”. Błędnie na obu końcach: granice miesięcy księżycowych przesuwają się o dni, a miesiące przestępne psują całe mapowanie.
+3. **Obsługa miesiąca przestępnego.** Niektóre narzędzia po cichu wyrzucają miesiące przestępne; nieliczne stosują zasady półmiesięczne. Niewiele z nich mówi, co zrobiło.
+4. **Założenia termin porodu vs. poczęcie.** Niektóre odejmują 266 dni od terminu porodu, inne używają 280 − 14 w ten sam sposób od ostatniej miesiączki — w większości równoważne, ale konwencje zaokrąglania rozstają się w pobliżu granic.
+5. **Niedbałostwo strefy czasowej.** Błędy „o jeden dzień” przy parsowaniu dat odwracają miesiące księżycowe w pobliżu dnia granicznego.
+6. **Komórki legend przepisywane ręcznie.** Zdjęcia tabliczek przepisywane ręcznie wprowadzają dryf transkrypcji.
+
+## Jak tego unikamy
+
+Nasz predyktor korzysta z **pełnej księżycowo-słonecznej tablicy 1900–2100** (zbioru danych wywodzącego się z Obserwatorium w Hongkongu, w który odzwierciedlają poważne biblioteki kalendarzowe) zamiast przybliżeń: dokładne kotwice chińskiego Nowego Roku, dokładne długości miesięcy, jawnie oznaczone miesiące przestępne. Każdy wynik podaje wiek księżycowy, miesiąc księżycowy i status miesiąca przestępnego, jakich użył.
+
+Jeśli musisz zweryfikować ręcznie, Obserwatorium w Hongkongu publikuje oficjalne tabele konwersji — ale dwie daty wpisane do [przejrzystego kalkulatora](/pl/chinese-gender-predictor/) to szybsze rozwiązanie. 🧮

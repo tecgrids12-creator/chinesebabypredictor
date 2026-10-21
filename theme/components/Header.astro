@@ -28,9 +28,28 @@ const nav = [
     <div class="grid h-16 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
       {/* left slot: language switcher */}
       <div class="flex items-center gap-2">
+        <script is:inline>
+  /* Language switcher routing: global, hydration-free, defined before any select renders. */
+  window.__cbpLangTo = function (next) {
+    try {
+      var TOOLS = ['chinese-gender-predictor/', 'chinese-gender-chart/', 'gender-planner/', 'lunar-age-calculator/', 'mayan-gender-predictor/', 'due-date-calculator/', 'gender-quiz/', 'blog/'];
+      var LANGS = ['ar', 'bg', 'bn', 'de', 'es', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'ms', 'nl', 'pl', 'pt', 'ru', 'sv', 'tr'];
+      var path = window.location.pathname;
+      var segs = path.split('/').filter(Boolean);
+      var current = segs.length && LANGS.indexOf(segs[0]) !== -1 ? segs[0] : 'en';
+      var rest = current !== 'en' ? segs.slice(1) : segs;
+      /* Localized home/tool/blog-list pages exist for every locale; anything
+         else (legal pages, blog posts, TTC planner) falls back to locale home. */
+      var first = rest[0] || '';
+      var suffix = TOOLS.indexOf(first + '/') !== -1 && !(first === 'blog' && rest.length > 1) ? first + '/' : '';
+      var target = next === 'en' ? '/' + suffix : '/' + next + '/' + suffix;
+      if (target && target !== window.location.pathname) window.location.assign(target);
+    } catch (e) { /* never block real navigation */ }
+  };
+</script>
         <form data-lang-switcher class="relative hidden sm:block">
           <label class="sr-only" for="lang-select">{t.common.language}</label>
-          <select id="lang-select" data-current-locale={locale} data-current-path={Astro.url.pathname}
+          <select id="lang-select" data-current-locale={locale} data-current-path={Astro.url.pathname} onchange="__cbpLangTo(this.value)"
                   class="focusable cursor-pointer appearance-none rounded-full py-2 pl-8 pr-3 text-sm font-semibold text-plum-700 transition hover:-translate-y-px"
                   style="border: 1px solid transparent; background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)) padding-box, linear-gradient(120deg, rgba(238,90,151,.4), rgba(126,169,249,.45)) border-box; box-shadow: 0 4px 14px -6px rgba(122,47,136,.18); max-width: 9.5rem;">
             {SUPPORTED_LOCALES.map((loc) => (
@@ -100,7 +119,7 @@ const nav = [
         ))}
         <div class="col-span-2 flex items-center gap-2 pt-1">
           <label class="sr-only" for="lang-select-mobile">{t.common.language}</label>
-          <select id="lang-select-mobile" data-lang-switcher data-current-locale={locale} data-current-path={Astro.url.pathname}
+          <select id="lang-select-mobile" data-lang-switcher data-current-locale={locale} data-current-path={Astro.url.pathname} onchange="__cbpLangTo(this.value)"
                   class="focusable w-full appearance-none rounded-2xl px-4 py-3 text-sm font-semibold text-plum-800"
                   style="border: 1px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.35)) border-box;">
             {SUPPORTED_LOCALES.map((loc) => (
@@ -137,24 +156,7 @@ const nav = [
     burgerToCross(!open);
   });
 
-  // ── Language switcher (custom i18n routing) ────────────────────────────────
-  const TOOL_PATHS = ['chinese-gender-predictor/', 'chinese-gender-chart/', 'gender-planner/', 'lunar-age-calculator/', 'mayan-gender-predictor/', 'due-date-calculator/', 'gender-quiz/', 'blog/'];
-  document.querySelectorAll<HTMLSelectElement>('select[data-lang-switcher]').forEach((select) => {
-    select.addEventListener('change', () => {
-      const next = select.value || 'en';
-      const current = select.dataset.currentLocale || 'en';
-      const pathname = select.dataset.currentPath || '/';
-      // Strip the current locale prefix to find the English base path.
-      let base = pathname.startsWith('/') ? pathname.slice(1) : pathname;
-      if (current !== 'en') {
-        const prefix = current + '/';
-        base = base.startsWith(prefix) ? base.slice(prefix.length) : base;
-      }
-      const suffix = base === '/' || base === '' ? '' : (TOOL_PATHS.find((tool) => base.startsWith(tool)) ?? '');
-      // Localized home/tool/blog pages exist for every locale; anything else
-      // (legal, posts, …) falls back to the locale's home page.
-      const target = next === 'en' ? `/${suffix}` : `/${next}/${suffix}`;
-      window.location.href = target;
-    });
-  });
+  // ── Language switcher routing ──
+  // Handled by the inline global `__cbpLangTo` + native onchange attributes
+  // defined above the selects (hydration-free, works before/after hydration).
 </script>

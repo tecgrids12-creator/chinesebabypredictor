@@ -27,6 +27,52 @@ const emojis: Record<string, string> = {
   'Accuracy & Science': '🔬',
   Guides: '🧭',
   'Myths & Fun': '🎭',
+  'Calendarios y tablas': '📅',
+  'Precisión y ciencia': '🔬',
+  'Guías': '🧭',
+  'Mitos y diversión': '🎭',
+  'Календари и таблицы': '📅',
+  'Точность и наука': '🔬',
+  'Руководства': '🧭',
+  'Мифы и веселье': '🎭',
+  'Calendriers et tableaux': '📅',
+  'Précision et science': '🔬',
+  'Mythes et amusement': '🎭',
+  'Kalenders en tabellen': '📅',
+  'Nauwkeurigheid en wetenschap': '🔬',
+  'Mythen en plezier': '🎭',
+  'चार्ट और कैलेंडर': '📅',
+  'सटीकता और विज्ञान': '🔬',
+  'गाइड': '🧭',
+  'मिथक और मनोरंजन': '🎭',
+  'Tabelle e calendari': '📅',
+  'Precisione e scienza': '🔬',
+  'Guide': '🧭',
+  'Miti e divertimento': '🎭',
+  'Tabelas e calendários': '📅',
+  'Precisão e ciência': '🔬',
+  'Guias': '🧭',
+  'Mitos e diversão': '🎭',
+  'Tabele i kalendarze': '📅',
+  'Dokładność i nauka': '🔬',
+  'Poradniki': '🧭',
+  'Mity i zabawa': '🎭',
+  'الجداول والتقاويم': '📅',
+  'الدقة والعلم': '🔬',
+  'أدلة': '🧭',
+  'الخرافات والترفيه': '🎭',
+  'Tablolar ve Takvimler': '📅',
+  'Doğruluk ve Bilim': '🔬',
+  'Rehberler': '🧭',
+  'Mitler ve Eğlence': '🎭',
+  'Tabel dan Kalender': '📅',
+  'Akurasi dan Sains': '🔬',
+  'Panduan': '🧭',
+  'Mitos dan Hiburan': '🎭',
+};
+const dateTags: Record<string, string> = {
+  es: 'es-ES', fr: 'fr-FR', nl: 'nl-NL', ru: 'ru-RU', hi: 'hi-IN',
+  it: 'it-IT', pt: 'pt-BR', pl: 'pl-PL', ar: 'ar-EG', tr: 'tr-TR', id: 'id-ID',
 };
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
@@ -53,7 +99,7 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
           </h2>
           <p class="mt-2 flex-1 text-sm leading-relaxed text-plum-600">{post.description}</p>
           <div class="mt-4 flex items-center justify-between text-xs font-semibold text-plum-500">
-            <time datetime={post.publishDate}>{new Date(post.publishDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
+            <time datetime={post.publishDate}>{new Date(post.publishDate).toLocaleDateString(dateTags[locale] ?? 'en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
             <a href={safeLocalizedPath(`blog/${post.slug}/`, locale)} class="focusable font-bold text-girl-600 transition group-hover:underline">{t.readMore} →</a>
           </div>
         </article>

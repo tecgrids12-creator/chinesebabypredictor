@@ -1,0 +1,24 @@
+---
+title: 'Por qué cada predictor chino de género da respuestas distintas'
+description: '¿Dos sitios, mismas fechas, predicciones opuestas? Exponemos los seis atajos de conversión que causan las disputas de tabla — y cómo nuestra herramienta los evita.'
+publishDate: 2026-02-18
+author: 'Equipo de Chinese Baby Predictor'
+category: 'Guías'
+---
+
+Si pasaste tus fechas por dos predictores chinos y obtuviste **niño en uno, niña en el otro**, no estás maldito — has topado con el problema de conversión. La tabla es una rejilla fija; todo el desacuerdo vive en las *entradas*.
+
+## Los seis sospechosos habituales
+
+1. **Edades lunares aproximadas.** Los sitios sencillos usan `(año − año de nacimiento) + 1` y jamás comprueban si el nacimiento fue antes del Año Nuevo Chino — una diferencia real de uno a dos años.
+2. **Robo del mes de calendario por mes lunar.** Muchas tablas mapean "marzo → mes lunar 3" sin más. Mal por ambos lados: las fronteras de los meses lunares se desplazan días, y los meses intercalares estropean la asignación.
+3. **Manejo del mes intercalar.** Algunas herramientas se deshacen en silencio de los meses intercalares; unas pocas usan reglas de medio mes. Pocas te cuentan qué hicieron.
+4. **Supuestos fecha probable vs. concepción.** Unos restan 266 días a la fecha probable, otros usan 280 − 14 de la última regla — mayormente equivalente, pero las convenciones de redondeo se bifurcan cerca de las fronteras.
+5. **Zona horaria desaliñada.** Errores de un día al analizar fechas voltean meses lunares cerca de un día de frontera.
+6. **Celdas de excel de leyendas.** Fotos de tablas re-tecleadas a mano meten deriva de transcripción.
+
+## Cómo lo evitamos
+
+Nuestro predictor usa la **tabla lunisolar completa 1900–2100** (el set derivado del Observatorio de Hong Kong, espejo de las bibliotecas serias de calendario) en vez de aproximaciones: anclas exactas del Año Nuevo Chino, tamaños exactos de mes, marcado explícito del mes intercalar. Cada resultado te dice la edad lunar, el mes lunar y el estado intercalar que usó.
+
+Si tienes que verificar a mano, el Observatorio de Hong Kong publica tablas oficiales de conversión — pero dos fechas en una [calculadora transparente](/es/chinese-gender-predictor/) es más rápido. 🧮

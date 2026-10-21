@@ -6,6 +6,7 @@ import type { Locale } from '@i18n/utils';
 
 interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
+const p = t.planner;
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
@@ -13,39 +14,24 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
   <section class="section-shell grid items-start gap-10 lg:grid-cols-2">
     <div>
       <h1 class="font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
-        Conceive a <span class="text-boy-500">boy</span> or a <span class="text-girl-500">girl</span> — the planning calendar
+        <Fragment set:html={p.h1} />
       </h1>
-      <p class="mt-4 text-lg leading-relaxed text-plum-600">
-        Read the traditional chart backwards: enter the mother's birthday, choose the gender you're hoping for, and get the
-        lunar months that "match" — converted to real Gregorian date windows you can circle on a calendar.
-      </p>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">{p.intro}</p>
       <div class="mt-6 rounded-3xl bg-girl-50/60 p-5 ring-1 ring-girl-100">
-        <p class="font-display font-bold text-plum-800">🍼 Before you plan…</p>
-        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">
-          No calendar can influence a baby's sex — it's set by chromosomes at conception. Use this planner as a charming ritual
-          alongside real family planning advice, and celebrate whichever wonderful outcome arrives.
-        </p>
+        <p class="font-display font-bold text-plum-800">{p.calloutTitle}</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">{p.calloutBody}</p>
       </div>
     </div>
-    <div class="lg:sticky lg:top-24"><GenderPlanner client:idle strings={t.planner} /></div>
+    <div class="lg:sticky lg:top-24"><GenderPlanner client:idle strings={p} /></div>
   </section>
   <GeoLeadLinks />
 
   <section class="section-shell mt-14">
     <div class="prose-custom">
-      <h2>How to read your planner results</h2>
-      <p>
-        The planner walks through both lunar years that overlap your chosen Gregorian year, computes your <strong>lunar age</strong>
-        for each, and keeps only the months whose chart cell matches your wish. For every match you get the exact
-        <strong>Gregorian window</strong> (for example: "Sep 22 – Oct 20, 2026") plus month numbers and leap-month notes — the
-        clarity vague "year of the elephant" tables can't give you.
-      </p>
-      <h2>Tips for timing cycles with windows</h2>
-      <p>
-        Conception happens near ovulation — about 14 days after a period begins. If a window opens mid-month, check where
-        your own ovulation typically falls relative to it. If ovulation lands outside every happy window this year… welcome
-        to the entire history of folklore family planning: nature keeps her own calendar.
-      </p>
+      <h2>{p.readTitle}</h2>
+      <p><Fragment set:html={p.readBody} /></p>
+      <h2>{p.timingTitle}</h2>
+      <p><Fragment set:html={p.timingBody} /></p>
     </div>
   </section>
 

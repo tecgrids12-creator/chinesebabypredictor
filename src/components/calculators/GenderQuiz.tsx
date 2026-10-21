@@ -7,6 +7,12 @@ export interface QuizStrings {
   restart: string; yes: string; no: string;
   resultBoy: string; resultGirl: string;
   share: string; disclaimer: string; progress: string;
+  /** Localized question texts (same order/values as QUESTIONS below). */
+  questions?: string[];
+  /** Result meter label, e.g. "blue signals" (localized noun phrase). */
+  blueSignals?: string;
+  /** Localized share text with {pct} and {verdict} tokens. */
+  shareText?: string;
 }
 
 interface Question {
@@ -33,17 +39,20 @@ const QUESTIONS: Question[] = [
 
 /** Old wives' tales quiz island — pure fun, tallies folklore points. */
 export default function GenderQuiz({ strings }: { strings: QuizStrings }) {
+  const questions: Question[] = strings.questions?.length === QUESTIONS.length
+    ? QUESTIONS.map((q, i) => ({ ...q, text: strings.questions![i] }))
+    : QUESTIONS;
   const [step, setStep] = useState(0);
   const [score, setScore] = useState(0); // negative = girl side, positive = boy side
   const [done, setDone] = useState(false);
 
   const answer = useCallback((q: Question) => {
     setScore((s) => s + (q.a === 'boy' ? 1 : -1));
-    if (step + 1 >= QUESTIONS.length) {
+    if (step + 1 >= questions.length) {
       setDone(true);
     }
     setStep((s) => s + 1);
-  }, [step]);
+  }, [step, questions.length]);
 
   const restart = () => {
     setStep(0);
@@ -51,7 +60,7 @@ export default function GenderQuiz({ strings }: { strings: QuizStrings }) {
     setDone(false);
   };
 
-  const total = QUESTIONS.length;
+  const total = questions.length;
   const guessed = done ? (score === 0 ? (Math.random() < 0.5 ? 'boy' : 'girl') : score > 0 ? 'boy' : 'girl') : null;
 
   if (done) {
@@ -71,7 +80,7 @@ export default function GenderQuiz({ strings }: { strings: QuizStrings }) {
           {pct}% {isBoy ? strings.resultBoy : strings.resultGirl}
         </h3>
         <p className="mt-2 text-sm text-plum-600">
-          {strings.progress}: {stepsSummary(score, total)}
+          {strings.progress}: {stepsSummary(score, total, strings.blueSignals ?? 'blue signals')}
         </p>
         <div className="mx-auto mt-4 h-4 max-w-sm overflow-hidden rounded-full bg-gradient-to-r from-boy-400 to-girl-400" aria-hidden="true">
           <div className="h-full bg-white/60" style={{ width: `${pct}%` }}></div>
@@ -81,7 +90,9 @@ export default function GenderQuiz({ strings }: { strings: QuizStrings }) {
           <button
             type="button"
             onClick={() => {
-              const text = `Old wives' tales say: ${pct}% ${isBoy ? 'BOY 💙' : 'GIRL 💗'} — try the quiz at chinesebabypredictor.com/gender-quiz/`;
+              const text = (strings.shareText ?? 'Old wives\' tales say: {pct}% {verdict} — try the quiz at chinesebabypredictor.com/gender-quiz/')
+                .replaceAll('{pct}', String(pct))
+                .replaceAll('{verdict}', isBoy ? 'BOY 💙' : 'GIRL 💗');
               if (navigator.share) void navigator.share({ text });
               else void navigator.clipboard.writeText(text);
             }}
@@ -95,7 +106,7 @@ export default function GenderQuiz({ strings }: { strings: QuizStrings }) {
     );
   }
 
-  const q = QUESTIONS[step];
+  const q = questions[step];
   if (!q) return null;
 
   return (
@@ -120,7 +131,7 @@ export default function GenderQuiz({ strings }: { strings: QuizStrings }) {
   );
 }
 
-function stepsSummary(score: number, total: number): string {
+function stepsSummary(score: number, total: number, label: string): string {
   const boyish = Math.round(((score + total) / 2 / total) * 100);
-  return `${boyish}% blue signals`;
+  return `${boyish}% ${label}`;
 }

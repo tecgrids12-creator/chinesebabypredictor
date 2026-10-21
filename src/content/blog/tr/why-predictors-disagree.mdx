@@ -1,0 +1,24 @@
+---
+title: 'Neden Her Çin Cinsiyet Tahmin Aracı Farklı Cevaplar Verir'
+description: 'İki site, aynı tarihler, zıt tahminler mi? Tablo ayrılıklarına yol açan altı dönüşüm kısayolunu ortaya çıkarıyoruz — ve aracımız bunlardan nasıl kaçınır.'
+publishDate: 2026-02-18
+author: 'Chinese Baby Predictor Ekibi'
+category: 'Rehberler'
+---
+
+Tarihlerinizi iki Çin cinsiyet tahmin aracından geçirdiniz ve **birinin erkek dedi, diğeri kız** — lanetlenmiş değilsiniz; dönüşüm sorunuyla tanıştınız. Tablo tek sabit ızgaradır; bütün ayrılık *girdilerde* yaşar.
+
+## Alışılmış altı şüpheli
+
+1. **Yaklaşık ay yaşları.** Basit siteler `(yıl − doğum yılı) + 1` formülünü kullanır ve doğumun Çin Yeni Yılı'ndan önce gelip gelmediğini hiç kontrol etmez — gerçek bir bir-iki yıl farkıdır.
+2. **Takvim ayının kameri ay gibi gasp edilmesi.** Birçok tablo düpedüz "Mart → kameri ay 3" eşler. İki uçta da yanlıştır: kameri ay sınırları günler oynar ve artık aylar eşlemeyi mahveder.
+3. **Artık ay işlemi.** Bazı araçlar artık ayları sessizce düşürür; birkaçı yarım-ay kuralları kullanır. Ne yaptıklarını size söyleyen azdır.
+4. **Tahmin tarihi ya da gebe kalma varsayımları.** Bazıları tahmin tarihinden 266 gün düşer; bazıları son adet tarihi için 280 − 14 kullanır — çoğunlukla eşdeğer, ama yuvarlama kuralları sınırlara yakınsa ayrışır.
+5. **Zaman dilimi özensizliği.** Tarih çözümlemesindeki tek günlük kaymalar, sınır günün yakınında kameri ayları ters yüz eder.
+6. **Lejand-excel hücreleri.** Elle yeniden yazılmış tablo fotoğrafları, yazım sapması taşır.
+
+## Bunu nasıl önliyoruz
+
+Tahmin aracımız yaklaşım yerine tüm **1900–2100 lunisolar (ay-güneş) tablosunu** kullanır (ciddi takvim kütüphanelerinin yansıttığı, Hong Kong Gözlemevinden türetilmiş veri kümesi): kesin Çin Yeni Yılı çapaları, kesin ay boyutları, açık artık-ay işaretleme. Her sonuç, kullandığı ay yaşını, kameri ayı ve artık durumunu size söyler.
+
+Elle doğrulamanız zorunluysa Hong Kong Gözlemevi resmî dönüşüm tabloları yayımlar — ama iki tarih [şeffaf bir hesaplayıcıya](/tr/chinese-gender-predictor/) daha hızlıdır. 🧮

@@ -7,13 +7,13 @@ interface Props { t: Dictionary; locale: Locale; exclude?: string; }
 const { t, locale, exclude } = Astro.props;
 
 const tools = [
-  { emoji: '🧮', label: t.nav.predictor, desc: 'Two dates → one instant boy/girl guess with real lunar conversion.', href: 'chinese-gender-predictor/' },
-  { emoji: '📊', label: t.nav.chart, desc: 'The full interactive lunar age × month grid — tap any cell.', href: 'chinese-gender-chart/' },
-  { emoji: '🗓️', label: t.nav.planner, desc: 'Favourable months to conceive a boy or a girl, with date windows.', href: 'gender-planner/' },
-  { emoji: '🌕', label: t.nav.lunarAge, desc: 'Find your traditional virtual (lunar) age in seconds.', href: 'lunar-age-calculator/' },
-  { emoji: '🏛️', label: t.nav.mayan, desc: 'The Mayan odd/even method as a playful second opinion.', href: 'mayan-gender-predictor/' },
-  { emoji: '⏳', label: t.nav.dueDate, desc: 'Due date from your cycle or conception — plus weeks & zodiac.', href: 'due-date-calculator/' },
-  { emoji: '💍', label: t.nav.quiz, desc: '12 old wives’ tale clues and a folkloric verdict.', href: 'gender-quiz/' },
+  { emoji: '🧮', label: t.nav.predictor, desc: t.rel?.d1 ?? 'Two dates → one instant boy/girl guess with real lunar conversion.', href: 'chinese-gender-predictor/' },
+  { emoji: '📊', label: t.nav.chart, desc: t.rel?.d2 ?? 'The full interactive lunar age × month grid — tap any cell.', href: 'chinese-gender-chart/' },
+  { emoji: '🗓️', label: t.nav.planner, desc: t.rel?.d3 ?? 'Favourable months to conceive a boy or a girl, with date windows.', href: 'gender-planner/' },
+  { emoji: '🌕', label: t.nav.lunarAge, desc: t.rel?.d4 ?? 'Find your traditional virtual (lunar) age in seconds.', href: 'lunar-age-calculator/' },
+  { emoji: '🏛️', label: t.nav.mayan, desc: t.rel?.d5 ?? 'The Mayan odd/even method as a playful second opinion.', href: 'mayan-gender-predictor/' },
+  { emoji: '⏳', label: t.nav.dueDate, desc: t.rel?.d6 ?? 'Due date from your cycle or conception — plus weeks & zodiac.', href: 'due-date-calculator/' },
+  { emoji: '💍', label: t.nav.quiz, desc: t.rel?.d7 ?? '12 old wives’ tale clues and a folkloric verdict.', href: 'gender-quiz/' },
 ].filter((tool) => tool.href !== exclude);
 ---
 

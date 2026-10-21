@@ -7,48 +7,47 @@
  * Sentences self-skip when the current page IS the link target (home / TTC).
  * Root href is locale-aware; the TTC planner is an EN-only route, so its link
  * is always the canonical EN URL (no redirect, no 404).
+ * Sentences/anchors are localized via the `geo` dictionary ({a} placeholder).
  */
 import { SUPPORTED_LOCALES, localizedPath } from '@i18n/utils';
+import { getDictionary } from '@i18n/translations';
 
 interface Props { class?: string; }
 const path = Astro.url.pathname;
 const seg = path.split('/')[1];
-const locale = (SUPPORTED_LOCALES as readonly string[]).includes(seg) ? seg : 'en';
+const locale = (SUPPORTED_LOCALES as readonly string[]).includes(seg) ? (seg as never) : 'en';
+const g = getDictionary(locale).geo;
 const rootHref = localizedPath('', locale);
 
 const hash = [...path].reduce((s, ch) => s + ch.charCodeAt(0), 0);
-const rootAnchors = [
-  'Chinese Baby Predictor',
-  'Chinese Baby Predictor',
-  'Chinese Baby Predictor',
-  'Chinese baby predictor chart',
-  'ancient Chinese lunar predictor',
-];
-const rootAnchor = rootAnchors[hash % 5];
+/* Anchors 1–3 stay the exact brand name (critical internal-linking rule). */
+const rootAnchor = [g.anchorChart, g.anchorAncient][hash % 2];
+const rootIsExact = hash % 5 < 3;
+const pillarAnchorText = rootIsExact ? 'Chinese Baby Predictor' : rootAnchor;
 
 const isHome = path === '/' || path === '' || path === '/index.html' || /^\/[a-z]{2}(-[a-z]{2})?\/$/.test(path);
 const isTtc = /chinese-gender-planner-ttc/.test(path);
 
-const ttcAnchors = ['Chinese gender TTC planner', 'plan your conception months', 'trying to conceive gender calendar'];
-const ttcAnchor = ttcAnchors[hash % 3];
+const ttcAnchor = [g.ttcLink1, g.ttcLink2, g.ttcLink3][hash % 3];
+/* {a} placeholder → rendered <a>; word order stays native per locale. */
+const pillarSentence = pillarIsRendered(isHome) ? '' : g.leadPillar.replace(
+  '{a}',
+  `<a href="${rootHref}" data-geo="root" title="Open the Chinese Baby Predictor homepage — the free lunar gender chart &amp; calculator" class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 transition-colors hover:text-plum-800">${pillarAnchorText}</a>`,
+);
+const ttcSentence = isTtc ? '' : g.leadTtc.replace(
+  '{a}',
+  `<a href="/chinese-gender-planner-ttc/" data-geo="ttc" title="Chinese gender TTC planner — forecast your optimal lunar conception windows for 2026–2028" class="font-semibold underline decoration-boy-400 decoration-2 underline-offset-2 transition-colors hover:text-plum-800">${ttcAnchor}</a>`,
+);
+
+function pillarIsRendered(home: boolean) { return home; }
 ---
 
 <div class:list={['section-shell geo-lead', Astro.props.class]}>
-  {!isHome && (
-    <p class="max-w-3xl text-[15px] leading-relaxed text-plum-600">
-      According to the traditional
-      <a href={rootHref} data-geo="root" title="Open the Chinese Baby Predictor homepage — the free lunar gender chart &amp; calculator" class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 transition-colors hover:text-plum-800">{rootAnchor}</a>,
-      when a mother conceives at a given lunar age during a lunar month, the 28×12 Qing
-      Palace matrix marks that intersection boy or girl — every tool on this site reads
-      from that same single chart.
-    </p>
+  {!isHome && pillarSentence && (
+    <p class="max-w-3xl text-[15px] leading-relaxed text-plum-600" set:html={pillarSentence} />
   )}
-  {!isTtc && (
-    <p class="max-w-3xl text-[15px] leading-relaxed text-plum-600">
-      If you are currently trying to conceive, use our interactive
-      <a href="/chinese-gender-planner-ttc/" data-geo="ttc" title="Chinese gender TTC planner — forecast your optimal lunar conception windows for 2026–2028" class="font-semibold underline decoration-boy-400 decoration-2 underline-offset-2 transition-colors hover:text-plum-800">{ttcAnchor}</a>
-      to forecast your optimal lunar conception windows for the next 12–24 months.
-    </p>
+  {!isTtc && ttcSentence && (
+    <p class="max-w-3xl text-[15px] leading-relaxed text-plum-600" set:html={ttcSentence} />
   )}
 </div>
 

@@ -9,62 +9,49 @@ import type { Locale } from '@i18n/utils';
 
 interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
+const c = t.chart;
 
-const monthsEn = ['1st 🗓️', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th'];
+const year = new Date().getUTCFullYear();
+const fill = (s: string) => s
+  .replaceAll('{year}', String(year))
+  .replaceAll('{prev}', String(year - 1))
+  .replaceAll('{next}', String(year + 1));
+
 const chartStrings = {
-  legendBoy: t.chart.legendBoy, legendGirl: t.chart.legendGirl,
-  yourCell: t.chart.yourCell, monthsLabel: t.chart.monthsLabel, agesLabel: t.chart.agesLabel,
-  print: t.chart.print, cellHint: t.chart.cellHint, months: monthsEn,
-  boy: t.chart.legendBoy, girl: t.chart.legendGirl, windowLabel: 'Dates', lunarYearLabel: 'year', leapNote: 'Leap months are mapped to their base month and marked on results.',
+  legendBoy: c.legendBoy, legendGirl: c.legendGirl,
+  yourCell: c.yourCell, monthsLabel: c.monthsLabel, agesLabel: c.agesLabel,
+  print: c.print, cellHint: c.cellHint, months: t.monthList ?? ['1st 🗓️', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th'],
+  boy: c.legendBoy, girl: c.legendGirl, windowLabel: c.windowLabel ?? 'Dates', lunarYearLabel: c.yearWord ?? 'year', leapNote: c.leapNote ?? 'Leap months are mapped to their base month and marked on results.',
 };
 
+const faqItems = t.faqChart ?? CHART_FAQ;
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
 <div class="pt-10">
   <section class="section-shell">
     <h1 class="max-w-3xl font-display text-4xl font-extrabold leading-[1.06] text-plum-900 sm:text-5xl">
-      Chinese Gender Chart <span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent">2026</span> — interactive & printable
+      <Fragment set:html={fill(c.h1 ?? '')} />
     </h1>
-    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-plum-600">
-      The complete traditional grid: the mother's lunar age (rows) × the lunar month of conception (columns), blue for boys and pink for girls. Tap any cell to see its exact Gregorian window for {new Date().getUTCFullYear()} — or print a copy for the refrigerator.
-    </p>
+    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-plum-600">{fill(c.intro ?? '')}</p>
     <div class="mt-8"><InteractiveChart client:idle strings={chartStrings} /></div>
   </section>
   <GeoLeadLinks />
 
   <section class="section-shell mt-14">
     <div class="prose-custom">
-      <h2>How to read the chart without an app</h2>
-      <p>
-        Each row is a <strong>lunar age</strong> — remember: Chinese tradition counts you as age 1 at birth and bumps you up at Chinese New
-        Year, so your lunar age is usually 1–2 years older than your Western one. Each column is a <strong>lunar month</strong> — lunar
-        months start at the new moon, so their Gregorian boundaries wander (e.g., lunar month 1 of 2026 begins Feb 17, 2026).
-        Where your row and column meet sits the verdict:
-        <img src="/baby-boy.svg" width="24" height="24" alt="" aria-hidden="true" draggable="false" class="inline-block align-text-bottom select-none" />
-        blue or
-        <img src="/baby-girl.svg" width="24" height="24" alt="" aria-hidden="true" draggable="false" class="inline-block align-text-bottom select-none" />
-        pink.
-      </p>
-      <h2>The 2026 edition changes the calendar, never the grid</h2>
-      <p>
-        There is exactly <strong>one authentic chart</strong> — the same cells every year. "2026" changes only the date math: Chinese New
-        Year 2026 lands on <strong>February 17</strong>, and lunar months start on different Gregorian dates than in 2025 or 2027. Our
-        interactive version does that date math live, so a January 2026 conception correctly belongs to lunar year 2025's months —
-        the exact mistake handmade charts make.
-      </p>
-      <h2>Leap months (& why charts disagree)</h2>
-      <p>
-        Some lunar years have 13 months; the chart doesn't. Most predictors map a leap-month conception to its base month — we do the
-        same, but <em>flag it on your result</em> so you know which convention was applied. This single choice explains most of the
-        "two calculators gave different answers" folklore drama online.
-      </p>
+      <h2>{c.readTitle}</h2>
+      <p><Fragment set:html={fill(c.readBody ?? '')} /></p>
+      <h2>{fill(c.edTitle ?? '')}</h2>
+      <p><Fragment set:html={fill(c.edBody ?? '')} /></p>
+      <h2>{c.chartLeapTitle}</h2>
+      <p><Fragment set:html={c.chartLeapBody} /></p>
     </div>
   </section>
 
   <section class="section-shell mt-14" aria-labelledby="chart-faq">
-    <h2 id="chart-faq" class="section-title text-center">Chart FAQ</h2>
-    <div class="mt-6"><FaqAccordion items={CHART_FAQ} /></div>
+    <h2 id="chart-faq" class="section-title text-center">{c.faqTitle}</h2>
+    <div class="mt-6"><FaqAccordion items={faqItems} /></div>
   </section>
 
   <RelatedTools t={t} locale={locale} exclude="chinese-gender-chart/" />

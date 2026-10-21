@@ -70,21 +70,21 @@ function SittingBaby({ gender, className = '' }: { gender: 'boy' | 'girl'; class
           <path d="M100 25 C 106 13, 126 9, 127 19 C 128 28, 115 32, 100 28 Z" fill="#F783B4" />
           <circle cx="100" cy="26" r="5.5" fill="#EF5FA2" />
           <circle cx="98.4" cy="24.4" r="1.6" fill="#FDD3E5" opacity="0.9" />
-          <path d="M98 27 c-1.5 -6 2 -8.5 4 -9 M102 19 q4.5 -5.5 10 -4 M94 19 q-4.5 -5.5 -10 -4" stroke="#3F2247" stroke-width="1.6" stroke-linecap="round" fill="none" />
+          <path d="M98 27 c-1.5 -6 2 -8.5 4 -9 M102 19 q4.5 -5.5 10 -4 M94 19 q-4.5 -5.5 -10 -4" stroke="#3F2247" strokeWidth="1.6" strokeLinecap="round" fill="none" />
         </>
       ) : (
         <path
           d="M99 24 q-1.5 -6 3 -8.5 M104 24 q4.5 -5.5 10 -4 M94 24 q-4.5 -5.5 -10 -4"
           stroke="#3F2247"
-          stroke-width="2.2"
-          stroke-linecap="round"
+          strokeWidth="2.2"
+          strokeLinecap="round"
           fill="none"
         />
       )}
 
       {/* brows */}
-      <path d="M74 60 q7 -5.5 14 -1.5" stroke="#C98A4B" stroke-width="2.6" stroke-linecap="round" fill="none" />
-      <path d="M112 58.5 q7 -4 14 1.5" stroke="#C98A4B" stroke-width="2.6" stroke-linecap="round" fill="none" />
+      <path d="M74 60 q7 -5.5 14 -1.5" stroke="#C98A4B" strokeWidth="2.6" strokeLinecap="round" fill="none" />
+      <path d="M112 58.5 q7 -4 14 1.5" stroke="#C98A4B" strokeWidth="2.6" strokeLinecap="round" fill="none" />
 
       {/* glossy eyes */}
       <circle cx="82" cy="72" r="7" fill="#2E1A33" />
@@ -97,11 +97,11 @@ function SittingBaby({ gender, className = '' }: { gender: 'boy' | 'girl'; class
       {/* blush + tiny nose */}
       <ellipse cx="70" cy="86" rx="7" ry="5" fill="#F8A9C4" opacity="0.8" />
       <ellipse cx="130" cy="86" rx="7" ry="5" fill="#F8A9C4" opacity="0.8" />
-      <path d="M97 84 q2.5 2.5 5 0" stroke="#D89A5E" stroke-width="2.4" stroke-linecap="round" fill="none" />
+      <path d="M97 84 q2.5 2.5 5 0" stroke="#D89A5E" strokeWidth="2.4" strokeLinecap="round" fill="none" />
 
       {/* smile */}
-      <path d="M88 94 q12 10 24 0" stroke="#3F2247" stroke-width="3" stroke-linecap="round" fill="none" />
-      <path d="M93 98.5 q7 4.5 14 0" stroke="#F27D95" stroke-width="2.6" stroke-linecap="round" fill="none" />
+      <path d="M88 94 q12 10 24 0" stroke="#3F2247" strokeWidth="3" strokeLinecap="round" fill="none" />
+      <path d="M93 98.5 q7 4.5 14 0" stroke="#F27D95" strokeWidth="2.6" strokeLinecap="round" fill="none" />
 
       {/* torso + soft chin/neck shadow (boy) */}
       <path d="M62 122 q38 -12 76 0 l4 44 q-42 10 -84 0 Z" fill={`url(#${skin})`} />
@@ -132,7 +132,7 @@ function SittingBaby({ gender, className = '' }: { gender: 'boy' | 'girl'; class
       ) : (
         <path d="M56 158 q44 -10 88 0 l-3 16 q-41 9 -82 0 Z" fill="#fff" />
       )}
-      <path d="M60 162 q40 -8.5 80 0" stroke="#DADAE2" stroke-width="2.4" stroke-dasharray="4 5" stroke-linecap="round" fill="none" />
+      <path d="M60 162 q40 -8.5 80 0" stroke="#DADAE2" strokeWidth="2.4" strokeDasharray="4 5" strokeLinecap="round" fill="none" />
       {pink && <path d="M100 156 l4.6 -8.2 h-9.2 Z" fill="#EF5FA2" opacity="0.7" />}
 
       {/* legs + chunky feet with toes */}
@@ -152,7 +152,7 @@ function SittingBaby({ gender, className = '' }: { gender: 'boy' | 'girl'; class
         <>
           <ellipse cx="100" cy="181" rx="8" ry="6.5" fill="#F06CA8" />
           <circle cx="100" cy="173.5" r="4.4" fill="#F5A44C" />
-          <circle cx="100" cy="188" r="5.5" fill="none" stroke="#EA5E9F" stroke-width="2.2" />
+          <circle cx="100" cy="188" r="5.5" fill="none" stroke="#EA5E9F" strokeWidth="2.2" />
         </>
       )}
     </svg>
@@ -221,7 +221,7 @@ export function BabyFace({ gender = 'girl', className = '' }: { gender?: 'boy' |
       <circle cx="60" cy="64" r="42" fill={`url(#${shade})`} />
 
       {/* single curl (like the reference emoji) */}
-      <path d="M57 23 c1.5 -7.5 10.5 -8 12.5 -3 c1.4 3.6 -2.4 6.6 -5.6 4.8" stroke="#D89A5E" stroke-width="3.4" stroke-linecap="round" fill="none" />
+      <path d="M57 23 c1.5 -7.5 10.5 -8 12.5 -3 c1.4 3.6 -2.4 6.6 -5.6 4.8" stroke="#D89A5E" strokeWidth="3.4" strokeLinecap="round" fill="none" />
       {pink && (
         <>
           <path d="M38 27.5 l-10.5 -6.5 c-3.6 -2.2 -7.4 1.6 -5.2 5.2 l4 6.2 12.3 0.9 Z" fill="#EF5FA2" />
@@ -231,8 +231,8 @@ export function BabyFace({ gender = 'girl', className = '' }: { gender?: 'boy' |
       )}
 
       {/* brows */}
-      <path d="M40 50 q6 -4.5 12 -1" stroke="#C98A4B" stroke-width="2.4" stroke-linecap="round" fill="none" />
-      <path d="M68 49 q6 -3.5 12 1" stroke="#C98A4B" stroke-width="2.4" stroke-linecap="round" fill="none" />
+      <path d="M40 50 q6 -4.5 12 -1" stroke="#C98A4B" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+      <path d="M68 49 q6 -3.5 12 1" stroke="#C98A4B" strokeWidth="2.4" strokeLinecap="round" fill="none" />
 
       {/* big glossy eyes */}
       <circle cx="45" cy="60" r="6.4" fill="#2E1A33" />
@@ -245,7 +245,7 @@ export function BabyFace({ gender = 'girl', className = '' }: { gender?: 'boy' |
       {/* blush + nose */}
       <ellipse cx="34.5" cy="72" rx="6.4" ry="4.6" fill="#F8A9C4" opacity="0.85" />
       <ellipse cx="85.5" cy="72" rx="6.4" ry="4.6" fill="#F8A9C4" opacity="0.85" />
-      <path d="M57.5 70 q2.5 2.6 5 0" stroke="#D89A5E" stroke-width="2.2" stroke-linecap="round" fill="none" />
+      <path d="M57.5 70 q2.5 2.6 5 0" stroke="#D89A5E" strokeWidth="2.2" strokeLinecap="round" fill="none" />
 
       {/* open smile with tongue */}
       <path d="M46 77 q14 13 28 0 q-4 12.5 -14 12.5 q-10 0 -14 -12.5 Z" fill="#5E2A38" />
@@ -260,7 +260,7 @@ export function MiniFace({ gender, className = 'h-4 w-4' }: { gender: 'boy' | 'g
   const pink = gender === 'girl';
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
-      <path d="M11.8 3.6 c0.5 -1.7 2.3 -1.9 2.7 -0.6 c0.3 1 -0.9 1.7 -1.6 1.1" stroke={pink ? '#B8125F' : '#1A50D6'} stroke-width="1.3" stroke-linecap="round" fill="none" />
+      <path d="M11.8 3.6 c0.5 -1.7 2.3 -1.9 2.7 -0.6 c0.3 1 -0.9 1.7 -1.6 1.1" stroke={pink ? '#B8125F' : '#1A50D6'} strokeWidth="1.3" strokeLinecap="round" fill="none" />
       <circle cx="12" cy="13.4" r="8.6" fill="#fff" />
       <circle cx="9.2" cy="12.2" r="1.5" fill="#3F2247" />
       <circle cx="14.8" cy="12.2" r="1.5" fill="#3F2247" />
@@ -268,7 +268,7 @@ export function MiniFace({ gender, className = 'h-4 w-4' }: { gender: 'boy' | 'g
       <circle cx="15.2" cy="11.7" r="0.55" fill="#fff" />
       <ellipse cx="6.8" cy="15.2" rx="1.5" ry="1" fill="#F8A9C4" />
       <ellipse cx="17.2" cy="15.2" rx="1.5" ry="1" fill="#F8A9C4" />
-      <path d="M9.6 16.6 q2.4 2.3 4.8 0" stroke="#3F2247" stroke-width="1.3" stroke-linecap="round" fill="none" />
+      <path d="M9.6 16.6 q2.4 2.3 4.8 0" stroke="#3F2247" strokeWidth="1.3" strokeLinecap="round" fill="none" />
     </svg>
   );
 }
