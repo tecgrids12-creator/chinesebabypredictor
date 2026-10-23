@@ -2,18 +2,29 @@
 /**
  * Accessible sticky site header with mobile menu and language switcher.
  */
-import { safeLocalizedPath, LOCALE_NAMES, SUPPORTED_LOCALES, type Locale } from '@i18n/utils';
+import {
+  safeLocalizedPath,
+  LOCALE_NAMES,
+  SUPPORTED_LOCALES,
+  LOCALIZED_TOOL_SLUGS,
+  type Locale,
+} from '@i18n/utils';
 import type { Dictionary } from '@i18n/translations';
 import Logo from '@theme/components/Logo.astro';
 
 interface Props { t: Dictionary; locale: Locale; }
 const { t, locale } = Astro.props;
 
+/* Single route registry (src/i18n/utils.ts) injected into the inline
+   switcher script — no duplicated hardcoded lists that can drift. */
+const SWITCHER_TOOLS = [...LOCALIZED_TOOL_SLUGS, 'blog']; // blog list localizes (posts fall back)
+const NON_EN_LOCALES = SUPPORTED_LOCALES.filter((l) => l !== 'en');
+
 const nav = [
   { label: t.nav.predictor, href: safeLocalizedPath('chinese-gender-predictor/', locale) },
   { label: t.nav.chart, href: safeLocalizedPath('chinese-gender-chart/', locale) },
   { label: t.nav.planner, href: safeLocalizedPath('gender-planner/', locale) },
-  { label: 'TTC Planner', href: safeLocalizedPath('chinese-gender-planner-ttc/', locale) },
+  { label: t.nav.ttc ?? 'TTC Planner', href: safeLocalizedPath('chinese-gender-planner-ttc/', locale) },
   { label: t.nav.lunarAge, href: safeLocalizedPath('lunar-age-calculator/', locale) },
   { label: t.nav.mayan, href: safeLocalizedPath('mayan-gender-predictor/', locale) },
   { label: t.nav.dueDate, href: safeLocalizedPath('due-date-calculator/', locale) },
@@ -28,18 +39,20 @@ const nav = [
     <div class="grid h-16 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
       {/* left slot: language switcher */}
       <div class="flex items-center gap-2">
-        <script is:inline>
-  /* Language switcher routing: global, hydration-free, defined before any select renders. */
+        <script is:inline define:vars={{ switcherTools: SWITCHER_TOOLS, nonEnLocales: NON_EN_LOCALES }}>
+  /* Language switcher routing: global, hydration-free, defined before any select renders.
+     Tool + blog-list route segments come from the shared i18n registry (utils.ts). */
   window.__cbpLangTo = function (next) {
     try {
-      var TOOLS = ['chinese-gender-predictor/', 'chinese-gender-chart/', 'gender-planner/', 'lunar-age-calculator/', 'mayan-gender-predictor/', 'due-date-calculator/', 'gender-quiz/', 'blog/'];
-      var LANGS = ['ar', 'bg', 'bn', 'de', 'es', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'ms', 'nl', 'pl', 'pt', 'ru', 'sv', 'tr'];
+      var TOOLS = switcherTools.map(function (s) { return s + '/'; });
+      var LANGS = nonEnLocales;
       var path = window.location.pathname;
       var segs = path.split('/').filter(Boolean);
       var current = segs.length && LANGS.indexOf(segs[0]) !== -1 ? segs[0] : 'en';
       var rest = current !== 'en' ? segs.slice(1) : segs;
       /* Localized home/tool/blog-list pages exist for every locale; anything
-         else (legal pages, blog posts, TTC planner) falls back to locale home. */
+         else (legal pages, blog posts, TTC planner, EN-only Wave-1 spokes)
+         falls back to the localized home — never a 404, never a dead click. */
       var first = rest[0] || '';
       var suffix = TOOLS.indexOf(first + '/') !== -1 && !(first === 'blog' && rest.length > 1) ? first + '/' : '';
       var target = next === 'en' ? '/' + suffix : '/' + next + '/' + suffix;

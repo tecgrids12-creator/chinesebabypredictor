@@ -1,0 +1,36 @@
+import type { PartialDictionary } from '../translations';
+
+export const dic: PartialDictionary = {
+  predictor: {
+    stepDobValue: '{dob} → gebe kalma anında {age} yaşında',
+    stepLunarValue: 'ay doğum yılı {birth} → ay gebe kalma yılı {year} = {age} (虚岁)',
+    stepMonthValue: '{date} → ay ayı {month}',
+    stepCellValue: '{age} satır × {month} sütun → {gender}',
+    genderBoy: 'ERKEK',
+    genderGirl: 'KIZ',
+    boyWord: 'erkek',
+    girlWord: 'kız',
+    leapNote: ' (artık ay — aşağıdaki Runyue rehberimize bakın)',
+    shareText: 'Çin cinsiyet takvimi diyor ki: ay yaşı {age} × ay sayısı {month}, {genderWord} işaret ediyor! chinesebabypredictor.com',
+  },
+  trust: {
+    badge: 'Editoryal İnceleme',
+    byline: 'Ebeveynlik &amp; Ay Astrolojisi Araştırma Ekibimiz tarafından araştırıldı ve derlendi',
+    body: 'Bu sitedeki her açıklama, her tablo değeri ve her tarih dönüşümü, Ebeveynlik &amp; Ay Astrolojisi Araştırma Ekibimiz tarafından araştırıldı ve derlendi; yayınlanmış demografik çalışmalarla — aralarında {studyLink} da var — çapraz kontrol edildi.',
+    studyLinkText: '2010 İsveç nüfus kaydı analizi (2,8 milyon doğum)',
+    disclaimerTitle: 'Folklor &amp; tıbbi uyarı.',
+    disclaimerBody: 'Chinese Baby Predictor, Qing Hanedanı\'nın geleneksel ay yöntemlerine dayanan kadim bir folklorik araçtır ve tamamen kültürel merak ile eğlence amaçlıdır. Tıbbi teşhis, fetal cinsiyet tayini veya üreme planlaması sağlamaz. Tıbbi olarak kesin cinsiyet tayini için ultrason, invaziv olmayan prenatal test (NIPT) veya amniyosentez konusunda lisanslı bir sağlık kuruluşuna danışın — {acogLink} veya {medlineLink} sayfalarına bakın.',
+    acogLinkText: 'ACOG prenatal test rehberliği',
+    medlineLinkText: 'MedlinePlus: Prenatal Test',
+  },
+  geo: {
+    hub5Label: 'Tüp Bebek (IVF &amp; FET) Cinsiyet Tahmincisi',
+    hub5Desc: 'Dondurulmuş embriyo transferi, taze IVF ve donör yumurta için tablo okumaları — iki tarih de karşılaştırılır.',
+    hub6Label: 'Geçmiş Gebelik Doğruluk Testi',
+    hub6Desc: 'Tabloyu gerçek çocuklarınızla test edin — ailenizin ay skor kartını alın.',
+    hub7Label: '2027 Çin Cinsiyet Takvimi',
+    hub7Desc: 'Ateş Keçisi Yılı: tam ay ayı haritası, 6 Şubat Çin Yeni Yılı geçiş tuzağı ve doğum yılı matrisi.',
+    hub8Label: '2028 Çin Cinsiyet Takvimi',
+    hub8Desc: 'Artık 5. ay baskısı: tamamı 13 ay ayı, kesin tarih pencereleriyle haritalandı.',
+  },
+};

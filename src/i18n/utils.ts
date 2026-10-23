@@ -55,6 +55,36 @@ export const LOCALE_NAMES: Record<Locale, { native: string; english: string; fla
 };
 
 /**
+ * Locale-aware tool slugs with fully localized page variants for every locale.
+ * These are the ONLY route segments the language switcher preserves when
+ * switching locale; anything else (legal, EN-only spokes, blog posts, TTC)
+ * gracefully falls back to the localized home so no dead clicks are possible.
+ */
+export const LOCALIZED_TOOL_SLUGS = [
+  'chinese-gender-predictor',
+  'chinese-gender-chart',
+  'gender-planner',
+  'lunar-age-calculator',
+  'mayan-gender-predictor',
+  'due-date-calculator',
+  'gender-quiz',
+] as const;
+
+/** Wave-1 specialized spokes: EN-only routes (registered in EN_ONLY_PATH). */
+export const EN_ONLY_TOOL_SLUGS = [
+  'ivf-chinese-gender-predictor',
+  'test-past-pregnancies-calculator',
+  'chinese-gender-calendar-2027',
+  'chinese-gender-calendar-2028',
+] as const;
+
+/** All tool route segments (localized + EN-only) — single registry. */
+export const ALL_TOOL_SLUGS: Array<(typeof LOCALIZED_TOOL_SLUGS)[number] | (typeof EN_ONLY_TOOL_SLUGS)[number]> = [
+  ...LOCALIZED_TOOL_SLUGS,
+  ...EN_ONLY_TOOL_SLUGS,
+];
+
+/**
  * Build a localized URL path.
  *   localizedPath('chinese-gender-chart/', 'es') → '/es/chinese-gender-chart/'
  *   localizedPath('chinese-gender-chart/', 'en') → '/chinese-gender-chart/'
@@ -66,14 +96,15 @@ export function localizedPath(path: string, locale: Locale): string {
 }
 
 /**
- * Routes that exist only in EN (legal pages, the TTC planner).
+ * Routes that exist only in EN (legal pages, the TTC planner, Wave-1 spokes).
  * A localized href to them would 404 — they always resolve to the EN canonical
  * URL so internal links stay do-follow, redirect-free and unbroken (GEO web).
  * Blog listings and posts localize ONLY for locales with a translated blog
  * (src/content/blog/<lang>/); every other locale keeps EN blog links so no
  * internal href ever points at a page that is not rendered.
  */
-const EN_ONLY_PATH = /^(about-us|contact-us|sitemap|privacy|terms|chinese-gender-planner-ttc)\//;
+const EN_ONLY_PATH =
+  /^(about-us|contact-us|sitemap|privacy|terms|chinese-gender-planner-ttc|ivf-chinese-gender-predictor|test-past-pregnancies-calculator|chinese-gender-calendar-2027|chinese-gender-calendar-2028)\//;
 
 /** Locales whose blog is fully translated (16 posts under src/content/blog/<lang>/). */
 export const BLOG_FULL_LOCALES: Locale[] = ['es', 'fr', 'nl', 'ru', 'hi', 'it', 'pt', 'pl', 'ar', 'tr', 'id'];

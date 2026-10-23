@@ -27,6 +27,8 @@ export interface Dictionary {
   footer: Record<string, string>;
   /** GEO entity-web strings: cluster hub, lead links, home sections (deep fallback to EN). */
   geo: Record<string, string>;
+  /** Wave-1 E-E-A-T pre-footer card (translated for blog-full locales; EN fallback otherwise). */
+  trust?: Record<string, string>;
   blog: Record<string, string>;
   /** Localized FAQs (EN fallback: editorial HOME_FAQ / CHART_FAQ used in components). */
   faqHome?: Array<{ q: string; a: string }>;
@@ -61,6 +63,7 @@ const en: Dictionary = {
     contactTitle: 'Contact Us',
   },
   nav: {
+    ttc: 'TTC Planner',
     predictor: 'Predictor', chart: 'Gender Chart', planner: 'Planner', lunarAge: 'Lunar Age',
     mayan: 'Mayan', dueDate: 'Due Date', quiz: 'Gender Quiz', blog: 'Blog', menu: 'Menu',
   },
@@ -355,6 +358,7 @@ const hi: PartialDictionary = {
     plannerDesc: 'जानें आपकी चंद्र उम्र के हिसाब से कौन-से महीने लड़के या लड़की के पक्ष में हैं।',
   },
   nav: {
+    ttc: 'गर्भधारण प्लानर',
     predictor: 'प्रेडिक्टर', chart: 'जेंडर चार्ट', planner: 'प्लानर', lunarAge: 'चंद्र उम्र',
     mayan: 'मायन', dueDate: 'ड्यू डेट', quiz: 'क्विज़', blog: 'ब्लॉग', menu: 'मेन्यू',
   },
@@ -453,6 +457,7 @@ const es: PartialDictionary = {
     chartDesc: 'El cuadro chino completo 2026: cuadrícula interactiva e imprimible de edad lunar × mes con niña o niño en cada casilla.',
   },
   nav: {
+    ttc: 'Planificador TTC',
     predictor: 'Predictor', chart: 'Cuadro Chino', planner: 'Planificador', lunarAge: 'Edad Lunar',
     mayan: 'Maya', dueDate: 'Fecha Probable', quiz: 'Test', blog: 'Blog', menu: 'Menú',
   },
@@ -584,6 +589,7 @@ const ru: PartialDictionary = {
     chartDesc: 'Полная китайская таблица: сетка «лунный возраст × месяц» с предсказанием в каждой ячейке.',
   },
   nav: {
+    ttc: 'ТТК-планировщик',
     predictor: 'Предсказатель', chart: 'Таблица', planner: 'Планировщик', lunarAge: 'Лунный возраст',
     mayan: 'Майя', dueDate: 'Дата родов', quiz: 'Тест', blog: 'Блог', menu: 'Меню',
   },
@@ -709,7 +715,7 @@ const fr: PartialDictionary = {
     chartTitle: 'Calendrier Chinois de Grossesse 2026 — Tableau Interactif',
     chartDesc: 'Le tableau chinois complet : grille âge lunaire × mois, interactive et imprimable.',
   },
-  nav: { predictor: 'Prédicteur', chart: 'Tableau', planner: 'Planificateur', lunarAge: 'Âge lunaire', mayan: 'Maya', dueDate: 'Date du terme', quiz: 'Quiz', blog: 'Blog', menu: 'Menu' },
+  nav: { predictor: 'Prédicteur', chart: 'Tableau', planner: 'Planificateur', lunarAge: 'Âge lunaire', mayan: 'Maya', dueDate: 'Date du terme', quiz: 'Quiz', blog: 'Blog', ttc: 'Planner TTC', menu: 'Menu' },
   cta: { predict: 'Prédire ✨', print: 'Imprimer', copy: 'Copier', copied: 'Copié !' },
   common: { entertainment: 'Pour le plaisir — pas un examen médical', language: 'Langue', skipToContent: 'Aller au contenu', relatedTools: 'Autres outils' },
   hero: {
@@ -831,7 +837,7 @@ const de: PartialDictionary = {
     chartTitle: 'Chinesische Geschlechtstabelle 2026 — Interaktive Tabelle',
     chartDesc: 'Die komplette chinesische Tabelle: Mondalter × Mondmonat als interaktive, druckbare Übersicht.',
   },
-  nav: { predictor: 'Rechner', chart: 'Tabelle', planner: 'Planer', lunarAge: 'Mondalter', mayan: 'Maya', dueDate: 'Termin-Rechner', quiz: 'Quiz', blog: 'Blog', menu: 'Menü' },
+  nav: { predictor: 'Rechner', chart: 'Tabelle', planner: 'Planer', lunarAge: 'Mondalter', mayan: 'Maya', dueDate: 'Termin-Rechner', quiz: 'Quiz', blog: 'Blog', ttc: 'TTC-Planer', menu: 'Menü' },
   cta: { predict: 'Vorhersage zeigen ✨', print: 'Tabelle drucken', copy: 'Ergebnis kopieren', copied: 'Kopiert!' },
   common: { entertainment: 'Nur zum Spaß — kein medizinischer Test', language: 'Sprache', skipToContent: 'Zum Inhalt', relatedTools: 'Weitere Baby-Tools' },
   hero: {
@@ -859,11 +865,11 @@ const de: PartialDictionary = {
   dueDate: { heading: 'Entbindungstermin-Rechner' },
   quiz: { heading: 'Altweibertum-Quiz' },
   footer: { tagline: 'Verspielte Mondkalender-Ratschläge — mit rosa und blauem Konfetti.' },
+  blog: { readMore: 'Weiterlesen', published: 'Veröffentlicht', updated: 'Aktualisiert', minutes: 'Min. Lesezeit' },
 };
 
 const it: PartialDictionary = {
   exploreTitle: 'Continua a esplorare',
-  blog: { readMore: 'Continua a leggere', published: 'Pubblicato', updated: 'Aggiornato', minutes: 'min di lettura' },
   geo: {
     hubTitle: 'Profili lunari correlati e navigazione rapida',
     hub1Label: 'Chinese Baby Predictor',
@@ -916,7 +922,7 @@ const it: PartialDictionary = {
     predictorTitle: 'Calendario Cinese della Gravidanza 2026 — Calcolatore Gratis',
     chartTitle: 'Calendario Cinese 2026 — Tabella Interattiva',
   },
-  nav: { predictor: 'Calcolatore', chart: 'Tabella', planner: 'Pianificatore', lunarAge: 'Età lunare', mayan: 'Maya', dueDate: 'Data presunta', quiz: 'Quiz', blog: 'Blog', menu: 'Menu' },
+  nav: { predictor: 'Calcolatore', chart: 'Tabella', planner: 'Pianificatore', lunarAge: 'Età lunare', mayan: 'Maya', dueDate: 'Data presunta', quiz: 'Quiz', blog: 'Blog', ttc: 'Pianificatore TTC', menu: 'Menu' },
   cta: { predict: 'Scopri ✨', print: 'Stampa tabella', copy: 'Copia risultato', copied: 'Copiato!' },
   common: { entertainment: 'Solo per divertimento — non è un esame medico', language: 'Lingua', skipToContent: 'Vai al contenuto', relatedTools: 'Altri strumenti' },
   hero: { kicker: 'Basato sulla tabella lunare di 700 anni · edizione 2026', title: 'Maschio o', titleAccent: 'femminuccia?', subtitle: 'Inserisci due date e lascia che il leggendario calendario cinese faccia la sua previsione.', trust1: 'Gratis', trust2: 'Senza registrazione', trust3: 'Risultato immediato' },
@@ -928,11 +934,11 @@ const it: PartialDictionary = {
   dueDate: { heading: 'Calcolatore della data presunta' },
   quiz: { heading: 'Quiz degli antichi detti' },
   footer: { tagline: 'Previsioni giocose con confetti rosa e azzurri.' },
+  blog: { readMore: 'Continua a leggere', published: 'Pubblicato', updated: 'Aggiornato', minutes: 'min di lettura' },
 };
 
 const pt: PartialDictionary = {
   exploreTitle: 'Continue explorando',
-  blog: { readMore: 'Continuar lendo', published: 'Publicado', updated: 'Atualizado', minutes: 'min de leitura' },
   geo: {
     hubTitle: 'Perfis lunares relacionados e navegação rápida',
     hub1Label: 'Chinese Baby Predictor',
@@ -985,7 +991,7 @@ const pt: PartialDictionary = {
     predictorTitle: 'Calendário Chinês da Gravidez 2026 — Calculadora Grátis',
     chartTitle: 'Calendário Chinês 2026 — Tabela Interativa',
   },
-  nav: { predictor: 'Calculadora', chart: 'Tabela', planner: 'Planejador', lunarAge: 'Idade lunar', mayan: 'Maia', dueDate: 'Data provável', quiz: 'Quiz', blog: 'Blog', menu: 'Menu' },
+  nav: { predictor: 'Calculadora', chart: 'Tabela', planner: 'Planejador', lunarAge: 'Idade lunar', mayan: 'Maia', dueDate: 'Data provável', quiz: 'Quiz', blog: 'Blog', ttc: 'Planejador TTC', menu: 'Menu' },
   cta: { predict: 'Descobrir ✨', print: 'Imprimir tabela', copy: 'Copiar resultado', copied: 'Copiado!' },
   common: { entertainment: 'Só para diversão — não é exame médico', language: 'Idioma', skipToContent: 'Ir ao conteúdo', relatedTools: 'Mais ferramentas' },
   hero: { kicker: 'Baseado na tabela lunar de 700 anos · edição 2026', title: 'Será menino', titleAccent: 'ou menina?', subtitle: 'Insira duas datas e deixe o lendário calendário chinês arriscar um palpite.', trust1: 'Grátis', trust2: 'Sem cadastro', trust3: 'Resultado na hora' },
@@ -997,6 +1003,7 @@ const pt: PartialDictionary = {
   dueDate: { heading: 'Calculadora da data provável' },
   quiz: { heading: 'Quiz das crenças antigas' },
   footer: { tagline: 'Palpites divertidos com confete rosa e azul.' },
+  blog: { readMore: 'Continuar lendo', published: 'Publicado', updated: 'Atualizado', minutes: 'min de leitura' },
 };
 
 const bn: PartialDictionary = {
@@ -1045,7 +1052,7 @@ const bn: PartialDictionary = {
     faqTitle: 'সাধারণ প্রশ্ন (FAQ)',
   },
   meta: { homeTitle: 'চাইনিজ জেন্ডার প্রেডিক্টর ২০২৬ — ছেলে না মেয়ে?' },
-  nav: { predictor: 'প্রেডিক্টর', chart: 'চার্ট', planner: 'প্ল্যানার', lunarAge: 'চান্দ্র বয়স', mayan: 'মায়ান', dueDate: 'প্রসব তারিখ', quiz: 'কুইজ', blog: 'ব্লগ', menu: 'মেনু' },
+  nav: { predictor: 'প্রেডিক্টর', chart: 'চার্ট', planner: 'প্ল্যানার', lunarAge: 'চান্দ্র বয়স', mayan: 'মায়ান', dueDate: 'প্রসব তারিখ', quiz: 'কুইজ', blog: 'ব্লগ', ttc: 'টিটিসি প্ল্যানার', menu: 'মেনু' },
   cta: { predict: 'ফল দেখুন ✨', print: 'চার্ট প্রিন্ট', copy: 'কপি', copied: 'কপি হয়েছে!' },
   common: { entertainment: 'শুধু মজার জন্য — এটি মেডিকেল টেস্ট নয়', language: 'ভাষা', skipToContent: 'মূল অংশে' },
   hero: { kicker: '৭০০ বছরের পুরনো চান্দ্র চার্টের ভিত্তিতে · ২০২৬', title: 'বাচ্চা ছেলে হবে', titleAccent: 'না মেয়ে?', subtitle: 'দুটি তারিখ দিন, বিখ্যাত চাইনিজ জেন্ডার ক্যালেন্ডার অনুমান করুক।', trust1: 'একদম ফ্রি', trust2: 'সাইন-আপ ছাড়া', trust3: 'সাথে সাথে ফল' },
@@ -1057,6 +1064,7 @@ const bn: PartialDictionary = {
   dueDate: { heading: 'প্রসব তারিখ ক্যালকুলেটর' },
   quiz: { heading: 'প্রবাদের কুইজ' },
   footer: { tagline: 'চান্দ্র ক্যালেন্ডারের মজার অনুমান — গোলাপি-নীল কনফেটি সহ।' },
+  blog: { readMore: 'আরও পড়ুন', published: 'প্রকাশিত', updated: 'আপডেট হয়েছে', minutes: 'মিনিট পড়া' },
 };
 
 const ja: PartialDictionary = {
@@ -1110,7 +1118,7 @@ const ja: PartialDictionary = {
     predictorTitle: '中国式 性別予想 2026 — 無料カレンダー＆チャート',
     chartTitle: '中国式チャート 2026 — インタラクティブ表',
   },
-  nav: { predictor: '予想ツール', chart: 'チャート', planner: 'プランナー', lunarAge: '旧暦年齢', mayan: 'マヤ式', dueDate: '出産予定日', quiz: 'クイズ', blog: 'ブログ', menu: 'メニュー' },
+  nav: { predictor: '予想ツール', chart: 'チャート', planner: 'プランナー', lunarAge: '旧暦年齢', mayan: 'マヤ式', dueDate: '出産予定日', quiz: 'クイズ', blog: 'ブログ', ttc: 'TTCプランナー', menu: 'メニュー' },
   cta: { predict: '結果を見る ✨', print: 'チャートを印刷', copy: '結果をコピー', copied: 'コピーしました！' },
   common: { entertainment: '娯楽目的 — 医学的検査ではありません', language: '言語', skipToContent: '本文へ', relatedTools: '他の占いツール' },
   hero: { kicker: '700年の歴史ある旧暦チャート · 2026年版', title: '男の子？', titleAccent: '女の子？', subtitle: '日付を2つ入れるだけで、伝説の中国式カレンダーが予想 — 旧暦変換つき。', trust1: '完全無料', trust2: '登録不要', trust3: '結果はすぐ' },
@@ -1122,6 +1130,7 @@ const ja: PartialDictionary = {
   dueDate: { heading: '出産予定日計算' },
   quiz: { heading: 'まさかのジンクスクイズ' },
   footer: { tagline: '旧暦ベースのかわいい性別予想 — ピンクとブルーの紙吹雪つき。' },
+  blog: { readMore: '続きを読む', published: '公開日', updated: '更新日', minutes: '分で読める' },
 };
 
 const ko: PartialDictionary = {
@@ -1175,7 +1184,7 @@ const ko: PartialDictionary = {
     predictorTitle: '중국식 아기 성별 점 2026 — 무료 계산기·차트',
     chartTitle: '중국식 성별 차트 2026 — 인터랙티브 표',
   },
-  nav: { predictor: '점 보기', chart: '차트', planner: '플래너', lunarAge: '음력 나이', mayan: '마야식', dueDate: '출산 예정일', quiz: '퀴즈', blog: '블로그', menu: '메뉴' },
+  nav: { predictor: '점 보기', chart: '차트', planner: '플래너', lunarAge: '음력 나이', mayan: '마야식', dueDate: '출산 예정일', quiz: '퀴즈', blog: '블로그', ttc: 'TTC 플래너', menu: '메뉴' },
   cta: { predict: '결과 보기 ✨', print: '차트 인쇄', copy: '복사', copied: '복사됨!' },
   common: { entertainment: '재미용 — 의학 검사가 아닙니다', language: '언어', skipToContent: '본문으로', relatedTools: '다른 도구' },
   hero: { kicker: '700년 전통 음력 차트 기반 · 2026 에디션', title: '남자아이?', titleAccent: '여자아이?', subtitle: '날짜 두 개만 입력하세요 — 전설의 중국식 달력이 추측해 드립니다.', trust1: '완전 무료', trust2: '가입 없이', trust3: '즉시 결과' },
@@ -1187,6 +1196,7 @@ const ko: PartialDictionary = {
   dueDate: { heading: '출산 예정일 계산' },
   quiz: { heading: '옛말 퀴즈' },
   footer: { tagline: '음력 기반 귀여운 성별 추측 — 분홍·파랑 컨페티와 함께.' },
+  blog: { readMore: '더 보기', published: '게시됨', updated: '업데이트됨', minutes: '분 읽기' },
 };
 
 const ms: PartialDictionary = {
@@ -1235,7 +1245,7 @@ const ms: PartialDictionary = {
     faqTitle: 'Soalan Lazim (FAQ)',
   },
   meta: { homeTitle: 'Peramal Jantina Bayi Cina 2026 — Lelaki atau Perempuan?' },
-  nav: { predictor: 'Peramal', chart: 'Carta', planner: 'Perancang', lunarAge: 'Umur Lunar', mayan: 'Maya', dueDate: 'Tarikh Jangka', quiz: 'Kuiz', blog: 'Blog', menu: 'Menu' },
+  nav: { predictor: 'Peramal', chart: 'Carta', planner: 'Perancang', lunarAge: 'Umur Lunar', mayan: 'Maya', dueDate: 'Tarikh Jangka', quiz: 'Kuiz', blog: 'Blog', ttc: 'Perancang TTC', menu: 'Menu' },
   cta: { predict: 'Tenung ✨', print: 'Cetak carta', copy: 'Salin', copied: 'Disalin!' },
   common: { entertainment: 'Untuk hiburan sahaja — bukan ujian perubatan', language: 'Bahasa', skipToContent: 'Ke kandungan' },
   hero: { kicker: 'Berdasar carta lunar 700 tahun · edisi 2026', title: 'Lelaki', titleAccent: 'atau perempuan?', subtitle: 'Masukkan dua tarikh dan biarkan kalendar Cina legenda lambangkan.', trust1: 'Percuma', trust2: 'Tanda daftar', trust3: 'Keputusan segera' },
@@ -1247,11 +1257,11 @@ const ms: PartialDictionary = {
   dueDate: { heading: 'Kira tarikh jangka' },
   quiz: { heading: 'Kuiz kepercayaan lama' },
   footer: { tagline: 'Tekaan berbanding kalendar lunar — konfeti merah jambu dan biru.' },
+  blog: { readMore: 'Baca lagi', published: 'Diterbitkan', updated: 'Dikemas kini', minutes: 'min bacaan' },
 };
 
 const pl: PartialDictionary = {
   exploreTitle: 'Czytaj dalej',
-  blog: { readMore: 'Czytaj dalej', published: 'Opublikowano', updated: 'Zaktualizowano', minutes: 'min czytania' },
   geo: {
     hubTitle: 'Powiązane profile księżycowe i szybka nawigacja',
     hub1Label: 'Chinese Baby Predictor',
@@ -1303,7 +1313,7 @@ const pl: PartialDictionary = {
     homeDesc: 'Darmowy chiński predyktor płci: wpisz daty i sprawdź, co mówi stary lunarny kalendarz.',
     chartTitle: 'Chińska tabelka płci 2026 — interaktywna',
   },
-  nav: { predictor: 'Predyktor', chart: 'Tabelka', planner: 'Planer', lunarAge: 'Wiek księżycowy', mayan: 'Maja', dueDate: 'Termin porodu', quiz: 'Quiz', blog: 'Blog', menu: 'Menu' },
+  nav: { predictor: 'Predyktor', chart: 'Tabelka', planner: 'Planer', lunarAge: 'Wiek księżycowy', mayan: 'Maja', dueDate: 'Termin porodu', quiz: 'Quiz', blog: 'Blog', ttc: 'Planer TTC', menu: 'Menu' },
   cta: { predict: 'Powiedz ✨', print: 'Drukuj tabelkę', copy: 'Kopiuj wynik', copied: 'Skopiowano!' },
   common: { entertainment: 'Tylko dla zabawy — to nie test medyczny', language: 'Język', skipToContent: 'Do treści', relatedTools: 'Więcej narzędzi do przewidywania płci' },
   hero: { kicker: 'Na bazie 700-letniej tabeli księżycowej · wydanie 2026', title: 'Chłopiec czy', titleAccent: 'dziewczynka?', subtitle: 'Wpisz dwie daty i pozwól legendarnemu kalendarzowi chińskiemu zdradzić sekret.', trust1: 'Darmowe', trust2: 'Bez rejestracji', trust3: 'Natychmiastowy wynik' },
@@ -1315,11 +1325,11 @@ const pl: PartialDictionary = {
   dueDate: { heading: 'Kalkulator terminu porodu' },
   quiz: { heading: 'Quiz przesądów' },
   footer: { tagline: 'Zabawne przepowiednie kalendarza księżycowego — z różowo-niebieskim confetti.' },
+  blog: { readMore: 'Czytaj dalej', published: 'Opublikowano', updated: 'Zaktualizowano', minutes: 'min czytania' },
 };
 
 const id: PartialDictionary = {
   exploreTitle: 'Jelajahi lebih lanjut',
-  blog: { readMore: 'Baca selengkapnya', published: 'Diterbitkan', updated: 'Diperbarui', minutes: 'menit baca' },
   geo: {
     hubTitle: 'Profil lunar terkait dan navigasi cepat',
     hub1Label: 'Chinese Baby Predictor',
@@ -1369,7 +1379,7 @@ const id: PartialDictionary = {
     blogTitle: 'Blog Prediksi Gender Bayi – Panduan & Tabel',
     blogDesc: 'Panduan tentang kalender qamari Tionghoa, tanggal qamari, mitos akurasi, dan semua cara menebak (dan mengetahui) jenis kelamin bayi.',
   },
-  nav: { predictor: 'Prediktor', chart: 'Tabel', planner: 'Perencana', lunarAge: 'Umur Cina', mayan: 'Maya', dueDate: 'Perkiraan Lahir', quiz: 'Kuis', blog: 'Blog', menu: 'Menu' },
+  nav: { predictor: 'Prediktor', chart: 'Tabel', planner: 'Perencana', lunarAge: 'Umur Cina', mayan: 'Maya', dueDate: 'Perkiraan Lahir', quiz: 'Kuis', blog: 'Blog', ttc: 'Perencana TTC', menu: 'Menu' },
   cta: { predict: 'Tunjukkan ✨', print: 'Cetak tabel', copy: 'Salin', copied: 'Tersalin!' },
   common: { entertainment: 'Untuk kesenangan — bukan tes medis', language: 'Bahasa', skipToContent: 'Ke konten', relatedTools: 'Alat prediksi gender lainnya' },
   hero: { kicker: 'Berdasar tabel bulan 700 tahun · edisi 2026', title: 'Cowok atau', titleAccent: 'cewek?', subtitle: 'Masukkan dua tanggal dan biarkan kalender Cina legendaris menebak.', trust1: 'Gratis', trust2: 'Tanpa daftar', trust3: 'Hasil instan' },
@@ -1381,11 +1391,11 @@ const id: PartialDictionary = {
   dueDate: { heading: 'Kalkulator hari persalinan' },
   quiz: { heading: 'Kuis kepercayaan lama' },
   footer: { tagline: 'Tebakan kalender lunar yang seru — dengan confetti merah muda dan biru.' },
+  blog: { readMore: 'Baca selengkapnya', published: 'Diterbitkan', updated: 'Diperbarui', minutes: 'menit baca' },
 };
 
 const ar: PartialDictionary = {
   exploreTitle: 'اكتشف المزيد',
-  blog: { readMore: 'اقرأ المزيد', published: 'نُشر', updated: 'محدّث', minutes: 'دقائق قراءة' },
   geo: {
     hubTitle: 'ملامح قمرية ذات صلة وتنقل سريع',
     hub1Label: 'Chinese Baby Predictor',
@@ -1437,7 +1447,7 @@ const ar: PartialDictionary = {
     homeDesc: 'توقع جنس المولد بالتقويم القمري الصيني المجاني: أدخل تاريخين واكتشف ما يقوله الجدول القديم.',
     chartTitle: 'الجدول الصيني 2026 — تفاعلي وقابل للطبع',
   },
-  nav: { predictor: 'الحاسبة', chart: 'الجدول', planner: 'المخطط', lunarAge: 'العمر القمري', mayan: 'المايا', dueDate: 'موعد الولادة', quiz: 'اختبار', blog: 'المدونة', menu: 'القائمة' },
+  nav: { predictor: 'الحاسبة', chart: 'الجدول', planner: 'المخطط', lunarAge: 'العمر القمري', mayan: 'المايا', dueDate: 'موعد الولادة', quiz: 'اختبار', blog: 'المدونة', ttc: 'مخطط TTC', menu: 'القائمة' },
   cta: { predict: 'اكتشف ✨', print: 'اطبع الجدول', copy: 'انسخ النتيجة', copied: 'تم النسخ!' },
   common: { entertainment: 'للمتعة فقط — ليس فحصاً طبياً', language: 'اللغة', skipToContent: 'إلى المحتوى', relatedTools: 'المزيد من أدوات جنس المولد' },
   hero: { kicker: 'مبني على الجدول القمري عمره 700 عام · إصدار 2026', title: 'ولد…', titleAccent: 'أم بنت؟', subtitle: 'أدخل تاريخين ودع التقويم الصيني الأسطوري يخمّن من قادم.', trust1: 'مجاني', trust2: 'بدون تسجيل', trust3: 'نتيجة فورية' },
@@ -1449,6 +1459,7 @@ const ar: PartialDictionary = {
   dueDate: { heading: 'حاسبة موعد الولادة' },
   quiz: { heading: 'اختبار المعتقدات القديمة' },
   footer: { tagline: 'تنبؤات قمرية ممتعة — مع قصاصات وردية وزرقاء.' },
+  blog: { readMore: 'اقرأ المزيد', published: 'نُشرت', updated: 'حُدّثت', minutes: 'دقائق قراءة' },
 };
 
 const bg: PartialDictionary = {
@@ -1497,7 +1508,7 @@ const bg: PartialDictionary = {
     faqTitle: 'Често задавани въпроси (FAQ)',
   },
   meta: { homeTitle: 'Китайски Календар за Пола на Бебето 2026 — Момче или Момиче?' },
-  nav: { predictor: 'Прогноза', chart: 'Таблица', planner: 'Планер', lunarAge: 'Лунна възраст', mayan: 'Мая', dueDate: 'Срок', quiz: 'Квиз', blog: 'Блог', menu: 'Меню' },
+  nav: { predictor: 'Прогноза', chart: 'Таблица', planner: 'Планер', lunarAge: 'Лунна възраст', mayan: 'Мая', dueDate: 'Срок', quiz: 'Квиз', blog: 'Блог', ttc: 'TTC планер', menu: 'Меню' },
   cta: { predict: 'Покажи ✨', print: 'Печат', copy: 'Копирай', copied: 'Копирано!' },
   common: { entertainment: 'Само за забавление — не е медицински тест', language: 'Език', skipToContent: 'Към съдържанието' },
   hero: { kicker: 'По 700-годишната лунна таблица · издание 2026', title: 'Момче или', titleAccent: 'момиче?', subtitle: 'Въведете две дати и позволете на легендарния китайски календар да отгатне.', trust1: 'Безплатно', trust2: 'Без регистрация', trust3: 'Мигновен резултат' },
@@ -1509,11 +1520,11 @@ const bg: PartialDictionary = {
   dueDate: { heading: 'Калкулатор на срока' },
   quiz: { heading: 'Квиз с народни поверия' },
   footer: { tagline: 'Забавни лунни предсказания — с розово и синьо конфети.' },
+  blog: { readMore: 'Прочети още', published: 'Публикувано', updated: 'Обновено', minutes: 'мин четене' },
 };
 
 const tr: PartialDictionary = {
   exploreTitle: 'Keşfetmeye devam et',
-  blog: { readMore: 'Devamını oku', published: 'Yayınlandı', updated: 'Güncellendi', minutes: 'dk okuma' },
   geo: {
     hubTitle: 'İlgili Ay Takvimi Profilleri ve Hızlı Gezinme',
     hub1Label: 'Chinese Baby Predictor',
@@ -1565,7 +1576,7 @@ const tr: PartialDictionary = {
     homeDesc: 'Ücretsiz Çin cinsiyet hesaplama aracı: iki tarih girin ve eski ay takvimi ne diyor, öğrenin.',
     chartTitle: 'Çin Cinsiyet Tablosu 2026 — İnteraktif Tablo',
   },
-  nav: { predictor: 'Hesaplayıcı', chart: 'Tablo', planner: 'Planlayıcı', lunarAge: 'Ay yaşı', mayan: 'Maya', dueDate: 'Doğum tarihi', quiz: 'Sınav', blog: 'Blog', menu: 'Menü' },
+  nav: { predictor: 'Hesaplayıcı', chart: 'Tablo', planner: 'Planlayıcı', lunarAge: 'Ay yaşı', mayan: 'Maya', dueDate: 'Doğum tarihi', quiz: 'Sınav', blog: 'Blog', ttc: 'TTC Planlayıcı', menu: 'Menü' },
   cta: { predict: 'Keşfet ✨', print: 'Tabloyu yazdır', copy: 'Kopyala', copied: 'Kopyalandı!' },
   common: { entertainment: 'Sadece eğlence — tıbbi test değildir', language: 'Dil', skipToContent: 'İçeriğe git', relatedTools: 'Daha fazla cinsiyet tahmin aracı' },
   hero: { kicker: '700 yıllık ay takvimi tablosuna dayanır · 2026 sürümü', title: 'Erkek mi', titleAccent: 'kız mı?', subtitle: 'İki tarih girin; efsanevi Çin takvimi tahmin etsin.', trust1: 'Ücretsiz', trust2: 'Kayıt yok', trust3: 'Anında sonuç' },
@@ -1577,6 +1588,7 @@ const tr: PartialDictionary = {
   dueDate: { heading: 'Doğum tarihi hesaplayıcı' },
   quiz: { heading: 'Batıl inanç testi' },
   footer: { tagline: 'Ay takvimini temelli eğlenceli tahminler — pembe/mavi konfetiler.' },
+  blog: { readMore: 'Devamını oku', published: 'Yayınlandı', updated: 'Güncellendi', minutes: 'dk okuma' },
 };
 
 const sv: PartialDictionary = {
@@ -1629,7 +1641,7 @@ const sv: PartialDictionary = {
     homeDesc: 'Gratis kinesisk könsprognos: mata in två datum och se vad den gamla månkalendern svarar.',
     chartTitle: 'Kinesisk könstabell 2026 — interaktiv',
   },
-  nav: { predictor: 'Prognos', chart: 'Tabell', planner: 'Planerare', lunarAge: 'Månålder', mayan: 'Maya', dueDate: 'Beräknad tid', quiz: 'Quiz', blog: 'Blogg', menu: 'Meny' },
+  nav: { predictor: 'Prognos', chart: 'Tabell', planner: 'Planerare', lunarAge: 'Månålder', mayan: 'Maya', dueDate: 'Beräknad tid', quiz: 'Quiz', blog: 'Blogg', ttc: 'TTC-planerare', menu: 'Meny' },
   cta: { predict: 'Visa ✨', print: 'Skriv ut tabellen', copy: 'Kopiera', copied: 'Kopierad!' },
   common: { entertainment: 'Bara för nöjes skull — inget medicinskt test', language: 'Språk', skipToContent: 'Till innehållet' },
   hero: { kicker: 'Baserad på den 700-åriga månkalendern · utgåva 2026', title: 'Pojke eller', titleAccent: 'flicka?', subtitle: 'Mata in två datum och låt den legendariska kinesiska kalendern gissa.', trust1: 'Kostnadsfri', trust2: 'Ingen registrering', trust3: 'Direkt svar' },
@@ -1641,6 +1653,7 @@ const sv: PartialDictionary = {
   dueDate: { heading: 'Beräkna förlossning' },
   quiz: { heading: 'Gummans visor-quiz' },
   footer: { tagline: 'Lekfulla månkalender-gissningar — med rosa och blått konfetti.' },
+  blog: { readMore: 'Läs mer', published: 'Publicerad', updated: 'Uppdaterad', minutes: 'min läsning' },
 };
 
 const TRANSLATIONS: Record<Locale, PartialDictionary | Dictionary> = {
@@ -1666,8 +1679,12 @@ function mergeFallback<T>(base: T, override: unknown): T {
 /** Get the full dictionary for a locale with English fallback. */
 export function getDictionary(locale: Locale): Dictionary {
   const base = mergeFallback(en, TRANSLATIONS[locale] ?? {});
-  return mergeFallback(base, (EXTRA_DICS[locale] ?? {}) as PartialDictionary) as Dictionary;
+  const layer2 = mergeFallback(base, (EXTRA_DICS[locale] ?? {}) as PartialDictionary);
+  /* Wave-1 additions (trust card, calculator-drawer templates, hub spokes). */
+  return mergeFallback(layer2, (WAVE1_DICS[locale] ?? {}) as PartialDictionary) as Dictionary;
 }
 
 /** Second-layer dictionaries (NL full locale + 2026-10 locale completion passes). */
 import { EXTRA_DICS } from './locales';
+/** Wave-1 additions (EN core + 11 fully-translated locale strips). */
+import { WAVE1_DICS } from './wave1';

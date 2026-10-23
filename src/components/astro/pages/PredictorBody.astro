@@ -42,7 +42,7 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
         <p class="mt-1.5 text-sm leading-relaxed text-plum-600">{t.common.medicalNote}</p>
       </div>
     </div>
-    <div class="lg:sticky lg:top-24 min-h-[480px]"><GenderPredictor client:idle strings={predictorStrings} /></div>
+    <div class="lg:sticky lg:top-24 min-h-[480px]"><GenderPredictor client:idle strings={predictorStrings} locale={locale} /></div>
   </div>
 
   <section class="section-shell mt-16" aria-labelledby="pred-how">

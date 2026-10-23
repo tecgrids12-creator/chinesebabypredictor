@@ -1,0 +1,85 @@
+---
+/**
+ * Wave-1 spoken page body #2 — "Was the Chinese Baby Predictor Right for You?"
+ * Multi-child accuracy backtester. EN-only spoke. UI strings from
+ * `BACKTEST_STRINGS` / `BACKTEST_FAQ` (src/i18n/tools.ts).
+ */
+import PastKidsBacktester from '@components/calculators/PastKidsBacktester.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
+import { BACKTEST_STRINGS, BACKTEST_FAQ } from '@i18n/tools';
+import { getDictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { locale?: Locale; }
+const { locale = 'en' } = Astro.props;
+const t = getDictionary(locale);
+const S = BACKTEST_STRINGS;
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.05fr]">
+    <div>
+      <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Multi-child accuracy test</p>
+      <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
+        Was the <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span> Right for You? Multi-Child Accuracy Tester
+      </h1>
+      <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">
+        Enter your children one by one — conception date, or birth/due date and we subtract the standard
+        266 days — and get an honest, family-sized hit-rate scorecard you can download and share.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#dd2175,#2c63e8)"></span>Up to 5 kids</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#2c63e8,#f59e0b)"></span>Instant ✅/❌ verdicts</span>
+      </div>
+      <div class="mt-8 rounded-3xl p-5" style="border: 1px solid transparent; background: linear-gradient(rgba(253,242,248,.65), rgba(253,242,248,.65)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.3)) border-box;">
+        <p class="font-display font-bold text-plum-800">🍼 {t.common.entertainment}</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">{t.common.medicalNote}</p>
+      </div>
+    </div>
+    <div class="lg:sticky lg:top-24 min-h-[520px]"><PastKidsBacktester client:idle strings={S} locale={locale} /></div>
+  </div>
+
+  <GeoLeadLinks />
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom">
+      <h2>Why Mothers Test Their Past Pregnancies First</h2>
+      <p>
+        Before you ask the lunar chart to predict a <em>future</em> baby, test it on past pregnancies you can verify.
+        Testing your actual children is the closest thing this folklore has to a blind, honest experiment: you know
+        the answers already, so you cannot (even accidentally) bend the inputs toward a result you want. It also
+        teaches the two conversions that break most casual users —
+        <strong>lunar age vs. Western age</strong> and <strong>lunar month vs. Gregorian month</strong> —
+        before any stakes are attached. If your family scorecard comes out 3-for-3, enjoy it; if it comes out
+        1-for-3, you have just replicated, at household scale, exactly what the population statistics predict.
+      </p>
+      <h2>The 6 Reasons People Think the Chart "Got It Wrong"</h2>
+      <ol class="prose-ol">
+        <li><strong>Western age instead of lunar age.</strong> The chart's rows are traditional virtual (虚岁) ages — at birth you are 1, and you gain a year at every Chinese New Year. A mother who is "28" in November may be lunar 30 at conception.</li>
+        <li><strong>Subtracting months instead of converting.</strong> "I conceived in June, so I was X in January" skips both the virtual-age rule and the CNY boundary.</li>
+        <li><strong>Using the birth date instead of conception date.</strong> Conception happens ≈ 266 days before the estimated due date. Reading the chart in the birth month is the single most common error we see.</li>
+        <li><strong>January/February birthday cutoffs.</strong> A mother born in late January must check whether her birth preceded that year's Chinese New Year — her lunar birth year differs from the Gregorian one.</li>
+        <li><strong>The leap-month (Runyue) half-rule.</strong> In years with an intercalary month the extra month is folded back into a numbered month by splitting it: days 1–15 count as the base month, days 16–29 as the next. Simple calculators skip this entirely.</li>
+        <li><strong>Confirmation bias.</strong> When the chart agrees we remember it; when it disagrees we adjust a date until it agrees — "proving" a 336-cell lottery table after the fact.</li>
+      </ol>
+      <h2>Confirmation Bias vs. the 2010 Swedish Study</h2>
+      <p>
+        Any single family's hit rate is an anecdote; the largest honest sample we have is the
+        <a href="https://pubmed.ncbi.nlm.nih.gov/20618730/" rel="nofollow noopener noreferrer" target="_blank">2010 Swedish population-registry study of ≈2.8 million births</a>,
+        which found the lunar method performs at chance level (about 50%). That is precisely why a mixed
+        scorecard is the truthful, un-gamed result — and why our tool prints its misses in the same size
+        font as its matches.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-shell mt-14" aria-labelledby="bt-faq">
+    <h2 id="bt-faq" class="section-title text-center">"Was it right?" FAQ</h2>
+    <div class="mt-6"><FaqAccordion items={BACKTEST_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="chinese-gender-predictor/" />
+</div>

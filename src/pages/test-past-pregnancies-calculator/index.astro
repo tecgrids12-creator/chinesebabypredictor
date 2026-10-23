@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import PastKidsBacktesterBody from '@components/astro/pages/PastKidsBacktesterBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { BACKTEST_STRINGS, BACKTEST_FAQ } from '@i18n/tools';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const title = 'Was the Chinese Baby Predictor Right for You? Multi-Child Accuracy Tester';
+const description = 'Test the Chinese gender chart on your actual children: enter conception or birth dates for up to 5 kids, get per-child ✅/❌ verdicts, your family hit-rate scorecard and a shareable lunar scorecard PNG.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath="test-past-pregnancies-calculator/"
+  locale={locale}
+  crumbs={[{ label: 'Chinese Baby Predictor' }, { label: 'Past Pregnancies Accuracy Tester' }]}
+  schema={[
+    webAppSchema({
+      name: 'Chinese Gender Chart Accuracy Backtester',
+      path: 'test-past-pregnancies-calculator/',
+      description: BACKTEST_STRINGS.motherHeading,
+    }),
+    faqPageSchema(BACKTEST_FAQ),
+  ]}
+>
+  <PastKidsBacktesterBody locale={locale} />
+</BaseLayout>

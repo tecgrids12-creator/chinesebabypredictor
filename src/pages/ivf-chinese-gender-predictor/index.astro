@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import IvfPredictorBody from '@components/astro/pages/IvfPredictorBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { IVF_STRINGS, IVF_FAQ } from '@i18n/tools';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const title = 'IVF & Frozen Embryo Chinese Baby Predictor (FET, IUI & Donor Egg)';
+const description = 'Read the Chinese gender chart for IVF, FET, IUI and donor-egg cycles: compare the egg retrieval date against the transfer date on the traditional lunar calendar — both lunar readings, split-verdict detection and PGT-A context included.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath="ivf-chinese-gender-predictor/"
+  locale={locale}
+  crumbs={[{ label: 'Chinese Baby Predictor' }, { label: 'IVF & FET Gender Predictor' }]}
+  schema={[
+    webAppSchema({
+      name: 'IVF & FET Chinese Gender Predictor',
+      path: 'ivf-chinese-gender-predictor/',
+      description: IVF_STRINGS.pathwayFet ?? title,
+    }),
+    faqPageSchema(IVF_FAQ),
+  ]}
+>
+  <IvfPredictorBody locale={locale} />
+</BaseLayout>

@@ -1,0 +1,191 @@
+---
+/**
+ * Wave-1 Annual Hub #2 — 2028 Chinese Gender Calendar (Leap 5th Month Edition).
+ * EN-only spoke. 13-month mapping table + leap-month half-split computed at
+ * BUILD TIME from the lunar engine. UI strings from `CALENDAR_STRINGS`.
+ */
+import CalendarPlanner from '@components/calculators/CalendarPlanner.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
+import { lunarMonthWindows, chartByWindow } from '@utils/lunarWindows';
+import { lunarNewYear, solarToLunar } from '@utils/lunar';
+import { CALENDAR_STRINGS, CAL2028_FAQ } from '@i18n/tools';
+import { getDictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { locale?: Locale; }
+const { locale = 'en' } = Astro.props;
+const t = getDictionary(locale);
+const S = CALENDAR_STRINGS;
+
+const YEAR = 2028;
+const DAY_MS = 86_400_000;
+
+/* All 13 lunar months of the Earth Monkey year, incl. the leap 5th month. */
+const windows = lunarMonthWindows(YEAR) ?? [];
+const leapWin = windows.find((w) => w.isLeap) ?? null;
+const half1 = leapWin ? { start: leapWin.start, end: new Date(leapWin.start.getTime() + 14 * DAY_MS) } : null;
+const half2 = leapWin ? { start: new Date(leapWin.start.getTime() + 15 * DAY_MS), end: leapWin.end } : null;
+
+const fmtD = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const fmtShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+/* Birth-year matrix (1982–2009) for the 2028 Monkey year. */
+const bestList = (gender: 'boy' | 'girl', b: number): string => {
+  const rows = chartByWindow(windows, b).filter((w) => w.gender === gender);
+  if (rows.length === 0) return '—';
+  const first = `${`M${rows[0].month}`}${rows[0].isLeap ? '*' : ''} (${fmtShort(rows[0].start)})`;
+  const rest = rows.slice(1, 4).map((w) => `M${w.month}${w.isLeap ? '*' : ''}`);
+  return [first, ...rest].join(' · ');
+};
+interface MatrixRow { birth: number; cny: Date; zodiac: string; emoji: string; age: number; boy: string; girl: string; }
+const matrix: MatrixRow[] = [];
+for (let b = 1982; b <= 2009; b++) {
+  const cny = lunarNewYear(b);
+  if (!cny) continue;
+  const z = solarToLunar(cny);
+  matrix.push({
+    birth: b,
+    cny,
+    zodiac: z.zodiac,
+    emoji: z.zodiacEmoji,
+    age: YEAR - b + 1,
+    boy: bestList('boy', b),
+    girl: bestList('girl', b),
+  });
+}
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.05fr]">
+    <div>
+      <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Year of the Earth Monkey · 戊申 · Leap 5th month</p>
+      <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
+        <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">2028</span> Chinese Gender Calendar &amp; Baby Predictor
+      </h1>
+      <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">
+        The 13-month Earth Monkey year with its intercalary 5th lunar month (Runyue) mapped day-by-day —
+        the half-month rule applied to summer 2028 conceptions, plus a 1982–2009 birth-year matrix.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#dd2175,#2c63e8)"></span>CNY 2028: Jan 26</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#2c63e8,#f59e0b)"></span>13 lunar months · leap M5</span>
+      </div>
+      <div class="mt-8 rounded-3xl p-5" style="border: 1px solid transparent; background: linear-gradient(rgba(253,242,248,.65), rgba(253,242,248,.65)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.3)) border-box;">
+        <p class="font-display font-bold text-plum-800">🍼 {t.common.entertainment}</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">{t.common.medicalNote}</p>
+      </div>
+    </div>
+    <div class="lg:sticky lg:top-24 min-h-[520px]">
+      <CalendarPlanner year={2028} strings={S} planHeading={S.plannerHeading.replace('2027', '2028')} computeLabel={S.compute.replace('2027', '2028')} locale={locale} />
+    </div>
+  </div>
+
+  <GeoLeadLinks />
+
+  {/* Astronomical highlights */}
+  <section class="section-shell mt-14">
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="calculator-card p-6">
+        <p class="text-3xl" aria-hidden="true">🐒</p>
+        <h2 class="mt-1.5 font-display text-lg font-bold text-plum-900">Chinese New Year 2028: January 26, 2028</h2>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">
+          The Year of the <strong>Earth Monkey (戊申)</strong> starts unusually early. Because the lunar year
+          starts on Jan 26, 2028, virtually all of Gregorian 2028 sits inside the Monkey lunar year — the
+          crossover trap seen in other years is confined to the first 25 days of 2028 (Fire Goat lunar months).
+        </p>
+      </div>
+      {leapWin && (
+        <div class="calculator-card p-6">
+          <p class="text-3xl" aria-hidden="true">🌙</p>
+          <h2 class="mt-1.5 font-display text-lg font-bold text-plum-900">The 2028 Intercalary Leap 5th Month (*Runyue)</h2>
+          <p class="mt-1.5 text-sm leading-relaxed text-plum-600">
+            Lunar year 2028 carries <strong>13 months</strong>; the extra month follows month 5:
+            <strong>{fmtD(leapWin.start)} – {fmtD(leapWin.end)}</strong>. The traditional half-month rule reads
+            days 1–15 as month 5 and days 16–29 as month 6 — so summer 2028 conceptions have <em>two</em>
+            valid chart columns depending on their date:
+          </p>
+          <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+            <span class="rounded-2xl bg-plum-100 px-3 py-2 font-bold text-plum-800">Days 1–15 → M5 ({half1 && `${fmtShort(half1.start)} – ${fmtShort(half1.end)}`})</span>
+            <span class="rounded-2xl bg-cream-100 px-3 py-2 font-bold text-plum-800">Days 16–29 → M6 ({half2 && `${fmtShort(half2.start)} – ${fmtShort(half2.end)}`})</span>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {/* 13-month conversion table */}
+  <section class="section-shell mt-14" id="conversion-table" aria-labelledby="conv-title">
+    <h2 id="conv-title" class="section-title">{S.monthTableTitle.replace('2027', '2028')}</h2>
+    <p class="mt-3 max-w-3xl leading-relaxed text-plum-600">{S.monthTableIntro.replace('2027', '2028')}</p>
+    <div class="mt-5 overflow-x-auto rounded-3xl ring-1 ring-cream-200">
+      <table class="w-full min-w-[560px] border-collapse bg-white text-sm">
+        <thead>
+          <tr class="bg-cream-100 text-left font-display text-xs font-extrabold uppercase tracking-wide text-plum-600">
+            <th class="px-4 py-3">{S.colLunar}</th>
+            <th class="px-4 py-3">{S.colLeap}</th>
+            <th class="px-4 py-3">{S.colStart}</th>
+            <th class="px-4 py-3">{S.colEnd}</th>
+            <th class="px-4 py-3">{S.colDays}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {windows.map((w, i) => (
+            <tr class={i % 2 ? 'bg-cream-50' : 'bg-white'}>
+              <td class="px-4 py-2.5 font-display font-bold text-plum-800">M{w.month}</td>
+              <td class="px-4 py-2.5 font-semibold text-plum-500">{w.isLeap ? `${S.leapChip} ★` : '—'}</td>
+              <td class="px-4 py-2.5 font-semibold text-plum-700">{fmtD(w.start)}</td>
+              <td class="px-4 py-2.5 font-semibold text-plum-700">{fmtD(w.end)}</td>
+              <td class="px-4 py-2.5 text-plum-500">{w.days}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-2 max-w-3xl text-xs leading-relaxed text-plum-500">
+      ★ The leap (Runyue) row is read with the half-month rule: its first half counts as M5, its second half as M6.
+    </p>
+  </section>
+
+  {/* Birth-year matrix */}
+  <section class="section-shell mt-14" id="birth-matrix" aria-labelledby="matrix-title">
+    <h2 id="matrix-title" class="section-title">{S.matrixTitle.replace('2027', '2028').replace('(1982–2009)', '(1982–2009)')}</h2>
+    <p class="mt-3 max-w-3xl leading-relaxed text-plum-600">{S.matrixIntro.replace('2027', '2028')}</p>
+    <p class="mt-2 max-w-3xl rounded-2xl bg-cream-100 px-4 py-3 text-xs leading-relaxed text-plum-500">ℹ️ {S.caveat}</p>
+    <div class="mt-5 overflow-x-auto rounded-3xl ring-1 ring-cream-200">
+      <table class="w-full min-w-[760px] border-collapse bg-white text-sm">
+        <thead>
+          <tr class="bg-cream-100 text-left font-display text-xs font-extrabold uppercase tracking-wide text-plum-600">
+            <th class="px-4 py-3">{S.colBirthYear}</th>
+            <th class="px-4 py-3">{S.colCny}</th>
+            <th class="px-4 py-3">{S.colZodiac}</th>
+            <th class="px-4 py-3">{S.colAge.replace('2027', '2028')}</th>
+            <th class="px-4 py-3 text-boy-600">💙 {S.colBoyWindows}</th>
+            <th class="px-4 py-3 text-girl-600">💗 {S.colGirlWindows}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {matrix.map((r, i) => (
+            <tr class={i % 2 ? 'bg-cream-50' : 'bg-white'}>
+              <td class="px-4 py-2.5 font-display font-bold text-plum-800">{r.birth}</td>
+              <td class="px-4 py-2.5 font-semibold text-plum-700">{fmtD(r.cny)}</td>
+              <td class="px-4 py-2.5 text-plum-600">{r.emoji} {r.zodiac}</td>
+              <td class="px-4 py-2.5 font-bold text-plum-900">{r.age}</td>
+              <td class="px-4 py-2.5 text-plum-600">{r.boy}</td>
+              <td class="px-4 py-2.5 text-plum-600">{r.girl}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section-shell mt-14" aria-labelledby="cal-faq">
+    <h2 id="cal-faq" class="section-title text-center">2028 calendar FAQ</h2>
+    <div class="mt-6"><FaqAccordion items={CAL2028_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="chinese-gender-predictor/" />
+</div>

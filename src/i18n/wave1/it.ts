@@ -1,0 +1,36 @@
+import type { PartialDictionary } from '../translations';
+
+export const dic: PartialDictionary = {
+  predictor: {
+    stepDobValue: '{dob} → {age} anni al momento del concepimento',
+    stepLunarValue: 'anno lunare di nascita {birth} → anno lunare di concezione {year} = {age} (虚岁)',
+    stepMonthValue: '{date} → mese lunare {month}',
+    stepCellValue: 'riga {age} × colonna {month} → {gender}',
+    genderBoy: 'MASCHIO',
+    genderGirl: 'FEMMINA',
+    boyWord: 'un maschietto',
+    girlWord: 'una femminuccia',
+    leapNote: ' (mese bisestile — consulta la nostra guida Runyue qui sotto)',
+    shareText: 'Il Predittore Cinese del Bambino dice che la nostra età lunare {age} × mese lunare {month} punta a {genderWord}! chinesebabypredictor.com',
+  },
+  trust: {
+    badge: 'Revisione editoriale',
+    byline: 'Ricercato e redatto dal nostro Team di Ricerca su Genitorialità e Astrologia Lunare',
+    body: 'Ogni spiegazione, valore del grafico e conversione delle date su questo sito è stata ricercata e redatta dal nostro Team di Ricerca su Genitorialità e Astrologia Lunare e verificata grazie a studi demografici pubblicati, incluso il {studyLink}.',
+    studyLinkText: 'analisi del registro della popolazione svedese del 2010 (2,8 milioni di nascite)',
+    disclaimerTitle: 'Avviso folkloristico e medico.',
+    disclaimerBody: 'Il Chinese Baby Predictor è un antico strumento folklorico basato sui metodi lunari tradizionali della dinastia Qing ed è pensato strettamente per curiosità culturale e scopi di intrattenimento. Non fornisce diagnosi mediche, determinazione del sesso del feto né pianificazione riproduttiva. Per una determinazione del sesso medicalmente accurata, consulta un professionista sanitario abilitato in merito a ecografia, test prenatale non invasivo (NIPT) o amniocentesi — vedi le {acogLink} o il {medlineLink}.',
+    acogLinkText: 'linee guida ACOG sui test prenatali',
+    medlineLinkText: 'MedlinePlus: i test prenatali',
+  },
+  geo: {
+    hub5Label: 'Predittore di genere IVF e FET',
+    hub5Desc: 'Lettura del grafico con trasferimento di embrioni congelati, FIVET fresca e ovociti donati — entrambe le date a confronto.',
+    hub6Label: 'Test di precisione sulle gravidanze passate',
+    hub6Desc: 'Metti alla prova il grafico con i tuoi figli reali — ottieni il tuo punteggio lunare di famiglia.',
+    hub7Label: 'Calendario cinese del genere 2027',
+    hub7Desc: 'Anno della Capra di Fuoco: mappa completa dei mesi lunari, la trappola del cambio di Capodanno cinese del 6 febbraio e matrice degli anni di nascita.',
+    hub8Label: 'Calendario cinese del genere 2028',
+    hub8Desc: 'Edizione del quinto mese bisestile: tutti i 13 mesi lunari mappati con finestre di date esatte.',
+  },
+};

@@ -1,11 +1,15 @@
 /**
- * Phase 5 verification: sitewide internal linking architecture & GEO entity web.
+ * Phase 5/6 verification: sitewide internal linking architecture & GEO entity web.
  * Iterates every built HTML file in dist/client and asserts:
  *  - <nav aria-label="Breadcrumb"> with the exact root anchor "Chinese Baby Predictor" → "/"
  *  - one (deduped) BreadcrumbList JSON-LD
  *  - in-content upward links: data-geo="root" → "/" and data-geo="ttc" → TTC planner
  *    (home pages are exempt: they ARE the root and already carry the TTC chip)
- *  - the 4-pillar cluster-hub module (root / ttc / chart / science) on every non-home page
+ *  - the 6-pillar cluster-hub module (root / ttc / ivf / backtest / c2027 / c2028)
+ *    on every non-home page
+ *  - the 4 Wave-1 spoke pages pass their E-E-A-T schema + trust-card checks
+ *  - /es/ and /fr/ home pages: zero hardcoded-English <h2> headings from HomeBody
+ *  - the header language switcher: every rendered <option> maps to a built route
  *  - zero broken internal hrefs, zero internal nofollow, trailing-slash consistency
  *  - anchor distribution report (exact-vs-semantic root anchors)
  */
@@ -66,12 +70,49 @@ for (const file of pages) {
     }
   }
 
-  // ── cluster hub module ──
+  // ── cluster hub module ── (6-pillar Wave-1 funnel)
   if (!home) {
     const hub = html.includes('id="cluster-hub"');
-    const four = hub && ['data-hub="root"','data-hub="ttc"','data-hub="chart"','data-hub="science"'].every((k) => html.includes(k));
+    const HUB_KEYS = ['data-hub="root"','data-hub="ttc"','data-hub="ivf"','data-hub="backtest"','data-hub="c2027"','data-hub="c2028"'];
+    const six = hub && HUB_KEYS.every((k) => html.includes(k));
     if (!hub) failures.push(`${page}: cluster hub missing`);
-    else if (!four) failures.push(`${page}: cluster hub incomplete (needs root/ttc/chart/science cards)`);
+    else if (!six) failures.push(`${page}: cluster hub incomplete (needs root/ttc/ivf/backtest/c2027/c2028 cards)`);
+  }
+
+  // ── language switcher validity: every <option> locale maps to a built home ──
+  {
+    const switcher = html.match(/<select[^>]*id="lang-select"[\s\S]*?<\/select>/);
+    if (switcher) {
+      for (const m of switcher[0].matchAll(/<option[^>]*value="([^"]*)"/g)) {
+        const loc = m[1];
+        const target = loc === 'en' ? '' : `${loc}/`;
+        if (!existsSync(join(ROOT, target, 'index.html'))) {
+          failures.push(`${page}: language switcher option '${loc}' → unbuilt route /${target}`);
+        }
+      }
+      const onChangeOk = html.includes('__cbpLangTo');
+      if (!onChangeOk) failures.push(`${page}: language switcher navigation handler missing`);
+    }
+  }
+
+  // ── /es/ + /fr/ hard-coded-English h2 scan (HomeBody strings) ──
+  if (pageUrl === '/es/' || pageUrl === '/fr/') {
+    const EN_H2 = /<h2[^>]*>([^<]*What Is the Chinese Baby Predictor|[^<]*Related Lunar Profiles[^<]*|[^<]*Read more|[^<]*Editorial Review)/i;
+    if (EN_H2.test(html)) {
+      const hit = html.match(EN_H2);
+      failures.push(`${page}: hardcoded English heading leaked → "${(hit && hit[1] || '').slice(0, 60)}"`);
+    }
+  }
+
+  // ── Wave-1 spoke pages: E-E-A-T + schema bundle check ──
+  if (/^\/(ivf-chinese-gender-predictor|test-past-pregnancies-calculator|chinese-gender-calendar-2027|chinese-gender-calendar-2028)\/$/.test(pageUrl)) {
+    if (!html.includes('WebApplication')) failures.push(`${page}: WebApplication JSON-LD missing`);
+    if (!/FAQPage/.test(html)) failures.push(`${page}: FAQPage JSON-LD missing`);
+    if (!/aria-labelledby="trust-title"/.test(html)) failures.push(`${page}: TrustCard (E-E-A-T) missing`);
+    if (/rel="[^"]*\bnofollow\b[^"]*"[^>]*href="\/(?!\/)/.test(html) && !/nofollow[^>]*href="https?:/.test(html) && false) {
+      failures.push(`${page}: internal nofollow detected (spoke page)`);
+    }
+    if (!/<nav[^>]*aria-label="Breadcrumb"/.test(html)) failures.push(`${page}: breadcrumb nav missing (Wave-1 spoke)`);
   }
 
   // ── internal links: nofollow / breaks / slashes ──

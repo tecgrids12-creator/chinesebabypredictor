@@ -30,6 +30,10 @@ export interface PredictorStrings {
   stepDob: string; stepLunar: string; stepMonth: string; stepCell: string;
   /* Share card */
   shareCard: string; shareCardSaved: string;
+  /* Wave-1 localizable value templates + share sentence (wave-1 dictionary layer). */
+  stepDobValue?: string; stepLunarValue?: string; stepMonthValue?: string; stepCellValue?: string;
+  genderBoy?: string; genderGirl?: string; boyWord?: string; girlWord?: string;
+  leapNote?: string; shareText?: string;
 }
 
 type TabMode = 'predict' | 'plan';
@@ -49,7 +53,16 @@ interface Result {
   lunarConceptionYear: number;
 }
 
-export default function GenderPredictor({ strings }: { strings: PredictorStrings }) {
+/** Interpolate {curly} placeholders inside a dictionary template. */
+function tpl(template: string | undefined, vars: Record<string, unknown>): string {
+  if (!template) return '';
+  return template.replace(/\{(\w+)\}/g, (_, k: string) => {
+    const v = vars[k];
+    return v === undefined || v === null ? '' : String(v);
+  });
+}
+
+export default function GenderPredictor({ strings, locale = 'en' }: { strings: PredictorStrings; locale?: string }) {
   const [tab, setTab] = useState<TabMode>('predict');
   const [mode, setMode] = useState<Mode>('conception');
   const [dob, setDob] = useState('');
@@ -170,11 +183,11 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
     return Array.from({ length: 18 }, (_, i) => {
       const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i, 1));
       const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i + 1, 1));
-      const label = start.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
+      const label = start.toLocaleDateString(locale === 'en' ? 'en-US' : locale, { month: 'short', timeZone: 'UTC' });
       const overlap = rows.some((w) => w.start.getTime() < end.getTime() && w.end.getTime() >= start.getTime());
       return { start, label, overlap };
     });
-  }, [planResult]);
+  }, [planResult, locale]);
 
   /* ── Phase 4: canvas share card ──────────────────────────────────── */
   const shareCard = useCallback(async () => {
@@ -204,23 +217,23 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
     ctx.textAlign = 'center';
     ctx.fillText('👶 Chinese Baby Predictor', S / 2, 120);
 
-    // kicker
+    // kicker (localized)
     ctx.font = '700 46px "Plus Jakarta Sans Variable", system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.fillText('OUR LUNAR PREDICTION IS', S / 2, 340);
+    ctx.fillText((strings.resultHero ?? '').toUpperCase(), S / 2, 340);
 
-    // baby emoji + title
+    // baby emoji + title (localized)
     ctx.font = '240px system-ui';
     ctx.fillText(result.gender === 'boy' ? '💙' : '💗', S / 2, 600);
     ctx.font = '800 118px "Fredoka Variable", "Plus Jakarta Sans Variable", system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(result.gender === 'boy' ? "It's a BOY!" : "It's a GIRL!", S / 2, 800);
+    ctx.fillText(result.gender === 'boy' ? (strings.boyTitle ?? 'BOY') : (strings.girlTitle ?? 'GIRL'), S / 2, 800);
 
-    // chips
+    // chips (localized labels)
     const chips = [
-      `Lunar age ${result.lunarAge}`,
-      `Lunar month ${result.lunarMonth}${result.wasLeapMonth ? ' (leap)' : ''}`,
-      `${result.zodiacEmoji} ${result.zodiac} year`,
+      `${strings.lunarAge}: ${result.lunarAge}`,
+      `${strings.lunarMonth}: ${result.lunarMonth}${result.wasLeapMonth ? ` ✓${strings.planLeap ?? ''}` : ''}`,
+      `${strings.zodiac}: ${result.zodiacEmoji} ${result.zodiac}`,
     ];
     ctx.font = '700 40px "Plus Jakarta Sans Variable", system-ui, sans-serif';
     let total = chips.reduce((acc, c) => acc + ctx.measureText(c).width + 64, -64 + (chips.length - 1) * 24);
@@ -255,13 +268,15 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
     URL.revokeObjectURL(url);
     setCardMsg(true);
     window.setTimeout(() => setCardMsg(false), 2200);
-  }, [result]);
+  }, [result, strings]);
 
   const share = useCallback(async () => {
     if (!result) return;
-    const text = `${result.gender === 'boy' ? '💙 Boy' : '💗 Girl'} — the Chinese Baby Predictor says our lunar age ${result.lunarAge} × lunar month ${result.lunarMonth} points to ${
-      result.gender === 'boy' ? 'a boy' : 'a girl'
-    }! chinesebabypredictor.com`;
+    const text = `${result.gender === 'boy' ? '💙' : '💗'} ${tpl(strings.shareText, {
+      age: result.lunarAge,
+      month: result.lunarMonth,
+      genderWord: result.gender === 'boy' ? (strings.boyWord ?? 'a boy') : (strings.girlWord ?? 'a girl'),
+    })}`;
     try {
       if (navigator.share) {
         await navigator.share({ text, title: 'Chinese Baby Predictor' });
@@ -273,7 +288,7 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
     } catch {
       /* user dismissed – nothing to do */
     }
-  }, [result]);
+  }, [result, strings]);
 
   const reset = () => {
     setResult(null);
@@ -458,6 +473,7 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
               windows={planResult ?? []}
               want={want}
               strings={strings}
+              locale={locale}
               mini={miniCalendar}
             />
           </div>
@@ -477,7 +493,7 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
               <div
                 className="mt-4 flex items-end justify-center gap-2 sm:gap-3"
                 role="img"
-                aria-label={result.gender === 'boy' ? 'a boy' : 'a girl'}
+                aria-label={result.gender === 'boy' ? strings.planBoy : strings.planGirl}
               >
                 <BabyFace gender={result.gender} className="h-24 w-24 drop-shadow-lg sm:h-28 sm:w-28" />
                 <GlossyHeart tone={result.gender === 'boy' ? 'blue' : 'pink'} className="h-16 w-16 drop-shadow-lg sm:h-20 sm:w-20" />
@@ -519,19 +535,19 @@ export default function GenderPredictor({ strings }: { strings: PredictorStrings
                   <ol className="grid gap-2.5 text-sm">
                     <li className="flex gap-3">
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white font-display text-xs font-extrabold text-plum-800">1</span>
-                      <p><strong className="font-display">{strings.stepDob}:</strong> {dob} → {result.westernAge}y at conception</p>
+                      <p><strong className="font-display">{strings.stepDob}:</strong> {tpl(strings.stepDobValue, { dob, age: result.westernAge })}</p>
                     </li>
                     <li className="flex gap-3">
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white font-display text-xs font-extrabold text-plum-800">2</span>
-                      <p><strong className="font-display">{strings.stepLunar}:</strong> lunar birth year {result.lunarBirthYear} → lunar conception year {result.lunarConceptionYear} = {result.lunarAge} (虚岁)</p>
+                      <p><strong className="font-display">{strings.stepLunar}:</strong> {tpl(strings.stepLunarValue, { birth: result.lunarBirthYear, year: result.lunarConceptionYear, age: result.lunarAge })}</p>
                     </li>
                     <li className="flex gap-3">
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white font-display text-xs font-extrabold text-plum-800">3</span>
-                      <p><strong className="font-display">{strings.stepMonth}:</strong> {fmtDate(result.conception, 'en')} → lunar month {result.lunarMonth}{result.wasLeapMonth ? ' (leap month — see our Runyue guide below)' : ''}</p>
+                      <p><strong className="font-display">{strings.stepMonth}:</strong> {tpl(`${strings.stepMonthValue ?? ''}${result.wasLeapMonth ? (strings.leapNote ?? '') : ''}`, { date: fmtDate(result.conception, locale), month: result.lunarMonth })}</p>
                     </li>
                     <li className="flex gap-3">
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white font-display text-xs font-extrabold text-plum-800">4</span>
-                      <p><strong className="font-display">{strings.stepCell}:</strong> row {result.lunarAge} × column {result.lunarMonth} → <strong>{result.gender === 'boy' ? 'BOY' : 'GIRL'}</strong></p>
+                      <p><strong className="font-display">{strings.stepCell}:</strong> {tpl(strings.stepCellValue, { age: result.lunarAge, month: result.lunarMonth, gender: result.gender === 'boy' ? (strings.genderBoy ?? 'BOY') : (strings.genderGirl ?? 'GIRL') })}</p>
                     </li>
                   </ol>
                 </div>
@@ -592,11 +608,13 @@ function PlanOutput({
   windows,
   want,
   strings,
+  locale = 'en',
   mini,
 }: {
   windows: Array<{ lunarYear: number; month: number; isLeap: boolean; start: Date; end: Date; lunarAge: number }>;
   want: 'boy' | 'girl';
   strings: PredictorStrings;
+  locale?: string;
   mini: Array<{ start: Date; label: string; overlap: boolean }>;
 }) {
   return (
@@ -620,13 +638,13 @@ function PlanOutput({
           >
             <p className="flex items-baseline justify-between font-display text-xl font-extrabold">
               <span>
-                {w.start.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })} {w.start.getUTCFullYear()}
+                {w.start.toLocaleDateString(locale, { month: 'short', timeZone: 'UTC' })} {w.start.getUTCFullYear()}
                 {w.isLeap ? <span className="ml-1 text-xs font-bold opacity-80">{strings.planLeap}</span> : null}
               </span>
               <span className="text-xs font-bold opacity-85">M{w.month}</span>
             </p>
             <p className="mt-1 text-sm font-semibold opacity-95">
-              {strings.planWindow}: {fmtDate(w.start, 'en')} – {fmtDate(w.end, 'en')}
+              {strings.planWindow}: {fmtDate(w.start, locale)} – {fmtDate(w.end, locale)}
             </p>
             <p className="mt-1 text-xs opacity-85">{strings.lunarAge}: {w.lunarAge}</p>
           </div>

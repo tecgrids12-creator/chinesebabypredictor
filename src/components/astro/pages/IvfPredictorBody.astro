@@ -1,0 +1,97 @@
+---
+/**
+ * Wave-1 spoken page body #1 — IVF & Frozen Embryo Chinese Baby Predictor.
+ * EN-only spoke (route registered in EN_ONLY_PATH). All UI strings come from
+ * `IVF_STRINGS` / `IVF_FAQ` (src/i18n/tools.ts); editorial prose lives here,
+ * matching the site's English-only editorial pattern.
+ */
+import IvfPredictor from '@components/calculators/IvfPredictor.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
+import { IVF_STRINGS, IVF_FAQ } from '@i18n/tools';
+import { getDictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { locale?: Locale; }
+const { locale = 'en' } = Astro.props;
+const t = getDictionary(locale);
+const S = IVF_STRINGS;
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.05fr]">
+    <div>
+      <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>IVF · FET · IUI · Donor egg</p>
+      <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
+        IVF &amp; Frozen Embryo <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span> (FET, IUI &amp; Donor Egg)
+      </h1>
+      <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">
+        Compare the two moments an IVF baby "begins" — egg retrieval and embryo transfer — on the traditional
+        Qing Palace chart at once, with donor-egg readings for both parents-by-intent.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#dd2175,#2c63e8)"></span>Free &amp; instant</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#2c63e8,#f59e0b)"></span>Both dates compared</span>
+      </div>
+      <div class="mt-8 rounded-3xl p-5" style="border: 1px solid transparent; background: linear-gradient(rgba(253,242,248,.65), rgba(253,242,248,.65)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.3)) border-box;">
+        <p class="font-display font-bold text-plum-800">🍼 {t.common.entertainment}</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">{t.common.medicalNote}</p>
+      </div>
+    </div>
+    <div class="lg:sticky lg:top-24 min-h-[520px]"><IvfPredictor client:idle strings={S} locale={locale} /></div>
+  </div>
+
+  <GeoLeadLinks />
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom">
+      <h2>Retrieval Date vs. Transfer Date: Which Moment Does Chinese Astrology Count?</h2>
+      <p>
+        The traditional chart is read from the <strong>moment of conception</strong>. In a natural pregnancy that is the
+        day egg meets sperm. In an IVF cycle that moment happens in the lab: the <strong>egg retrieval date</strong>
+        (whether fertilization happens by conventional insemination or ICSI) is the closest Gregorian date to
+        conception, while the <strong>embryo transfer date</strong> marks implantation — a biologically meaningful but
+        different moment. Traditionalists read the chart from retrieval because the baby's "lunar seed" is
+        considered planted when fertilization occurs, and clinics themselves date IVF pregnancies from retrieval
+        or LMP rather than from transfer. Our dual-comparison calculator shows both readings side-by-side so you
+        never have to guess which one a website silently used.
+      </p>
+      <h2>How Day-5 Blastocyst Math Shifts the Boundary Dates</h2>
+      <p>
+        A day-3 embryo is transferred roughly 2 days after retrieval; a day-5/6 blastocyst is transferred
+        4–5 days after retrieval. If you only know the transfer date, subtract the embryo's age at transfer to
+        reconstruct fertilization — that subtraction can move you across a lunar month boundary, which is exactly
+        why two people with the same transfer date can "legitimately" report different chart cells. The calculator's
+        fresh-cycle mode performs this embryo-day math for you and flags any split verdict rather than hiding it.
+      </p>
+      <h2>Donor Egg vs. the Carrying Mother's Energy</h2>
+      <p>
+        Donor-egg cycles create a genuine folkloric dilemma: the egg carries the <strong>donor's lunar lineage</strong>
+        (her age at retrieval selects the chart row), while the womb that incubates the pregnancy belongs to the
+        <strong>carrying mother</strong> (her lunar age at transfer). There is no "official" answer inside the tradition —
+        practitioners split on it — so our tool computes both readings and lets you compare them instead of
+        pretending only one exists.
+      </p>
+      <h2>Clinical PGT-A Testing vs. Folklore</h2>
+      <p>
+        Be clear about what this website is and is not. Lunar calendar gender prediction is cultural heritage and
+        runs at coin-flip odds in large-scale testing (see the 2010 Swedish registry analysis linked in our trust
+        footer). If knowing an IVF baby's sex matters — for X-linked family conditions or family balancing — the
+        clinical route is <em>preimplantation genetic testing</em> (PGT-A, which also screens chromosome count), read
+        on a blastocyst biopsy. Regulations on elective sex selection vary by country and clinic. For authoritative
+        medical context see
+        <a href="https://www.sart.org/" rel="nofollow noopener noreferrer" target="_blank">SART</a> and
+        <a href="https://www.acog.org/womens-health/faqs/prenatal-genetic-screening-tests" rel="nofollow noopener noreferrer" target="_blank">ACOG's prenatal genetic screening FAQ</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-shell mt-14" aria-labelledby="ivf-faq">
+    <h2 id="ivf-faq" class="section-title text-center">IVF gender-predictor FAQ</h2>
+    <div class="mt-6"><FaqAccordion items={IVF_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="chinese-gender-predictor/" />
+</div>

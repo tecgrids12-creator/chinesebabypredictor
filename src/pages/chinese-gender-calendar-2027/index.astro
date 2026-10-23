@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Calendar2027Body from '@components/astro/pages/Calendar2027Body.astro';
+import { getDictionary } from '@i18n/translations';
+import { CALENDAR_STRINGS, CAL2027_FAQ } from '@i18n/tools';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const title = '2027 Chinese Gender Calendar & Baby Predictor (Year of the Fire Goat)';
+const description = 'Chinese New Year 2027 falls on February 6 (Fire Goat). Full Gregorian⇄lunar month table, the Jan 1–Feb 5 crossover trap, a 1982–2009 birth-year matrix and a pre-filtered 2027 conception planner.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath="chinese-gender-calendar-2027/"
+  locale={locale}
+  crumbs={[{ label: 'Chinese Baby Predictor' }, { label: '2027 Chinese Gender Calendar' }]}
+  schema={[
+    webAppSchema({
+      name: '2027 Chinese Gender Calendar',
+      path: 'chinese-gender-calendar-2027/',
+      description: CALENDAR_STRINGS.plannerHeading,
+    }),
+    faqPageSchema(CAL2027_FAQ),
+  ]}
+>
+  <Calendar2027Body locale={locale} />
+</BaseLayout>

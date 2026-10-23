@@ -1,0 +1,36 @@
+import type { PartialDictionary } from '../translations';
+
+export const dic: PartialDictionary = {
+  predictor: {
+    stepDobValue: '{dob} → {age} jaar oud bij bevruchting',
+    stepLunarValue: 'maan-geboortejaar {birth} → maan-bevruchtingsjaar {year} = {age} (虚岁)',
+    stepMonthValue: '{date} → maanmaand {month}',
+    stepCellValue: 'rij {age} × kolom {month} → {gender}',
+    genderBoy: 'JONGEN',
+    genderGirl: 'MEISJE',
+    boyWord: 'een jongen',
+    girlWord: 'een meisje',
+    leapNote: ' (schrikkelmaand — zie onze Runyue-gids hieronder)',
+    shareText: 'De Chinese Babypredicter zegt dat onze maanleeftijd {age} × maanmaand {month} wijst op {genderWord}! chinesebabypredictor.com',
+  },
+  trust: {
+    badge: 'Redactionele controle',
+    byline: 'Onderzocht en samengesteld door onze Parenting- &amp; Maanastrologie-onderzoeksgroep',
+    body: 'Elke uitleg, elke tabelwaarde en elke datumconversie op deze site is onderzocht en samengesteld door onze Parenting- &amp; Maanastrologie-onderzoeksgroep en gecontroleerd aan de hand van gepubliceerde demografische studies, waaronder {studyLink}.',
+    studyLinkText: 'Zweedse bevolkingsregisteranalyse uit 2010 (2,8 miljoen geboortes)',
+    disclaimerTitle: 'Folklore- &amp; medische disclaimer.',
+    disclaimerBody: 'De Chinese Baby Predictor is een eeuwenoud folkloristisch instrument gebaseerd op traditionele maanmethodes uit de Qing-dynastie en is uitsluitend bedoeld voor culturele nieuwsgierigheid en entertainment. Het geeft geen medische diagnose, geen geslachtsbepaling van de foetus en geen vruchtbaarheidsbegeleiding. Voor een medisch betrouwbare geslachtsbepaling raadpleeg je een erkende zorgverlener over echoscopie, niet-invasieve prenatale test (NIPT) of vruchtwaterpunctie — zie de {acogLink} of {medlineLink}.',
+    acogLinkText: 'ACOG-richtlijn prenatale testen',
+    medlineLinkText: 'MedlinePlus: prenatale testen',
+  },
+  geo: {
+    hub5Label: 'IVF- &amp; FET-geslachtspredictor',
+    hub5Desc: 'Tabellezels voor bevroren embryo-overdracht, verse IVF en eiceldonatie — beide data vergeleken.',
+    hub6Label: 'Nauwkeurigheidstester voor eerdere zwangerschappen',
+    hub6Desc: 'Leg de tabel naast je echte kinderen — ontdek je maan-scorekaart voor het gezin.',
+    hub7Label: 'Chinese geslachtstabel 2027',
+    hub7Desc: 'Jaar van de Vuurgeit: complete maanmaandkaart, de Chinees-Nieuwjaarvalkuil van 6 februari en de geboortejaarmatrix.',
+    hub8Label: 'Chinese geslachtstabel 2028',
+    hub8Desc: 'Schrikkel-5e-maandeditie: alle 13 maanmaanden in kaart gebracht met exacte datumvensters.',
+  },
+};

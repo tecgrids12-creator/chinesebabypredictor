@@ -1,55 +1,33 @@
 ---
 /**
  * GEO entity web · "Related Lunar Profiles & Quick Navigation" cluster module.
- * Rendered sitewide by BaseLayout (bottom of every article), giving each of the
- * 185 pages four curated vertical + lateral exits: the main calculator, the TTC
- * planner, the full chart, and the empirical study section.
- * Tool routes are locale-aware; the TTC planner is an EN-only route and always
- * links to its canonical EN URL (zero redirects / zero 404s).
+ * Rendered sitewide by BaseLayout (bottom of every article), giving each page
+ * six curated vertical + lateral exits: the root seed pillar, the TTC planner,
+ * and the four Wave-1 specialized spokes (IVF/FET, past-pregnancies tester,
+ * 2027 and 2028 gender calendars).
+ * Tool routes are locale-aware; EN-only spokes and the TTC planner always link
+ * to their canonical EN URL via safeLocalizedPath (zero redirects / 404s).
  * Labels/descriptions come from the `geo` dictionary (deep EN fallback).
  */
 import type { Locale } from '@i18n/utils';
-import { localizedPath } from '@i18n/utils';
+import { safeLocalizedPath } from '@i18n/utils';
 import { getDictionary } from '@i18n/translations';
 
 interface Props { locale?: Locale; }
 const locale = Astro.props.locale ?? 'en';
 const g = getDictionary(locale).geo;
-const H = (p: string) => (p === 'chinese-gender-planner-ttc/' ? '/chinese-gender-planner-ttc/' : localizedPath(p, locale));
+const H = (p: string) => safeLocalizedPath(p, locale);
 
+/* Card type: root=1st, ttc=2nd, ivf=3rd, backtest=4th, c2027=5th, c2028=6th.
+ * The root label stays the exact seed-keyword anchor BRAND name in EN in
+ * every locale (critical internal-linking rule); the rest localize. */
 const hub = [
-  {
-    key: 'root',
-    href: H(''),
-    icon: '🏠',
-    label: 'Chinese Baby Predictor',
-    desc: g.hub1Desc,
-    title: 'Chinese Baby Predictor — main lunar gender calculator',
-  },
-  {
-    key: 'ttc',
-    href: H('chinese-gender-planner-ttc/'),
-    icon: '🗓️',
-    label: g.hub2Label,
-    desc: g.hub2Desc,
-    title: 'Chinese gender TTC planner — 2026–2028 conception windows',
-  },
-  {
-    key: 'chart',
-    href: H('chinese-gender-chart/'),
-    icon: '📊',
-    label: g.hub3Label,
-    desc: g.hub3Desc,
-    title: 'Interactive 28×12 lunar gender chart — full matrix',
-  },
-  {
-    key: 'science',
-    href: `${H('')}#study-title`,
-    icon: '🔬',
-    label: g.hub4Label,
-    desc: g.hub4Desc,
-    title: '2010 Swedish population registry study — folklore vs. empirical evidence',
-  },
+  { key: 'root',    href: H(''), icon: '🏠', label: 'Chinese Baby Predictor', desc: g.hub1Desc, title: 'Chinese Baby Predictor — main lunar gender calculator' },
+  { key: 'ttc',     href: H('chinese-gender-planner-ttc/'), icon: '🗓️', label: g.hub2Label, desc: g.hub2Desc, title: 'Chinese gender TTC planner — 2026–2028 conception windows' },
+  { key: 'ivf',     href: H('ivf-chinese-gender-predictor/'), icon: '🧬', label: g.hub5Label, desc: g.hub5Desc, title: 'IVF & FET Chinese gender predictor — retrieval vs. transfer dates' },
+  { key: 'backtest', href: H('test-past-pregnancies-calculator/'), icon: '🎯', label: g.hub6Label, desc: g.hub6Desc, title: 'Was the Chinese gender predictor right? Multi-child accuracy test' },
+  { key: 'c2027',   href: H('chinese-gender-calendar-2027/'), icon: '🐐', label: g.hub7Label, desc: g.hub7Desc, title: '2027 Chinese gender calendar — Year of the Fire Goat, Feb 6 CNY trap' },
+  { key: 'c2028',   href: H('chinese-gender-calendar-2028/'), icon: '🐵', label: g.hub8Label, desc: g.hub8Desc, title: '2028 Chinese gender calendar — leap 5th lunar month edition' },
 ] as const;
 ---
 
@@ -57,17 +35,12 @@ const hub = [
   <h2 id="cluster-hub-title" class="font-display text-center text-xl font-extrabold tracking-tight text-plum-900 sm:text-2xl">
     {g.hubTitle}
   </h2>
-  <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
     {hub.map((item) => (
-      <a
-        href={item.href}
-        data-hub={item.key}
-        title={item.title}
-        aria-label={item.title}
-        class="reveal calculator-card group block p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lift"
-      >
+      <a href={item.href} data-hub={item.key} title={item.title} aria-label={item.title}
+         class="reveal calculator-card group block p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lift">
         <p class="text-2xl" aria-hidden="true">{item.icon}</p>
-        <p class="mt-1.5 font-display font-bold leading-snug text-plum-900 transition-colors group-hover:text-girl-600">{item.label}</p>
+        <p class="mt-1.5 font-display font-bold leading-snug text-plum-900 transition-colors group-hover:text-girl-600" set:html={item.label} />
         <p class="mt-1 text-xs leading-relaxed text-plum-500">{item.desc}</p>
       </a>
     ))}

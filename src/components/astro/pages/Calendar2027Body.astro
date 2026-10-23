@@ -1,0 +1,172 @@
+---
+/**
+ * Wave-1 Annual Hub #1 — 2027 Chinese Gender Calendar (Year of the Fire Goat).
+ * EN-only spoke. The conversion table and birth-year matrix are computed at
+ * BUILD TIME from the site's own lunar engine (src/utils/lunar*) — no
+ * hand-typed lunar data. UI strings from `CALENDAR_STRINGS` (src/i18n/tools.ts).
+ */
+import CalendarPlanner from '@components/calculators/CalendarPlanner.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
+import { lunarMonthWindows, chartByWindow } from '@utils/lunarWindows';
+import { lunarNewYear, solarToLunar } from '@utils/lunar';
+import { CALENDAR_STRINGS, CAL2027_FAQ } from '@i18n/tools';
+import { getDictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { locale?: Locale; }
+const { locale = 'en' } = Astro.props;
+const t = getDictionary(locale);
+const S = CALENDAR_STRINGS;
+
+const YEAR = 2027;
+
+/* Lunar-month windows of the Fire Goat year (Feb 6 2027 → Jan 25 2028). */
+const windows = lunarMonthWindows(YEAR) ?? [];
+const fmtD = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+/* Birth-year quick-lookup matrix (1982–2009). For each year:
+ * CNY cutoff, zodiac animal, 2027 lunar age, best boy/girl windows. */
+interface MatrixRow { birth: number; cny: Date; zodiac: string; emoji: string; age: number; boy: string; girl: string; }
+const bestList = (gender: 'boy' | 'girl', b: number): string => {
+  const rows = chartByWindow(windows, b).filter((w) => w.gender === gender);
+  if (rows.length === 0) return '—';
+  const first = `${`M${rows[0].month}`}${rows[0].isLeap ? '*' : ''} (${fmtD(rows[0].start).replace(/,? 20\d\d/, '')})`;
+  const rest = rows.slice(1, 4).map((w) => `M${w.month}`);
+  return [first, ...rest].join(' · ');
+};
+const matrix: MatrixRow[] = [];
+for (let b = 1982; b <= 2009; b++) {
+  const cny = lunarNewYear(b);
+  if (!cny) continue;
+  const z = solarToLunar(cny);
+  matrix.push({
+    birth: b,
+    cny,
+    zodiac: z.zodiac,
+    emoji: z.zodiacEmoji,
+    age: YEAR - b + 1,
+    boy: bestList('boy', b),
+    girl: bestList('girl', b),
+  });
+}
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.05fr]">
+    <div>
+      <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Year of the Fire Goat · 丁未</p>
+      <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
+        <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">2027</span> Chinese Gender Calendar &amp; Baby Predictor
+      </h1>
+      <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
+      <p class="mt-4 text-lg leading-relaxed text-plum-600">
+        Every 2027 lunar month of the Fire Goat year mapped to exact Gregorian dates — with the
+        February&nbsp;6 CNY crossover trap, a 1982–2009 birth-year matrix and a pre-filtered conception planner.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#dd2175,#2c63e8)"></span>CNY 2027: Feb 6</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#2c63e8,#f59e0b)"></span>12 lunar months · no leap</span>
+      </div>
+      <div class="mt-8 rounded-3xl p-5" style="border: 1px solid transparent; background: linear-gradient(rgba(253,242,248,.65), rgba(253,242,248,.65)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.3)) border-box;">
+        <p class="font-display font-bold text-plum-800">🍼 {t.common.entertainment}</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">{t.common.medicalNote}</p>
+      </div>
+    </div>
+    <div class="lg:sticky lg:top-24 min-h-[520px]">
+      <CalendarPlanner year={2027} strings={S} planHeading={S.plannerHeading} computeLabel={S.compute} locale={locale} />
+    </div>
+  </div>
+
+  <GeoLeadLinks />
+
+  {/* Crossover trap warning box */}
+  <section class="section-shell mt-14">
+    <div class="rounded-3xl p-6 sm:p-8 shadow-lift" style="border: 1px solid transparent; background: linear-gradient(rgba(255,247,237,.92), rgba(255,247,237,.92)) padding-box, linear-gradient(120deg, rgba(245,158,11,.65), rgba(221,33,117,.45)) border-box;">
+      <h2 class="font-display text-xl font-extrabold text-plum-900 sm:text-2xl">
+        ⚠️ The Jan 1 – Feb 5, 2027 Crossover Trap
+      </h2>
+      <p class="mt-3 leading-relaxed text-plum-700">
+        <strong>Chinese New Year 2027 falls on February 6, 2027.</strong> Any baby conceived between
+        <strong>Jan 1 and Feb 5, 2027</strong> still belongs to the <strong>2026 Fire Horse lunar year</strong>:
+        its 11th or 12th lunar month — and it uses the mother's <strong>2026 lunar age</strong>, not her 2027 one.
+        Reading those early-January conceptions as if they were "2027 months" silently moves you to the wrong
+        chart row <em>and</em> column at the same time — one of the most common ways the predictor gets misused.
+        The conversion table below begins at the lunar new year, so conceptions inside the trap belong to
+        <a class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-girl-600" href="/chinese-gender-calendar-2027/#conversion-table">the tail of the 2026 table</a>,
+        not to any Fire Goat month.
+      </p>
+    </div>
+  </section>
+
+  {/* Build-time conversion table */}
+  <section class="section-shell mt-14" id="conversion-table" aria-labelledby="conv-title">
+    <h2 id="conv-title" class="section-title">{S.monthTableTitle}</h2>
+    <p class="mt-3 max-w-3xl leading-relaxed text-plum-600">{S.monthTableIntro}</p>
+    <div class="mt-5 overflow-x-auto rounded-3xl ring-1 ring-cream-200">
+      <table class="w-full min-w-[560px] border-collapse bg-white text-sm">
+        <thead>
+          <tr class="bg-cream-100 text-left font-display text-xs font-extrabold uppercase tracking-wide text-plum-600">
+            <th class="px-4 py-3">{S.colLunar}</th>
+            <th class="px-4 py-3">{S.colLeap}</th>
+            <th class="px-4 py-3">{S.colStart}</th>
+            <th class="px-4 py-3">{S.colEnd}</th>
+            <th class="px-4 py-3">{S.colDays}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {windows.map((w, i) => (
+            <tr class={i % 2 ? 'bg-cream-50' : 'bg-white'}>
+              <td class="px-4 py-2.5 font-display font-bold text-plum-800">M{w.month}</td>
+              <td class="px-4 py-2.5 font-semibold text-plum-500">—</td>
+              <td class="px-4 py-2.5 font-semibold text-plum-700">{fmtD(w.start)}</td>
+              <td class="px-4 py-2.5 font-semibold text-plum-700">{fmtD(w.end)}</td>
+              <td class="px-4 py-2.5 text-plum-500">{w.days}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {/* Birth-year lookup matrix */}
+  <section class="section-shell mt-14" id="birth-matrix" aria-labelledby="matrix-title">
+    <h2 id="matrix-title" class="section-title">{S.matrixTitle}</h2>
+    <p class="mt-3 max-w-3xl leading-relaxed text-plum-600">{S.matrixIntro}</p>
+    <p class="mt-2 max-w-3xl rounded-2xl bg-cream-100 px-4 py-3 text-xs leading-relaxed text-plum-500">ℹ️ {S.caveat}</p>
+    <div class="mt-5 overflow-x-auto rounded-3xl ring-1 ring-cream-200">
+      <table class="w-full min-w-[760px] border-collapse bg-white text-sm">
+        <thead>
+          <tr class="bg-cream-100 text-left font-display text-xs font-extrabold uppercase tracking-wide text-plum-600">
+            <th class="px-4 py-3">{S.colBirthYear}</th>
+            <th class="px-4 py-3">{S.colCny}</th>
+            <th class="px-4 py-3">{S.colZodiac}</th>
+            <th class="px-4 py-3">{S.colAge}</th>
+            <th class="px-4 py-3 text-boy-600">💙 {S.colBoyWindows}</th>
+            <th class="px-4 py-3 text-girl-600">💗 {S.colGirlWindows}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {matrix.map((r, i) => (
+            <tr class={i % 2 ? 'bg-cream-50' : 'bg-white'}>
+              <td class="px-4 py-2.5 font-display font-bold text-plum-800">{r.birth}</td>
+              <td class="px-4 py-2.5 font-semibold text-plum-700">{fmtD(r.cny)}</td>
+              <td class="px-4 py-2.5 text-plum-600">{r.emoji} {r.zodiac}</td>
+              <td class="px-4 py-2.5 font-bold text-plum-900">{r.age}</td>
+              <td class="px-4 py-2.5 text-plum-600">{r.boy}</td>
+              <td class="px-4 py-2.5 text-plum-600">{r.girl}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section-shell mt-14" aria-labelledby="cal-faq">
+    <h2 id="cal-faq" class="section-title text-center">2027 calendar FAQ</h2>
+    <div class="mt-6"><FaqAccordion items={CAL2027_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="chinese-gender-predictor/" />
+</div>

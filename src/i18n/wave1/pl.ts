@@ -1,0 +1,36 @@
+import type { PartialDictionary } from '../translations';
+
+export const dic: PartialDictionary = {
+  predictor: {
+    stepDobValue: '{dob} → {age} lat w chwili poczęcia',
+    stepLunarValue: 'księżycowy rok urodzenia {birth} → księżycowy rok poczęcia {year} = {age} (虚岁)',
+    stepMonthValue: '{date} → miesiąc księżycowy {month}',
+    stepCellValue: 'wiersz {age} × kolumna {month} → {gender}',
+    genderBoy: 'CHŁOPIEC',
+    genderGirl: 'DZIEWCZYNKA',
+    boyWord: 'chłopca',
+    girlWord: 'dziewczynki',
+    leapNote: ' (miesiąc przestępny — zobacz nasz przewodnik Runyue poniżej)',
+    shareText: 'Chiński predyktor mówi, że nasz wiek księżycowy {age} × miesiąc księżycowy {month} wskazuje na {genderWord}! chinesebabypredictor.com',
+  },
+  trust: {
+    badge: 'Recenzja redakcyjna',
+    byline: 'Zbadane i opracowane przez nasz Zespół Badawczy Rodzicielstwa i Astrologii Księżycowej',
+    body: 'Każde wyjaśnienie, każda wartość w tabeli i każde przeliczenie daty na tej stronie zostały zbadane i opracowane przez nasz Zespół Badawczy Rodzicielstwa i Astrologii Księżycowej oraz zweryfikowane na podstawie opublikowanych badań demograficznych, w tym {studyLink}.',
+    studyLinkText: 'analiza szwedzkiego rejestru ludności z 2010 r. (2,8 mln urodzeń)',
+    disclaimerTitle: 'Zastrzeżenie folklorystyczne i medyczne.',
+    disclaimerBody: 'Chinese Baby Predictor to starożytne narzędzie folklorystyczne oparte na tradycyjnych księżycowych metodach z dynastii Qing, stworzone wyłącznie dla kulturalnej ciekawości i rozrywki. Nie zapewnia diagnozy medycznej, określania płci płodu ani planowania reprodukcji. Aby poznać płeć w sposób medycznie wiarygodny, skonsultuj się z licencjonowanym lekarzem w sprawie USG, nieinwazyjnych badań prenatalnych (NIPT) lub amniopunkcji — zobacz {acogLink} lub {medlineLink}.',
+    acogLinkText: 'wytyczne ACOG dotyczące badań prenatalnych',
+    medlineLinkText: 'MedlinePlus: badania prenatalne',
+  },
+  geo: {
+    hub5Label: 'Predyktor płci IVF i FET',
+    hub5Desc: 'Odczyty tabeli dla trasferu zamrożonych zarodków, świeżego IVF i komórek jajowych od dawczyni — obie daty porównane.',
+    hub6Label: 'Tester dokładności z poprzednich ciąż',
+    hub6Desc: 'Sprawdź tabelę na swoich rzeczywistych dzieciach — odbierz rodzinny raport księżycowy.',
+    hub7Label: 'Chiński kalendarz płci na 2027',
+    hub7Desc: 'Rok Ognistej Kozy: pełna mapa miesięcy księżycowych, pułapka przekroju chińskiego Nowego Roku (6 lutego) i macierz roczników urodzenia.',
+    hub8Label: 'Chiński kalendarz płci na 2028',
+    hub8Desc: 'Edycja z przestępnym piątym miesiącem: wszystkie 13 miesięcy księżycowych mapowane z dokładnymi oknami dat.',
+  },
+};

@@ -32,6 +32,11 @@ export default defineConfig({
               'src/components/calculators/MayanPredictor.tsx',
               'src/components/calculators/DueDateCalculator.tsx',
             ],
+            'wave1-tools': [
+              'src/components/calculators/IvfPredictor.tsx',
+              'src/components/calculators/PastKidsBacktester.tsx',
+              'src/components/calculators/CalendarPlanner.tsx',
+            ],
           },
         },
       },

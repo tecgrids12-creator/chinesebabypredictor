@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Calendar2028Body from '@components/astro/pages/Calendar2028Body.astro';
+import { getDictionary } from '@i18n/translations';
+import { CALENDAR_STRINGS, CAL2028_FAQ } from '@i18n/tools';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+
+const locale = 'en';
+const t = getDictionary(locale);
+const title = '2028 Chinese Gender Calendar & Baby Predictor (Leap 5th Month Edition)';
+const description = 'Chinese New Year 2028 is January 26 (Earth Monkey) with a 13-month lunar year. The leap 5th month (Runyue) with the half-month rule, full Gregorian⇄lunar table, birth-year matrix and a 2028 conception planner.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath="chinese-gender-calendar-2028/"
+  locale={locale}
+  crumbs={[{ label: 'Chinese Baby Predictor' }, { label: '2028 Chinese Gender Calendar' }]}
+  schema={[
+    webAppSchema({
+      name: '2028 Chinese Gender Calendar',
+      path: 'chinese-gender-calendar-2028/',
+      description: CALENDAR_STRINGS.plannerHeading,
+    }),
+    faqPageSchema(CAL2028_FAQ),
+  ]}
+>
+  <Calendar2028Body locale={locale} />
+</BaseLayout>
