@@ -31,5 +31,6 @@ User-agent: Omgilibot
 User-agent: FacebookBot
 Allow: /
 
-# Sitemap Declaration
+# Sitemap Declaration (flat full sitemap is canonical; index kept for compat)
+Sitemap: https://chinesebabypredictor.com/sitemap.xml
 Sitemap: https://chinesebabypredictor.com/sitemap-index.xml

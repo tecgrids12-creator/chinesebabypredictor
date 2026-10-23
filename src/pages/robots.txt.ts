@@ -5,8 +5,10 @@ const SITE = 'https://chinesebabypredictor.com';
 /**
  * Production robots.txt: unrestricted crawling for traditional search
  * engines AND generative-AI answer engines (GEO). Astro's sitemap
- * integration emits `sitemap-index.xml` (which lists sitemap-0.xml), so the
- * sitemap directive points at the real, existing file rather than a 404.
+ * integration emits `sitemap-index.xml` + `sitemap-0.xml`; the post-build
+ * `sitemapRoot()` integration (astro.config.mjs) merges every shard into a
+ * single flat `/sitemap.xml` containing ALL pages. robots.txt declares both:
+ * `sitemap.xml` (full flat list — canonical) and the index (compatibility).
  */
 const body = `# chinesebabypredictor.com — full crawl & indexation permissions granted.
 # No opt-out headers, no bot challenges: every response is a clean HTTP 200.
@@ -41,7 +43,8 @@ User-agent: Omgilibot
 User-agent: FacebookBot
 Allow: /
 
-# Sitemap Declaration
+# Sitemap Declaration (flat full sitemap is canonical; index kept for compat)
+Sitemap: ${SITE}/sitemap.xml
 Sitemap: ${SITE}/sitemap-index.xml
 `;
 
