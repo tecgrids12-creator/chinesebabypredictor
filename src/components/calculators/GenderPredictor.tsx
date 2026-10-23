@@ -301,8 +301,9 @@ export default function GenderPredictor({ strings, locale = 'en' }: { strings: P
 
   return (
     <div className="calculator-card relative overflow-hidden" id="calculator">
+      {/* Proper full-box gradient wash (darker plum → pink → blue tones). */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-r from-girl-400/15 via-transparent to-boy-400/15"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(69,2,79,0.25)_0%,rgba(221,33,117,0.16)_34%,rgba(122,47,136,0.14)_58%,rgba(126,169,249,0.18)_74%,rgba(26,80,214,0.26)_100%)]"
         aria-hidden="true"
       />
 

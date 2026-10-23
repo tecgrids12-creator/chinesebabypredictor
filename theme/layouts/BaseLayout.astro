@@ -35,7 +35,7 @@ const t: Dictionary = getDictionary(locale);
 ---
 
 <!doctype html>
-<html lang={lang} dir={dir} class="scroll-pt-24">
+<html lang={lang} dir={dir}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -63,7 +63,8 @@ const t: Dictionary = getDictionary(locale);
     <a href="#main" class="skip-link">{t.common.skipToContent}</a>
     <Header t={t} locale={locale} />
 
-    <main id="main" class="relative">
+    {/* top padding clears the fixed floating navbar out of the content flow */}
+    <main id="main" class="relative pt-[80px] lg:pt-[104px]">
       {/* Every page's self-contained content is an <article> (article > section
           > h2/h3), so answer engines can lift blocks cleanly. */}
       <article class="relative">

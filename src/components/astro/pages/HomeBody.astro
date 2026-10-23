@@ -58,7 +58,66 @@ const studyStats = [
 ];
 ---
 
-<div class="pt-10">
+<div class="relative pt-10">
+  {/* Subtle baby-pink flower/heart garden behind the hero (single tone, very soft) */}
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-4 -z-10 h-[680px]">
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute left-[5%] top-6 h-9 w-9 text-[#f8bcd4] opacity-25" fill="currentColor">
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(72 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(144 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(216 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(288 12 12)"></ellipse>
+      <circle cx="12" cy="12" r="2.6" fill="currentColor"></circle>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute left-[1.5%] top-28 h-6 w-6 text-[#f8bcd4] opacity-30 [animation-delay:-1.4s] [animation-duration:8s]" fill="currentColor">
+      <path d="M12 21.4C7.2 17.9 3.5 14.6 2.3 11.2 1.1 7.7 3.1 4.4 6.4 4c2-.2 3.9.9 5.6 3.1C13.7 4.9 15.6 3.8 17.6 4c3.3.4 5.3 3.7 4.1 7.2-1.2 3.4-4.9 6.7-9.7 10.2z"></path>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute left-[36%] top-2 h-7 w-7 text-[#f8bcd4] opacity-20 [animation-delay:-2.8s] [animation-duration:9s]" fill="currentColor">
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(72 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(144 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(216 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(288 12 12)"></ellipse>
+      <circle cx="12" cy="12" r="2.6" fill="currentColor"></circle>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute left-[31%] top-40 h-5 w-5 text-[#f8bcd4] opacity-25 blur-[1px] [animation-delay:-3.6s]" fill="currentColor">
+      <path d="M12 21.4C7.2 17.9 3.5 14.6 2.3 11.2 1.1 7.7 3.1 4.4 6.4 4c2-.2 3.9.9 5.6 3.1C13.7 4.9 15.6 3.8 17.6 4c3.3.4 5.3 3.7 4.1 7.2-1.2 3.4-4.9 6.7-9.7 10.2z"></path>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute right-[27%] top-1 h-8 w-8 text-[#f8bcd4] opacity-25 [animation-delay:-4.4s] [animation-duration:10s]" fill="currentColor">
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(72 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(144 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(216 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(288 12 12)"></ellipse>
+      <circle cx="12" cy="12" r="2.6" fill="currentColor"></circle>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute right-[8%] top-24 h-6 w-6 text-[#f8bcd4] opacity-30 [animation-delay:-5.2s] [animation-duration:7.5s]" fill="currentColor">
+      <path d="M12 21.4C7.2 17.9 3.5 14.6 2.3 11.2 1.1 7.7 3.1 4.4 6.4 4c2-.2 3.9.9 5.6 3.1C13.7 4.9 15.6 3.8 17.6 4c3.3.4 5.3 3.7 4.1 7.2-1.2 3.4-4.9 6.7-9.7 10.2z"></path>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute right-[2.5%] top-56 h-6 w-6 text-[#f8bcd4] opacity-20 [animation-delay:-6.1s] [animation-duration:8.5s]" fill="currentColor">
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(72 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(144 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(216 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(288 12 12)"></ellipse>
+      <circle cx="12" cy="12" r="2.6" fill="currentColor"></circle>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute bottom-24 left-[8%] h-8 w-8 text-[#f8bcd4] opacity-20 [animation-delay:-7s] [animation-duration:11s]" fill="currentColor">
+      <path d="M12 21.4C7.2 17.9 3.5 14.6 2.3 11.2 1.1 7.7 3.1 4.4 6.4 4c2-.2 3.9.9 5.6 3.1C13.7 4.9 15.6 3.8 17.6 4c3.3.4 5.3 3.7 4.1 7.2-1.2 3.4-4.9 6.7-9.7 10.2z"></path>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute bottom-10 left-[21%] h-7 w-7 text-[#f8bcd4] opacity-25 [animation-delay:-8.3s] [animation-duration:9.5s]" fill="currentColor">
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(72 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(144 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(216 12 12)"></ellipse>
+      <ellipse cx="12" cy="5.6" rx="2.5" ry="4.2" transform="rotate(288 12 12)"></ellipse>
+      <circle cx="12" cy="12" r="2.6" fill="currentColor"></circle>
+    </svg>
+    <svg viewBox="0 0 24 24" class="anim-floaty absolute bottom-12 right-[30%] h-5 w-5 text-[#f8bcd4] opacity-30 blur-[0.5px] [animation-delay:-9.2s] [animation-duration:8s]" fill="currentColor">
+      <path d="M12 21.4C7.2 17.9 3.5 14.6 2.3 11.2 1.1 7.7 3.1 4.4 6.4 4c2-.2 3.9.9 5.6 3.1C13.7 4.9 15.6 3.8 17.6 4c3.3.4 5.3 3.7 4.1 7.2-1.2 3.4-4.9 6.7-9.7 10.2z"></path>
+    </svg>
+  </div>
+
   {/* ── Hero + calculator ─────────────────────────────────────────────── */}
   <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.05fr] lg:pt-6">
     <div class="reveal">
@@ -92,7 +151,7 @@ const studyStats = [
       </div>
     </div>
 
-    <div class="lg:sticky lg:top-24 min-h-[480px]"><GenderPredictor client:idle strings={predictorStrings} locale={locale} /></div>
+    <div class="lg:sticky lg:top-36 min-h-[480px]"><GenderPredictor client:idle strings={predictorStrings} locale={locale} /></div>
   </div>
 
   {/* ── What is it (GEO answer block: direct, liftable definition) ─────── */}

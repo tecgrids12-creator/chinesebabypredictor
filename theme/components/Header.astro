@@ -33,10 +33,12 @@ const nav = [
 ];
 ---
 
-<header id="site-header" class="relative">
+{/* Floating frosted glass bar: fixed, centered pill, 65%-opacity white glass.
+    (Glass styling lives in global.css #site-header; layout classes here.) */}
+<header id="site-header" class="fixed inset-x-0 top-2 z-50 mx-auto max-w-7xl rounded-[1.75rem] px-2 pt-0.5 pb-1 sm:px-3 lg:pb-1">
   {/* ── Line 1: centered logo ─────────────────────────────────────────────── */}
   <div class="section-shell">
-    <div class="grid h-16 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
+    <div class="grid h-14 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 lg:h-12">
       {/* left slot: language switcher */}
       <div class="flex items-center gap-2">
         <script is:inline define:vars={{ switcherTools: SWITCHER_TOOLS, nonEnLocales: NON_EN_LOCALES }}>
@@ -81,7 +83,7 @@ const nav = [
       {/* centered brand */}
       <a href={safeLocalizedPath('', locale)} class="focusable group flex items-center gap-2 sm:gap-2.5" aria-label="Chinese Baby Predictor — home">
         <span class="transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110 group-active:scale-95">
-          <Logo size={42} uid="header" class="h-9 w-9 sm:h-[42px] sm:w-[42px]" />
+          <Logo size={42} uid="header" class="h-9 w-9 sm:h-10 sm:w-10" />
         </span>
         <span class="font-display text-base font-extrabold leading-none tracking-tight text-plum-900 sm:text-xl">
           Chinese<span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent"> Baby</span> Predictor
@@ -109,9 +111,9 @@ const nav = [
     </div>
 
     {/* ── Line 2: centered primary nav ──────────────────────────────────────── */}
-    <nav aria-label="Primary" class="hidden justify-center gap-1 pb-2.5 lg:flex">
+    <nav aria-label="Primary" class="hidden justify-center gap-1 pb-1 lg:flex">
       {nav.map((item) => (
-        <a href={item.href} class="focusable nav-link rounded-full px-3.5 py-1.5 text-sm font-semibold text-plum-700 transition-colors hover:text-girl-600">
+        <a href={item.href} class="focusable nav-link rounded-full px-3.5 py-1 text-sm font-semibold text-plum-700 transition-colors hover:text-girl-600">
           {item.label}
         </a>
       ))}

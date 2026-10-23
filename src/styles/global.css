@@ -40,7 +40,14 @@
 }
 
 /* ─── Base ─────────────────────────────────────────────────────────────────── */
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* clearance below the fixed floating navbar for #anchor jumps */
+  scroll-padding-top: 84px;
+}
+@media (min-width: 1024px) {
+  html { scroll-padding-top: 108px; }
+}
 
 /* Layered gradient mesh: cream base + pink / blue / gold aurora corners.
    Fixed attachment keeps the mesh stable while scrolling. */
@@ -186,29 +193,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   box-shadow: 0 4px 10px -3px rgba(221, 33, 117, 0.45);
 }
 
-/* ─── Sticky header glass ───────────────────────────────────────────────────── */
+/* ─── Floating frosted-glass navbar (fixed pill, 65% opacity) ──────────────── */
 #site-header {
-  background: linear-gradient(rgba(253, 247, 247, 0.78), rgba(253, 247, 247, 0.66));
-  backdrop-filter: blur(14px) saturate(1.4);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  border-bottom: 1px solid transparent;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-/* pink→blue→gold hairline that fades toward the right */
-#site-header::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 1.5px;
-  background-image: linear-gradient(to right, rgba(221, 33, 117, 0.65), rgba(61, 116, 234, 0.65), rgba(251, 191, 36, 0.4));
-  -webkit-mask-image: linear-gradient(to right, black, transparent);
-  mask-image: linear-gradient(to right, black, transparent);
-  pointer-events: none;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.65)) padding-box,
+    linear-gradient(120deg, rgba(238, 90, 151, 0.5), rgba(126, 169, 249, 0.55), rgba(251, 191, 36, 0.35)) border-box;
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  box-shadow:
+    0 18px 40px -20px rgba(69, 2, 79, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: box-shadow 0.3s ease;
 }
 #site-header.is-scrolled {
-  box-shadow: 0 18px 40px -22px rgba(69, 2, 79, 0.30);
+  box-shadow:
+    0 26px 50px -20px rgba(69, 2, 79, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 /* nav link with animated gradient underline */
