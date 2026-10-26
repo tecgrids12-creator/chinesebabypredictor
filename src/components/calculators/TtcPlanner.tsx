@@ -164,7 +164,7 @@ export default function TtcPlanner({ strings }: { strings: TtcStrings }) {  cons
     ctx.fillText('Folk tradition for fun — nature stays 50/50 · chinesebabypredictor.com', W / 2, H - 60);
 
     function stringsOptimal(g: Gender) {
-      return g === 'boy' ? 'OPTIMAL FOR BOY' : 'OPTIMAL FOR GIRL';
+      return g === 'boy' ? 'BOY · FOLKLORE' : 'GIRL · FOLKLORE';
     }
 
     const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, 'image/png', 0.95));

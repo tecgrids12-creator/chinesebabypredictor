@@ -41,8 +41,8 @@ export interface Dictionary {
 
 const en: Dictionary = {
   meta: {
-    homeTitle: 'Chinese Baby Predictor: Accurate Lunar Gender Chart & Calculator',
-    homeDesc: 'Use our free Chinese baby predictor and interactive lunar calendar. Accurately converts your Gregorian dates to predict baby’s gender instantly.',
+    homeTitle: 'Chinese Baby Predictor: Authentic Lunar Gender Chart & Calculator',
+    homeDesc: 'Free Chinese baby predictor based on traditional Qing Dynasty lunar charts. Accurately converts Gregorian dates to lunar months for fun and cultural curiosity.',
     predictorTitle: 'Chinese Gender Predictor 2026 – Boy or Girl Baby Calculator',
     predictorDesc: 'Our accurate Chinese gender predictor converts your dates to the lunar calendar and reads the traditional chart for you. Try the free baby gender calculator now.',
     chartTitle: 'Chinese Gender Chart 2026 – Interactive Boy or Girl Chart',

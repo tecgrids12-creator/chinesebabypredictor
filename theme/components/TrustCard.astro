@@ -16,7 +16,7 @@ const t = getDictionary(locale).trust;
 
 const linkClass = 'font-semibold underline decoration-plum-700 decoration-2 underline-offset-2 hover:text-plum-900';
 const studyLink = `<a href="https://pubmed.ncbi.nlm.nih.gov/20618730/" rel="nofollow noopener noreferrer" target="_blank" class="${linkClass}">${t.studyLinkText}</a>`;
-const acogLink = `<a href="https://www.acog.org/womens-health/faqs/prenatal-genetic-screening-tests" rel="nofollow noopener noreferrer" target="_blank" class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-900">${t.acogLinkText}</a>`;
+const acogLink = `<a href="https://www.acog.org/womens-health/faqs/how-your-fetus-grows-during-pregnancy" rel="nofollow noopener noreferrer" target="_blank" class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-900">${t.acogLinkText}</a>`;
 const medlineLink = `<a href="https://medlineplus.gov/prenataltesting.html" rel="nofollow noopener noreferrer" target="_blank" class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-900">${t.medlineLinkText}</a>`;
 
 const bodyHtml = t.body.replace('{studyLink}', studyLink);
@@ -51,7 +51,7 @@ const disclaimerHtml = `<strong class="font-display text-plum-900">${t.disclaime
       <p class="mt-3 max-w-3xl text-sm leading-relaxed text-plum-700" set:html={bodyHtml} />
 
       <div class="mt-4 rounded-2xl bg-white/80 p-5 ring-1 ring-plum-700/10">
-        <p class="text-sm leading-relaxed text-plum-700" set:html={disclaimerHtml} />
+        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={disclaimerHtml} />
       </div>
     </div>
   </div>
