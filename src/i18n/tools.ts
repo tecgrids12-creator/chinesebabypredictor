@@ -69,7 +69,7 @@ export const IVF_STRINGS: IvfStrings = {
   lunarAge: 'Lunar age',
   lunarMonth: 'Lunar month',
   zodiac: 'Chinese zodiac',
-  agreeBadge: 'Both dates agree!',
+  agreeBadge: 'Both moments agree (folklore)',
   lockWord: 'Lunar Lock',
   splitBadge: 'Split Verdict',
   agreeNote: 'Both readings give the same cell of the Qing Palace chart — a rare 100% lunar agreement.',
@@ -123,7 +123,7 @@ export interface BacktestStrings {
   test: string; reset: string;
   rowPrediction: string; rowActual: string; rowVerdict: string;
   match: string; miss: string; predict: string;
-  hitScore: (n: number, total: number, pct: number) => string;
+  hitScore: string;
   perfectLine: string; mixedLine: string;
   scorecardButton: string; scorecardSaved: string;
   invalidRow: string;
@@ -160,8 +160,8 @@ export const BACKTEST_STRINGS: BacktestStrings = {
   match: '✅ Match',
   miss: '❌ Miss',
   predict: '🔮 Predicts',
-  hitScore: (n, total, pct) => `The Lunar Chart was ${n} for ${total} (${pct}%) for your past pregnancies!`,
-  perfectLine: 'A perfect score — the lunar cells lined up with every one of your children’s cells.',
+  hitScore: 'The lunar chart matched {n} of {total} ({pct}%) for your past pregnancies!',
+  perfectLine: 'A perfect score — the lunar cells lined up with every one of your children’s cells. Enjoy it, but remember: your next conception is still an independent ~50/50 event, because every new egg and sperm pair reshuffles the chromosomes from scratch.',
   mixedLine: 'Mixed results are the statistical norm: the chart runs at coin-flip odds (≈50%) across 2.8 million births, so a half-and-half scorecard is exactly what chance looks like.',
   scorecardButton: '📸 Download My Family Lunar Scorecard',
   scorecardSaved: '✓ Saved to your device',
@@ -201,7 +201,7 @@ export interface CalendarStrings {
   windowLabel: string;
   lunarAgeLabel: string;
   noneResult: string;
-  resultHeading: (year: number) => string;
+  resultHeading: string;
   disclaimer: string;
   leapChip: string;
   monthTableTitle: string;
@@ -226,7 +226,7 @@ export const CALENDAR_STRINGS: CalendarStrings = {
   windowLabel: 'Favourable window',
   lunarAgeLabel: 'Her lunar age',
   noneResult: 'No favourable months for this age in 2027 — check the other gender or the full matrix below.',
-  resultHeading: (year) => `Favourable ${year} windows`,
+  resultHeading: 'Favourable {year} windows',
   disclaimer: 'Folkloric tradition at coin-flip odds — for fun and family planning conversations, not medical advice.',
   leapChip: 'Leap month',
   monthTableTitle: '📊 Complete 2027 Gregorian ⇄ lunar month conversion table',

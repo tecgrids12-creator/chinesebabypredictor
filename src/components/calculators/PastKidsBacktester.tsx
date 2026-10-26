@@ -37,6 +37,10 @@ interface RowReading {
 
 const DAY_MS = 86_400_000;
 
+/** Interpolate the {n}/{total}/{pct} placeholders of the serialized hitScore template. */
+const fmtHit = (s: string, n: number, total: number, pct: number) =>
+  s.replaceAll('{n}', String(n)).replaceAll('{total}', String(total)).replaceAll('{pct}', String(pct));
+
 /** Manual rounded-rect (Safari < 16 lacks ctx.roundRect). */
 function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
   ctx.beginPath();
@@ -187,7 +191,7 @@ export default function PastKidsBacktester({ strings: S, locale = 'en' }: { stri
       ctx.textAlign = 'center';
       ctx.font = '800 30px "Fredoka Variable", "Plus Jakarta Sans Variable", system-ui, sans-serif';
       ctx.fillStyle = '#ffe14d';
-      ctx.fillText(S.hitScore(stats.hits, stats.scored.length, stats.pct), W / 2, by + 34);
+      ctx.fillText(fmtHit(S.hitScore, stats.hits, stats.scored.length, stats.pct), W / 2, by + 34);
     }
     ctx.font = '600 17px "Plus Jakarta Sans Variable", system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
@@ -392,7 +396,7 @@ export default function PastKidsBacktester({ strings: S, locale = 'en' }: { stri
                   : 'bg-gradient-to-br from-girl-500 to-girl-400'
             }`}>
               <p className="font-display text-xl font-extrabold sm:text-2xl">
-                {stats.pct >= 99 ? '🌟' : '📊'} {S.hitScore(stats.hits, stats.scored.length, stats.pct)}
+                {stats.pct >= 99 ? '🌟' : '📊'} {fmtHit(S.hitScore, stats.hits, stats.scored.length, stats.pct)}
               </p>
               <p className="mx-auto mt-2 max-w-xl text-sm font-medium opacity-95">
                 {stats.hits === stats.scored.length ? S.perfectLine : S.mixedLine}

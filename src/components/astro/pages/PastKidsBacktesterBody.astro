@@ -23,13 +23,15 @@ const S = BACKTEST_STRINGS;
     <div>
       <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Multi-child accuracy test</p>
       <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
-        Was the <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span> Right for You? Multi-Child Accuracy Tester
+        Was the <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span> Right for You? Multi-Child Backtester
       </h1>
       <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
       <p class="mt-4 text-lg leading-relaxed text-plum-600">
         Enter your children one by one — conception date, or birth/due date and we subtract the standard
         266 days — and get an honest, family-sized hit-rate scorecard you can download and share.
       </p>
+
+      <GeoLeadLinks />
       <div class="mt-5 flex flex-wrap gap-2">
         <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#dd2175,#2c63e8)"></span>Up to 5 kids</span>
         <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#2c63e8,#f59e0b)"></span>Instant ✅/❌ verdicts</span>
@@ -41,8 +43,6 @@ const S = BACKTEST_STRINGS;
     </div>
     <div class="lg:sticky lg:top-24 min-h-[520px]"><PastKidsBacktester client:idle strings={S} locale={locale} /></div>
   </div>
-
-  <GeoLeadLinks />
 
   <section class="section-shell mt-14">
     <div class="prose-custom">

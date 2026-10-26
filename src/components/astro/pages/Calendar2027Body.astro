@@ -65,6 +65,8 @@ for (let b = 1982; b <= 2009; b++) {
         Every 2027 lunar month of the Fire Goat year mapped to exact Gregorian dates — with the
         February&nbsp;6 CNY crossover trap, a 1982–2009 birth-year matrix and a pre-filtered conception planner.
       </p>
+
+      <GeoLeadLinks />
       <div class="mt-5 flex flex-wrap gap-2">
         <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#dd2175,#2c63e8)"></span>CNY 2027: Feb 6</span>
         <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#2c63e8,#f59e0b)"></span>12 lunar months · no leap</span>
@@ -75,11 +77,9 @@ for (let b = 1982; b <= 2009; b++) {
       </div>
     </div>
     <div class="lg:sticky lg:top-24 min-h-[520px]">
-      <CalendarPlanner year={2027} strings={S} planHeading={S.plannerHeading} computeLabel={S.compute} locale={locale} />
+      <CalendarPlanner client:idle year={2027} strings={S} planHeading={S.plannerHeading} computeLabel={S.compute} locale={locale} />
     </div>
   </div>
-
-  <GeoLeadLinks />
 
   {/* Crossover trap warning box */}
   <section class="section-shell mt-14">

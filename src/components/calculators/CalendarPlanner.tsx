@@ -134,7 +134,7 @@ export default function CalendarPlanner({
             <div className="anim-pop">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="font-display text-lg font-extrabold text-plum-900">
-                  {S.resultHeading(year)}
+                  {S.resultHeading.replace('{year}', String(year))}
                 </p>
                 <span className="chip bg-white/80">
                   <span aria-hidden="true" className="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>
