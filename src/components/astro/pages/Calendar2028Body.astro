@@ -81,7 +81,7 @@ for (let b = 1982; b <= 2009; b++) {
       </div>
     </div>
     <div class="lg:sticky lg:top-24 min-h-[520px]">
-      <CalendarPlanner client:idle year={2028} strings={S} planHeading={S.plannerHeading.replace('2027', '2028')} computeLabel={S.compute.replace('2027', '2028')} locale={locale} />
+      <CalendarPlanner client:idle year={2028} strings={{ ...S, plannerIntro: S.plannerIntro.replace('2027', '2028'), monthTableTitle: S.monthTableTitle2028, monthTableIntro: S.monthTableIntro2028 }} planHeading={S.plannerHeading.replace('2027', '2028')} computeLabel={S.compute.replace('2027', '2028')} locale={locale} />
     </div>
   </div>
 
@@ -118,8 +118,8 @@ for (let b = 1982; b <= 2009; b++) {
 
   {/* 13-month conversion table */}
   <section class="section-shell mt-14" id="conversion-table" aria-labelledby="conv-title">
-    <h2 id="conv-title" class="section-title">{S.monthTableTitle.replace('2027', '2028')}</h2>
-    <p class="mt-3 max-w-3xl leading-relaxed text-plum-600">{S.monthTableIntro.replace('2027', '2028')}</p>
+    <h2 id="conv-title" class="section-title">{S.monthTableTitle2028}</h2>
+    <p class="mt-3 max-w-3xl leading-relaxed text-plum-600">{S.monthTableIntro2028}</p>
     <div class="mt-5 overflow-x-auto rounded-3xl ring-1 ring-cream-200">
       <table class="w-full min-w-[560px] border-collapse bg-white text-sm">
         <thead>

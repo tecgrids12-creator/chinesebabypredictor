@@ -55,6 +55,32 @@ for (const file of pages) {
     if (!home) failures.push(`${page}: BreadcrumbList JSON-LD missing`);
   }
 
+  // ── BreadcrumbList strict validation: every ListItem MUST carry a fully-
+  //    qualified absolute "item" URL (GSC "Missing field item" error fix) ──
+  {
+    const badItems = [];
+    for (const m of html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) {
+      try {
+        const parsed = JSON.parse(m[1]);
+        const graphs = Array.isArray(parsed) ? parsed : [parsed];
+        for (const g of graphs) {
+          if (g && g['@type'] === 'BreadcrumbList') {
+            const list = Array.isArray(g.itemListElement) ? g.itemListElement : [];
+            if (list.length === 0) badItems.push('empty itemListElement');
+            for (const li of list) {
+              if (typeof li.item !== 'string' || li.item === '' || !li.item.startsWith('https://')) {
+                badItems.push(`position ${li.position ?? '?'} "${String(li.name ?? '').slice(0, 40)}"`);
+              }
+            }
+          }
+        }
+      } catch { /* script isn't JSON — not a BreadcrumbList concern */ }
+    }
+    if (badItems.length) {
+      failures.push(`${page}: BreadcrumbList ListItems missing absolute item URL → ${badItems.slice(0, 3).join('; ')}`);
+    }
+  }
+
   // ── in-content upward links (attribute order-insensitive, locale-aware root) ──
   if (!home) {
     const pageLocale = (pageUrl.match(/^\/([a-z]{2,3}(-[a-z]{2})?)\//) || [])[1];

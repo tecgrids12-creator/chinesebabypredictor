@@ -206,6 +206,8 @@ export interface CalendarStrings {
   leapChip: string;
   monthTableTitle: string;
   monthTableIntro: string;
+  monthTableTitle2028: string;
+  monthTableIntro2028: string;
   colLunar: string; colLeap: string; colStart: string; colEnd: string; colDays: string;
   matrixTitle: string;
   matrixIntro: string;
@@ -231,6 +233,8 @@ export const CALENDAR_STRINGS: CalendarStrings = {
   leapChip: 'Leap month',
   monthTableTitle: '📊 Complete 2027 Gregorian ⇄ lunar month conversion table',
   monthTableIntro: 'Every lunar month of the Fire Goat year with its exact Gregorian start and end dates. Conceptions during the crossover trap (Jan 1 – Feb 5, 2027 — see below) belong to the 2026 Fire Horse lunar year, not this table.',
+  monthTableTitle2028: '📊 Complete 2028 Gregorian ⇄ lunar month conversion table',
+  monthTableIntro2028: 'Every lunar month of the Earth Monkey year with its exact Gregorian start and end dates. Conceptions during the early crossover trap (Jan 1 – Jan 25, 2028) belong to the 2027 Fire Goat lunar year, not this table.',
   colLunar: 'Lunar month',
   colLeap: 'Leap flag',
   colStart: 'Starts (Gregorian)',

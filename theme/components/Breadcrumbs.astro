@@ -9,15 +9,27 @@ interface Props { crumbs: Crumb[]; locale: Locale; t: Dictionary; }
 const { crumbs, locale, t } = Astro.props;
 const site = Astro.site?.origin ?? 'https://chinesebabypredictor.com';
 
+/* GSC fix — Google requires a fully-qualified absolute "item" URL on EVERY
+ * ListItem, including position 1 (root) and the final leaf. The root crumb is
+ * always the exact brand anchor: EN → https://chinesebabypredictor.com/,
+ * localized routes → https://chinesebabypredictor.com/<loc>/. The leaf item is
+ * the current page's own canonical URL (no hidden href needed). */
+const rootItem = new URL(localizedPath('', locale), site).href;
+const leafHrefFull = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const leafItem = new URL(leafHrefFull, site).href;
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
-  itemListElement: crumbs.map((c, i) => ({
-    '@type': 'ListItem',
-    position: i + 1,
-    name: c.label,
-    ...(c.href ? { item: new URL(localizedPath(c.href, locale), site).href } : {}),
-  })),
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Chinese Baby Predictor', item: rootItem },
+    ...crumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 2,
+      name: c.label,
+      item: new URL(c.href ? localizedPath(c.href, locale) : leafHrefFull, site).href,
+    })),
+  ],
 };
 ---
 
@@ -28,7 +40,7 @@ const jsonLd = {
     <>
       <span aria-hidden="true">›</span>
       {c.href
-        ? <a href={c.href} class="focusable font-semibold transition-colors hover:text-girl-500">{c.label}</a>
+        ? <a href={localizedPath(c.href, locale)} class="focusable font-semibold transition-colors hover:text-girl-500">{c.label}</a>
         : <span class="font-semibold text-plum-700">{c.label}</span>}
     </>
   ))}

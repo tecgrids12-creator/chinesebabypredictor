@@ -1,7 +1,8 @@
 /** JSON-LD builders shared by pages (schema.org structured data). */
 import type { FaqItem } from '../content/data/editorial';
 
-/** Root home hierarchy: single-crumbs trail Homepage → current tool. */
+/** Root home hierarchy: single-crumbs trail Homepage → current tool.
+ * Every ListItem carries a fully-qualified absolute "item" URL (GSC fix). */
 export function breadcrumbSchema(items: Array<{ name: string; path: string }>) {
   return {
     '@context': 'https://schema.org',
@@ -10,7 +11,7 @@ export function breadcrumbSchema(items: Array<{ name: string; path: string }>) {
       '@type': 'ListItem',
       position: i + 1,
       name: item.name,
-      item: `https://chinesebabypredictor.com/${item.path}`,
+      item: new URL(`/${item.path}`.replace(/\/{2,}/g, '/'), 'https://chinesebabypredictor.com').href,
     })),
   };
 }
