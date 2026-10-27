@@ -32,5 +32,15 @@ export const dic: PartialDictionary = {
     hub7Desc: 'Anno della Capra di Fuoco: mappa completa dei mesi lunari, la trappola del cambio di Capodanno cinese del 6 febbraio e matrice degli anni di nascita.',
     hub8Label: 'Calendario cinese del genere 2028',
     hub8Desc: 'Edizione del quinto mese bisestile: tutti i 13 mesi lunari mappati con finestre di date esatte.',
+    hub9Label: 'Verificatore di date cuspide',
+    hub9Desc: 'Concepimento vicino a un confine lunare? Legge ogni giorno della finestra fertile di 5–7 giorni e indica il giorno esatto del ribaltamento.',
+  },
+  nav: {
+    toolsMenu: 'Predittori e strumenti',
+    menuCore: 'Predittori principali',
+    menuPlanning: 'Pianificazione e specializzati',
+    menuAnnual: 'Calendari annuali e quiz',
+    guides: 'Guide e scienza',
+    homeCalc: 'Calcolatrice principale',
   },
 };

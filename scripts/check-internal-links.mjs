@@ -5,7 +5,7 @@
  *  - one (deduped) BreadcrumbList JSON-LD
  *  - in-content upward links: data-geo="root" → "/" and data-geo="ttc" → TTC planner
  *    (home pages are exempt: they ARE the root and already carry the TTC chip)
- *  - the 6-pillar cluster-hub module (root / ttc / ivf / backtest / c2027 / c2028)
+ *  - the 7-pillar cluster-hub module (root / ttc / ivf / backtest / c2027 / c2028 / cusp)
  *    on every non-home page
  *  - the 4 Wave-1 spoke pages pass their E-E-A-T schema + trust-card checks
  *  - /es/ and /fr/ home pages: zero hardcoded-English <h2> headings from HomeBody
@@ -87,7 +87,8 @@ for (const file of pages) {
     const rootHref = pageLocale ? `/${pageLocale}/` : '/';
     const tagMatches = [...html.matchAll(/<a\b[^>]*data-geo="root"[^>]*>([^<]*)<\/a>/g)];
     const rootTag = tagMatches.length && (/href="\/"/.test(tagMatches[0][0]) || tagMatches[0][0].includes(`href="${rootHref}"`));
-    const ttcTag = pageUrl === '/chinese-gender-planner-ttc/' || [...html.matchAll(/<a\b[^>]*>/g)].find((t) => t[0].includes('data-geo="ttc"') && t[0].includes('href="/chinese-gender-planner-ttc/"'));
+    const ttcSelf = /chinese-gender-planner-ttc\/$/.test(pageUrl);
+    const ttcTag = ttcSelf || [...html.matchAll(/<a\b[^>]*>/g)].find((t) => t[0].includes('data-geo="ttc"') && /href="\/[a-z]{2,3}(-[a-z]{2})?\/chinese-gender-planner-ttc\/"|href="\/chinese-gender-planner-ttc\/"/.test(t[0]));
     if (!rootTag) failures.push(`${page}: data-geo=root in-content link missing`);
     if (!ttcTag) failures.push(`${page}: data-geo=ttc in-content link missing`);
     if (tagMatches.length && rootTag) {
@@ -96,13 +97,13 @@ for (const file of pages) {
     }
   }
 
-  // ── cluster hub module ── (6-pillar Wave-1 funnel)
+  // ── cluster hub module ── (7-pillar GEO funnel: Wave-1 + cusp checker)
   if (!home) {
     const hub = html.includes('id="cluster-hub"');
-    const HUB_KEYS = ['data-hub="root"','data-hub="ttc"','data-hub="ivf"','data-hub="backtest"','data-hub="c2027"','data-hub="c2028"'];
-    const six = hub && HUB_KEYS.every((k) => html.includes(k));
+    const HUB_KEYS = ['data-hub="root"','data-hub="ttc"','data-hub="ivf"','data-hub="backtest"','data-hub="c2027"','data-hub="c2028"','data-hub="cusp"'];
+    const seven = hub && HUB_KEYS.every((k) => html.includes(k));
     if (!hub) failures.push(`${page}: cluster hub missing`);
-    else if (!six) failures.push(`${page}: cluster hub incomplete (needs root/ttc/ivf/backtest/c2027/c2028 cards)`);
+    else if (!seven) failures.push(`${page}: cluster hub incomplete (needs root/ttc/ivf/backtest/c2027/c2028/cusp cards)`);
   }
 
   // ── language switcher validity: every <option> locale maps to a built home ──

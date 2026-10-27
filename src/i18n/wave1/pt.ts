@@ -32,5 +32,15 @@ export const dic: PartialDictionary = {
     hub7Desc: 'Ano da Cabra de Fogo: mapa completo dos meses lunares, a pegadinha da virada do Ano Novo Chinês em 6 de fevereiro e matriz dos anos de nascimento.',
     hub8Label: 'Calendário chinês de gênero 2028',
     hub8Desc: 'Edição do quinto mês intercalar: todos os 13 meses lunares mapeados com janelas de datas exatas.',
+    hub9Label: 'Verificador de datas-limite (cúspide)',
+    hub9Desc: 'Concepção perto de uma fronteira lunar? Lê cada dia da janela fértil de 5–7 dias e aponta o dia exato da inversão.',
+  },
+  nav: {
+    toolsMenu: 'Preditores e ferramentas',
+    menuCore: 'Preditores principais',
+    menuPlanning: 'Planejamento e especializados',
+    menuAnnual: 'Calendários anuais e quizzes',
+    guides: 'Guias e ciência',
+    homeCalc: 'Calculadora principal',
   },
 };

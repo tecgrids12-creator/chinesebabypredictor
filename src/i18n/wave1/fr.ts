@@ -32,5 +32,15 @@ export const dic: PartialDictionary = {
     hub7Desc: 'Année de la Chèvre de Feu : carte complète des mois lunaires, le piège du passage au Nouvel An chinois du 6 février et matrice des années de naissance.',
     hub8Label: 'Calendrier chinois de genre 2028',
     hub8Desc: 'Édition du cinquième mois intercalaire : les 13 mois lunaires cartographiés avec des fenêtres de dates exactes.',
+    hub9Label: 'Vérificateur de bornes (cusp)',
+    hub9Desc: 'Conception près d’une frontière lunaire ? Analyse chaque jour de votre fenêtre fertile de 5–7 jours et nomme le jour exact du basculement.',
+  },
+  nav: {
+    toolsMenu: 'Prédicteurs et outils',
+    menuCore: 'Prédicteurs principaux',
+    menuPlanning: 'Planification et spécialisés',
+    menuAnnual: 'Calendriers annuels et quiz',
+    guides: 'Guides et science',
+    homeCalc: 'Calculatrice principale',
   },
 };

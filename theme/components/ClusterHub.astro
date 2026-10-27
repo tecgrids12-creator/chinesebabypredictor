@@ -18,9 +18,9 @@ const locale = Astro.props.locale ?? 'en';
 const g = getDictionary(locale).geo;
 const H = (p: string) => safeLocalizedPath(p, locale);
 
-/* Card type: root=1st, ttc=2nd, ivf=3rd, backtest=4th, c2027=5th, c2028=6th.
- * The root label stays the exact seed-keyword anchor BRAND name in EN in
- * every locale (critical internal-linking rule); the rest localize. */
+/* Card order: root=1st, ttc=2nd, ivf=3rd, backtest=4th, c2027=5th, c2028=6th,
+ * cusp=7th (Wave-2). The root label stays the exact seed-keyword anchor BRAND
+ * name in EN in every locale (critical internal-linking rule); the rest localize. */
 const hub = [
   { key: 'root',    href: H(''), icon: '🏠', label: 'Chinese Baby Predictor', desc: g.hub1Desc, title: 'Chinese Baby Predictor — main lunar gender calculator' },
   { key: 'ttc',     href: H('chinese-gender-planner-ttc/'), icon: '🗓️', label: g.hub2Label, desc: g.hub2Desc, title: 'Chinese gender TTC planner — 2026–2028 conception windows' },
@@ -28,6 +28,7 @@ const hub = [
   { key: 'backtest', href: H('test-past-pregnancies-calculator/'), icon: '🎯', label: g.hub6Label, desc: g.hub6Desc, title: 'Was the Chinese gender predictor right? Multi-child accuracy test' },
   { key: 'c2027',   href: H('chinese-gender-calendar-2027/'), icon: '🐐', label: g.hub7Label, desc: g.hub7Desc, title: '2027 Chinese gender calendar — Year of the Fire Goat, Feb 6 CNY trap' },
   { key: 'c2028',   href: H('chinese-gender-calendar-2028/'), icon: '🐵', label: g.hub8Label, desc: g.hub8Desc, title: '2028 Chinese gender calendar — leap 5th lunar month edition' },
+  { key: 'cusp',    href: H('cusp-conception-date-checker/'), icon: '⚖️', label: g.hub9Label ?? 'Cusp Conception Date Checker', desc: g.hub9Desc, title: 'Cusp conception date checker — Chinese gender chart boundary test' },
 ] as const;
 ---
 

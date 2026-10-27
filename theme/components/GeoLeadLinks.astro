@@ -5,8 +5,9 @@
  * contextual lateral link into the TTC planning engine. Both sentences are
  * rendered INSIDE the content flow (lead area, right after the H1 block).
  * Sentences self-skip when the current page IS the link target (home / TTC).
- * Root href is locale-aware; the TTC planner is an EN-only route, so its link
- * is always the canonical EN URL (no redirect, no 404).
+ * Root href is locale-aware; so is the TTC planner link (Wave-2 parity —
+ * every locale has a TTC route). Sentences self-skip when the current page IS
+ * the link target (home / the locale's own TTC page).
  * Sentences/anchors are localized via the `geo` dictionary ({a} placeholder).
  */
 import { SUPPORTED_LOCALES, localizedPath } from '@i18n/utils';
@@ -29,6 +30,7 @@ const isHome = path === '/' || path === '' || path === '/index.html' || /^\/[a-z
 const isTtc = /chinese-gender-planner-ttc/.test(path);
 
 const ttcAnchor = [g.ttcLink1, g.ttcLink2, g.ttcLink3][hash % 3];
+const ttcHref = localizedPath('chinese-gender-planner-ttc/', locale);
 /* {a} placeholder → rendered <a>; word order stays native per locale. */
 const pillarSentence = pillarIsRendered(isHome) ? '' : g.leadPillar.replace(
   '{a}',
@@ -36,7 +38,7 @@ const pillarSentence = pillarIsRendered(isHome) ? '' : g.leadPillar.replace(
 );
 const ttcSentence = isTtc ? '' : g.leadTtc.replace(
   '{a}',
-  `<a href="/chinese-gender-planner-ttc/" data-geo="ttc" title="Chinese gender TTC planner — forecast your optimal lunar conception windows for 2026–2028" class="font-semibold underline decoration-boy-400 decoration-2 underline-offset-2 transition-colors hover:text-plum-800">${ttcAnchor}</a>`,
+  `<a href="${ttcHref}" data-geo="ttc" title="Chinese gender TTC planner — forecast your optimal lunar conception windows for 2026–2028" class="font-semibold underline decoration-boy-400 decoration-2 underline-offset-2 transition-colors hover:text-plum-800">${ttcAnchor}</a>`,
 );
 
 function pillarIsRendered(home: boolean) { return home; }

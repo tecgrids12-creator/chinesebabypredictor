@@ -36,6 +36,14 @@ const en: PartialDictionary = {
     acogLinkText: 'ACOG Guidelines on Fetal Development',
     medlineLinkText: 'Learn about prenatal genetic screening on MedlinePlus',
   },
+  nav: {
+    toolsMenu: 'Predictors &amp; Tools',
+    menuCore: 'Core Predictors',
+    menuPlanning: 'Planning &amp; Specialized',
+    menuAnnual: 'Annual Calendars &amp; Quizzes',
+    guides: 'Guides &amp; Science',
+    homeCalc: 'Home Calculator',
+  },
   geo: {
     hub5Label: 'IVF &amp; FET Gender Predictor',
     hub5Desc: 'Frozen embryo transfer, fresh IVF and donor-egg chart readings — both dates compared.',
@@ -45,6 +53,8 @@ const en: PartialDictionary = {
     hub7Desc: 'Year of the Fire Goat: full lunar month map, the Feb 6 CNY crossover trap and birth-year matrix.',
     hub8Label: '2028 Chinese Gender Calendar',
     hub8Desc: 'Leap 5th-month edition: all 13 lunar months mapped with exact date windows.',
+    hub9Label: 'Cusp Conception Date Checker',
+    hub9Desc: 'Conceived near a lunar boundary? Tests every day of your 5–7-day fertile window and names the exact flip day.',
   },
 };
 

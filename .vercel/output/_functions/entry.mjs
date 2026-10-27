@@ -1,6 +1,6 @@
 import { renderers } from './renderers.mjs';
-import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_BpaLZbgJ.mjs';
-import { manifest } from './manifest_BqZy-A-p.mjs';
+import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_B_TOgt3P.mjs';
+import { manifest } from './manifest_Wyg4xNk9.mjs';
 
 const serverIslandMap = new Map();;
 
@@ -16,22 +16,23 @@ const _page8 = () => import('./pages/chinese-gender-chart.astro.mjs');
 const _page9 = () => import('./pages/chinese-gender-planner-ttc.astro.mjs');
 const _page10 = () => import('./pages/chinese-gender-predictor.astro.mjs');
 const _page11 = () => import('./pages/contact-us.astro.mjs');
-const _page12 = () => import('./pages/due-date-calculator.astro.mjs');
-const _page13 = () => import('./pages/gender-planner.astro.mjs');
-const _page14 = () => import('./pages/gender-quiz.astro.mjs');
-const _page15 = () => import('./pages/ivf-chinese-gender-predictor.astro.mjs');
-const _page16 = () => import('./pages/llms.txt.astro.mjs');
-const _page17 = () => import('./pages/lunar-age-calculator.astro.mjs');
-const _page18 = () => import('./pages/mayan-gender-predictor.astro.mjs');
-const _page19 = () => import('./pages/privacy.astro.mjs');
-const _page20 = () => import('./pages/robots.txt.astro.mjs');
-const _page21 = () => import('./pages/rss.xml.astro.mjs');
-const _page22 = () => import('./pages/sitemap.astro.mjs');
-const _page23 = () => import('./pages/terms.astro.mjs');
-const _page24 = () => import('./pages/test-past-pregnancies-calculator.astro.mjs');
-const _page25 = () => import('./pages/_locale_/blog/_slug_.astro.mjs');
-const _page26 = () => import('./pages/_locale_/_---slug_.astro.mjs');
-const _page27 = () => import('./pages/index.astro.mjs');
+const _page12 = () => import('./pages/cusp-conception-date-checker.astro.mjs');
+const _page13 = () => import('./pages/due-date-calculator.astro.mjs');
+const _page14 = () => import('./pages/gender-planner.astro.mjs');
+const _page15 = () => import('./pages/gender-quiz.astro.mjs');
+const _page16 = () => import('./pages/ivf-chinese-gender-predictor.astro.mjs');
+const _page17 = () => import('./pages/llms.txt.astro.mjs');
+const _page18 = () => import('./pages/lunar-age-calculator.astro.mjs');
+const _page19 = () => import('./pages/mayan-gender-predictor.astro.mjs');
+const _page20 = () => import('./pages/privacy.astro.mjs');
+const _page21 = () => import('./pages/robots.txt.astro.mjs');
+const _page22 = () => import('./pages/rss.xml.astro.mjs');
+const _page23 = () => import('./pages/sitemap.astro.mjs');
+const _page24 = () => import('./pages/terms.astro.mjs');
+const _page25 = () => import('./pages/test-past-pregnancies-calculator.astro.mjs');
+const _page26 = () => import('./pages/_locale_/blog/_slug_.astro.mjs');
+const _page27 = () => import('./pages/_locale_/_---slug_.astro.mjs');
+const _page28 = () => import('./pages/index.astro.mjs');
 const pageMap = new Map([
     ["node_modules/astro/dist/assets/endpoint/generic.js", _page0],
     ["src/pages/404.astro", _page1],
@@ -45,22 +46,23 @@ const pageMap = new Map([
     ["src/pages/chinese-gender-planner-ttc/index.astro", _page9],
     ["src/pages/chinese-gender-predictor/index.astro", _page10],
     ["src/pages/contact-us/index.astro", _page11],
-    ["src/pages/due-date-calculator/index.astro", _page12],
-    ["src/pages/gender-planner/index.astro", _page13],
-    ["src/pages/gender-quiz/index.astro", _page14],
-    ["src/pages/ivf-chinese-gender-predictor/index.astro", _page15],
-    ["src/pages/llms.txt.ts", _page16],
-    ["src/pages/lunar-age-calculator/index.astro", _page17],
-    ["src/pages/mayan-gender-predictor/index.astro", _page18],
-    ["src/pages/privacy/index.astro", _page19],
-    ["src/pages/robots.txt.ts", _page20],
-    ["src/pages/rss.xml.js", _page21],
-    ["src/pages/sitemap/index.astro", _page22],
-    ["src/pages/terms/index.astro", _page23],
-    ["src/pages/test-past-pregnancies-calculator/index.astro", _page24],
-    ["src/pages/[locale]/blog/[slug]/index.astro", _page25],
-    ["src/pages/[locale]/[...slug].astro", _page26],
-    ["src/pages/index.astro", _page27]
+    ["src/pages/cusp-conception-date-checker/index.astro", _page12],
+    ["src/pages/due-date-calculator/index.astro", _page13],
+    ["src/pages/gender-planner/index.astro", _page14],
+    ["src/pages/gender-quiz/index.astro", _page15],
+    ["src/pages/ivf-chinese-gender-predictor/index.astro", _page16],
+    ["src/pages/llms.txt.ts", _page17],
+    ["src/pages/lunar-age-calculator/index.astro", _page18],
+    ["src/pages/mayan-gender-predictor/index.astro", _page19],
+    ["src/pages/privacy/index.astro", _page20],
+    ["src/pages/robots.txt.ts", _page21],
+    ["src/pages/rss.xml.js", _page22],
+    ["src/pages/sitemap/index.astro", _page23],
+    ["src/pages/terms/index.astro", _page24],
+    ["src/pages/test-past-pregnancies-calculator/index.astro", _page25],
+    ["src/pages/[locale]/blog/[slug]/index.astro", _page26],
+    ["src/pages/[locale]/[...slug].astro", _page27],
+    ["src/pages/index.astro", _page28]
 ]);
 
 const _manifest = Object.assign(manifest, {
@@ -71,7 +73,7 @@ const _manifest = Object.assign(manifest, {
     middleware: () => import('./_noop-middleware.mjs')
 });
 const _args = {
-    "middlewareSecret": "aa492451-d42f-4109-85d3-0044bcc1b12f",
+    "middlewareSecret": "75518d0b-962f-4c3c-9107-0770a360e32e",
     "skewProtection": false
 };
 const _exports = createExports(_manifest, _args);

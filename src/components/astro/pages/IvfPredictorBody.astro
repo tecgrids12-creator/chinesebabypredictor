@@ -10,13 +10,14 @@ import FaqAccordion from '@theme/components/FaqAccordion.astro';
 import RelatedTools from '@theme/components/RelatedTools.astro';
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 import { IVF_STRINGS, IVF_FAQ } from '@i18n/tools';
+import { toolStrings } from '@i18n/tools.locales';
 import { getDictionary } from '@i18n/translations';
 import type { Locale } from '@i18n/utils';
 
 interface Props { locale?: Locale; }
 const { locale = 'en' } = Astro.props;
 const t = getDictionary(locale);
-const S = IVF_STRINGS;
+const S = toolStrings(IVF_STRINGS, locale, 'ivf');
 ---
 
 <div class="pt-10">
@@ -24,12 +25,17 @@ const S = IVF_STRINGS;
     <div>
       <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>IVF · FET · IUI · Donor egg</p>
       <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
-        IVF &amp; Frozen Embryo <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span> (FET, IUI &amp; Donor)
+        {locale === 'en' ? (
+          <>IVF &amp; Frozen Embryo <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span> (FET, IUI &amp; Donor)</>
+        ) : (
+          <Fragment set:html={S.h1} />
+        )}
       </h1>
       <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
       <p class="mt-4 text-lg leading-relaxed text-plum-600">
-        Compare the two moments an IVF baby "begins" — egg retrieval and embryo transfer — on the traditional
-        Qing Palace chart at once, with donor-egg readings for both parents-by-intent.
+        {locale === 'en'
+          ? <>Compare the two moments an IVF baby "begins" — egg retrieval and embryo transfer — on the traditional Qing Palace chart at once, with donor-egg readings for both parents-by-intent.</>
+          : <Fragment set:html={S.lead} />}
       </p>
 
       <GeoLeadLinks />

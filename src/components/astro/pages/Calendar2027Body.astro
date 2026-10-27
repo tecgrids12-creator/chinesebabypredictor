@@ -12,13 +12,16 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 import { lunarMonthWindows, chartByWindow } from '@utils/lunarWindows';
 import { lunarNewYear, solarToLunar } from '@utils/lunar';
 import { CALENDAR_STRINGS, CAL2027_FAQ } from '@i18n/tools';
+import { toolStrings } from '@i18n/tools.locales';
 import { getDictionary } from '@i18n/translations';
 import type { Locale } from '@i18n/utils';
 
 interface Props { locale?: Locale; }
 const { locale = 'en' } = Astro.props;
 const t = getDictionary(locale);
-const S = CALENDAR_STRINGS;
+const S = toolStrings(CALENDAR_STRINGS, locale, 'calendar');
+/** Strip templates carry {year} — interpolate here (strings only, never functions). */
+const fillYear = (s: string) => s.replaceAll('{year}', String(YEAR));
 
 const YEAR = 2027;
 
@@ -58,12 +61,17 @@ for (let b = 1982; b <= 2009; b++) {
     <div>
       <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Year of the Fire Goat · 丁未</p>
       <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
-        <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">2027</span> Chinese Gender Calendar &amp; Baby Predictor
+        {locale === 'en' ? (
+          <><span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">2027</span> Chinese Gender Calendar &amp; Baby Predictor</>
+        ) : (
+          <Fragment set:html={fillYear(S.h1)} />
+        )}
       </h1>
       <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
       <p class="mt-4 text-lg leading-relaxed text-plum-600">
-        Every 2027 lunar month of the Fire Goat year mapped to exact Gregorian dates — with the
-        February&nbsp;6 CNY crossover trap, a 1982–2009 birth-year matrix and a pre-filtered conception planner.
+        {locale === 'en'
+          ? <>Every 2027 lunar month of the Fire Goat year mapped to exact Gregorian dates — with the February&nbsp;6 CNY crossover trap, a 1982–2009 birth-year matrix and a pre-filtered conception planner.</>
+          : <Fragment set:html={fillYear(S.lead)} />}
       </p>
 
       <GeoLeadLinks />

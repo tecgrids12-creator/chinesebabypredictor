@@ -11,6 +11,8 @@ import type { FaqItem } from '../content/data/editorial';
 /* ───────────────────────── Phase 1 · IVF / FET / IUI ───────────────────────── */
 
 export interface IvfStrings {
+  metaTitle: string; metaDesc: string;
+  h1: string; h1Accent: string; lead: string;
   pathwayHeading: string;
   pathwayFet: string; pathwayFresh: string; pathwayDonor: string;
   fetHint: string; freshHint: string; donorHint: string;
@@ -37,6 +39,11 @@ export interface IvfStrings {
 }
 
 export const IVF_STRINGS: IvfStrings = {
+  metaTitle: 'IVF & Frozen Embryo Chinese Baby Predictor (FET, IUI & Donor)',
+  metaDesc: 'Read the Chinese gender chart for IVF, FET, IUI and donor-egg cycles: compare the egg retrieval date against the transfer date on the traditional lunar calendar — both lunar readings, split-verdict detection and PGT-A context included.',
+  h1: 'IVF & Frozen Embryo',
+  h1Accent: 'Chinese Baby Predictor (FET, IUI & Donor)',
+  lead: 'Compare the two moments an IVF baby "begins" — egg retrieval and embryo transfer — on the traditional Qing Palace chart at once, with donor-egg readings for both parents-by-intent.',
   pathwayHeading: 'Choose your IVF pathway',
   pathwayFet: '🧬 Frozen Embryo Transfer (FET)',
   pathwayFresh: '🥚 Fresh IVF / IUI Cycle',
@@ -107,6 +114,8 @@ export const IVF_FAQ: FaqItem[] = [
 /* ─────────────────── Phase 2 · Past pregnancies backtester ─────────────────── */
 
 export interface BacktestStrings {
+  metaTitle: string; metaDesc: string;
+  h1: string; h1Accent: string; lead: string;
   motherHeading: string;
   motherDobLabel: string; motherDobHint: string;
   childHeading: string;
@@ -133,6 +142,11 @@ export interface BacktestStrings {
 }
 
 export const BACKTEST_STRINGS: BacktestStrings = {
+  metaTitle: 'Was the Chinese Baby Predictor Right? Past Pregnancies Accuracy Tester',
+  metaDesc: 'Test the Chinese gender chart against your real past pregnancies: enter each child’s date and gender and get an honest hit-rate scorecard for your lunar cells.',
+  h1: 'Past Pregnancies',
+  h1Accent: 'Accuracy Tester',
+  lead: 'Enter the mother’s date of birth plus each child’s conception (or birth) date and actual gender — the tester replays the lunar chart on your own family and reports the honest hit rate, misses included.',
   motherHeading: 'Step 1 · Mother’s details',
   motherDobLabel: '🎂 Mother’s date of birth',
   motherDobHint: 'Entered once — drives the lunar age for every child below.',
@@ -193,6 +207,8 @@ export const BACKTEST_FAQ: FaqItem[] = [
 /* ───────────── Phases 3–4 · 2027 / 2028 calendar hubs (shared) ───────────── */
 
 export interface CalendarStrings {
+  metaTitle: string; metaDesc: string;
+  h1: string; h1Accent: string; lead: string;
   plannerHeading: string;
   plannerIntro: string;
   dobLabel: string; dobHint: string;
@@ -217,6 +233,11 @@ export interface CalendarStrings {
 }
 
 export const CALENDAR_STRINGS: CalendarStrings = {
+  metaTitle: 'Chinese Gender Calendar {year}: Boy or Girl Conception Windows',
+  metaDesc: 'The {year} Chinese gender calendar: every favourable lunar conception window for a boy or a girl with exact Gregorian dates, CNY crossover traps and leap-month rules handled on the authentic 1900–2100 lunisolar table.',
+  h1: 'Chinese Gender Calendar {year}',
+  h1Accent: 'Boy or Girl Conception Windows',
+  lead: 'Every lunar month of the {year} chart mapped to real Gregorian dates: pick the gender you hope for and the planner returns exact conception windows from the mother’s date of birth — leap months and New Year crossover traps handled automatically.',
   plannerHeading: '🎯 2027 conception planner (pre-filtered)',
   plannerIntro: 'Enter the mother’s date of birth, pick the gender you hope for, and see every favourable 2027 lunar window with exact Gregorian dates — leap months handled automatically.',
   dobLabel: '🎂 Mother’s date of birth',
@@ -290,3 +311,137 @@ export const CAL2028_FAQ: FaqItem[] = [
     a: 'Under the virtual-age rule she is lunar 39 during the 2028 Monkey year (39 = 2028 − 1990 + 1), assuming her birthday falls after the 1990 CNY cutoff; born before the cutoff she counts from lunar 1990 and is lunar 40. Either number selects her chart row — the planner computes it exactly from her date of birth.',
   },
 ];
+
+/* ───────────── Phase 3 · Cusp / borderline conception checker (Wave-2) ───────────── */
+
+export interface CuspStrings {
+  metaTitle: string; metaDesc: string;
+  h1: string; h1Accent: string; lead: string;
+  dobLabel: string; dobHint: string;
+  centerLabel: string; centerHint: string;
+  spreadHeading: string; spread2: string; spread3: string; spreadHelp: string;
+  calculate: string; again: string;
+  resultHeading: string;
+  dayCol: string; dateCol: string; lunarCol: string; ageCol: string; cellCol: string;
+  dayCenter: string; dayBefore: string; dayAfter: string;
+  lunarMonthWord: string; lunarDayWord: string; leapWord: string;
+  lockBanner: string; splitBanner: string; splitBody: string;
+  boundaryNewMoon: string; boundaryLeap: string; boundaryCny: string;
+  genderBoy: string; genderGirl: string; boyWord: string; girlWord: string;
+  invalid: string; earlyDate: string;
+  disclaimer: string;
+}
+
+export const CUSP_STRINGS: CuspStrings = {
+  metaTitle: 'Borderline & Cusp Conception Date Chinese Baby Predictor',
+  metaDesc: 'Conceived within days of a lunar month boundary or Chinese New Year? The cusp checker tests your whole 5- or 7-day fertile window day by day and shows exactly where a 2-day shift flips BOY to GIRL.',
+  h1: 'Borderline &amp; Cusp Conception Date',
+  h1Accent: 'Chinese Baby Predictor',
+  lead: 'Sperm survives up to 5 days and ovulation shifts by 24–48 hours — so if conception happened near a new moon or Chinese New Year, a 2-day difference can flip the lunar chart from boy to girl. This checker tests every single day of your fertile window and shows the exact day the prediction flips.',
+  dobLabel: '🎂 Mother’s date of birth',
+  dobHint: 'Selects her traditional lunar-age (虚岁) row for every day of the window.',
+  centerLabel: '🩸 Intercourse / ovulation centre date',
+  centerHint: 'Your best estimate of the centre of the fertile window — the ovulation date, or the day of (near-ovulation) intercourse.',
+  spreadHeading: 'Fertile window spread',
+  spread2: '±2 days · 5-day window',
+  spread3: '±3 days · 7-day fertile window',
+  spreadHelp: 'Sperm survive up to 5 days and the egg is viable 12–24 hours after ovulation, so honest uncertainty spans multiple days — the checker reads every day of it.',
+  calculate: '⚖️ Test my cusp window',
+  again: '↻ Try other dates',
+  resultHeading: 'Day-by-day chart readings across your fertile window',
+  dayCol: 'Day',
+  dateCol: 'Gregorian date',
+  lunarCol: 'Lunar date',
+  ageCol: 'Her lunar age',
+  cellCol: 'Chart cell',
+  dayCenter: 'Centre day',
+  dayBefore: '{n} before centre',
+  dayAfter: '{n} after centre',
+  lunarMonthWord: 'lunar month',
+  lunarDayWord: 'day',
+  leapWord: 'leap month',
+  lockBanner: '🔒 100% LUNAR LOCK (FOLKLORE: {gender}) — all {n} days of your window read the same cell. Your result does not depend on which day fertilization actually happened.',
+  splitBanner: '⚡ CUSP SPLIT DETECTED (BOUNDARY CROSSOVER)',
+  splitBody: 'The lunar verdict flips on {flipDate} ({boundary}): before it {n1} window day(s) read {g1}, after it {n2} day(s) read {g2}. If intercourse spanned more than one day, both folklore answers were in play — only the actual fertilization day decides.',
+  boundaryNewMoon: 'lunar month boundary in the table',
+  boundaryLeap: 'leap-month half-month split',
+  boundaryCny: 'lunar New Year / lunar-age rollover',
+  genderBoy: 'BOY',
+  genderGirl: 'GIRL',
+  boyWord: 'a boy',
+  girlWord: 'a girl',
+  invalid: 'Please fill in every required date.',
+  earlyDate: 'Dates before January 31, 1900 (the start of the reliable lunar table) are not supported.',
+  disclaimer: 'Entertainment only — a cusp split shows where the chart is sensitive, not which sex is likely. Human sex is decided by sperm genetics at a coin-flip level.',
+};
+
+export const CUSP_FAQ: FaqItem[] = [
+  {
+    q: 'When exactly does the Chinese gender chart flip from boy to girl near a boundary?',
+    a: 'The chart flips at two boundaries: the new moon that starts each lunar month (the table’s columns), and Chinese New Year (the lunar-age year used for the row). If your conception date sits within a few days of either, day −2 and day +2 of the same fertile window can fall in different columns — different chart cells, opposite folklore answers. The cusp checker prints every day of the window so you can see the exact flip date.',
+  },
+  {
+    q: 'Conceived at the end of a lunar month — does the reading still count?',
+    a: 'Yes. A conception on the last day of a lunar month is read with that month’s column; the next day’s conception moves to the new column. The honest question is not "is it legal" but "which day did fertilization happen" — and sperm survival of up to five days makes that genuinely uncertain. That uncertainty is why a split banner exists instead of one confident answer.',
+  },
+  {
+    q: 'What about conceptions right before Chinese New Year (late January / early February)?',
+    a: 'Before the lunar New Year you are still in the old lunar year, so the chart row uses the previous year’s age; after it, the age increments by one. A mother conceived a week before CNY and one a week after can sit on different rows even with the same birth date. February convenience-calculators that use a fixed "Gregorian-age + 1" rule get this wrong — our engine converts every window day through the real 1900–2100 lunisolar table.',
+  },
+  {
+    q: 'My result says CUSP SPLIT — is that a bad result?',
+    a: 'Neither good nor bad: it means the folklore answer depends on facts nobody can fully reconstruct (the exact fertilization day inside a 5-to-7-day window). About one in six window conceptions lands near a boundary. Treat any single lunar-calendar answer as entertainment at coin-flip odds — clinical sex determination is governed by sperm chromosomes, not by which side of a new moon a date fell on.',
+  },
+];
+
+/* ───────────── TTC planner strings (extracted from TtcPlannerBody.astro) ───────────── */
+
+export interface TtcToolStrings {
+  metaTitle: string; metaDesc: string;
+  h1: string; h1Accent: string; lead: string;
+  dobLabel: string; dobHint: string; ageNow: string; ageInYear: string;
+  wantLabel: string; boyLabel: string; girlLabel: string; bothLabel: string;
+  yearLabel: string; compute: string; again: string;
+  headline: string; optimalBoy: string; optimalGirl: string;
+  lunarMonth: string; lunarAgeLabel: string; windowLabel: string;
+  leapFirstHalf: string; leapSecondHalf: string;
+  skipLabel: string; none: string; newLunarYear: string;
+  save: string; saved: string; print: string; footnote: string;
+  invalid: string; matrixNote: string;
+}
+
+export const TTC_STRINGS: TtcToolStrings & Record<string, string> = {
+  metaTitle: 'Chinese Gender Planner: TTC Calendar for Boy or Girl (2026-2027)',
+  metaDesc: 'Plan your pregnancy with our free Chinese Gender TTC Planner. Select your birthdate and desired gender to find optimal lunar conception windows for 2026-2027.',
+  h1: 'The Chinese Gender Planner',
+  h1Accent: 'for TTC Parents',
+  lead: 'Pick your birthdate and the gender you’re hoping for — the ancient lunar chart returns exact conception windows with dates, lunar months and your traditional lunar age for every month of 2026, 2027 and 2028.',
+  dobLabel: 'Mother’s date of birth',
+  dobHint: 'Pick a date to see your live lunar age (虚岁) instantly.',
+  ageNow: 'Lunar age today',
+  ageInYear: 'age you’ll carry',
+  wantLabel: 'Desired baby gender',
+  boyLabel: '💙 Baby Boy',
+  girlLabel: '💖 Baby Girl',
+  bothLabel: '🌟 Overview',
+  yearLabel: 'Planning horizon',
+  compute: 'Show My Windows',
+  again: '↻ Reset',
+  headline: 'Conception windows for',
+  optimalBoy: 'BOY MONTH · FOLKLORE',
+  optimalGirl: 'GIRL MONTH · FOLKLORE',
+  lunarMonth: 'Lunar Month',
+  lunarAgeLabel: 'Lunar age',
+  windowLabel: 'Window',
+  leapFirstHalf: 'leap · 1st half',
+  leapSecondHalf: 'leap · 2nd half',
+  skipLabel: 'try another month',
+  none: 'No windows calculated yet.',
+  newLunarYear: '老虎',
+  save: 'Save My Planning Calendar',
+  saved: 'CALENDAR SAVED!',
+  print: 'Print',
+  footnote: '',
+  invalid: 'Please pick the mother’s date of birth first.',
+  matrixNote: 'Authentic 1900–2100 lunisolar tables · Qing Palace 28×12 chart (lunar ages 18–45) · leap months (Runyue) follow the traditional half-month rule: days 1–15 → month N, days 16+ → month N+1.',
+};

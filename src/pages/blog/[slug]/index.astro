@@ -5,7 +5,48 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 import RelatedTools from '@theme/components/RelatedTools.astro';
 import { getDictionary } from '@i18n/translations';
 import { alternatePaths } from '@i18n/utils';
-import { articleSchema } from '@utils/schema';
+import { articleSchema, faqPageSchema } from '@utils/schema';
+
+/* Wave-2 authority spokes get visible FAQ sections + FAQPage JSON-LD
+   (singular Q&A set, matches the on-page FAQ wording exactly). */
+const POST_FAQ: Record<string, Array<{ q: string; a: string }>> = {
+  'why-chinese-gender-calculators-disagree': [
+    {
+      q: 'Why do Chinese gender calculators give different results for the same date?',
+      a: "Because they disagree on the inputs, not the grid. The two biggest forks are the mother's age row (Gregorian approximation versus authentic 虚岁 with the Chinese New Year cutoff) and the month column (Gregorian month mapped directly instead of converted through a real lunisolar table). Leap months, due-date reconstruction, chart variants and time-zone boundaries add four more documented forks.",
+    },
+    {
+      q: 'Which Chinese gender predictor method is most authentic?',
+      a: 'The one that converts both the mother\'s date of birth and the conception date through an actual solar-to-lunar table (1900–2100), applies the traditional virtual-age (虚岁) rule with the true CNY cutoff for the conception year, and documents its leap-month treatment. Using the "authentic" engine matters for folklore fidelity — but note it does not make the prediction scientifically accurate; the chart is entertainment.',
+    },
+    {
+      q: 'Can two calculators both be right and still disagree?',
+      a: 'Yes. If a conception date sits on a boundary — a new moon, a leap-month day-15 split, or Chinese New Year — the folklore answer genuinely depends on which exact day fertilization occurred, and two sites using different rounding can both be internally consistent. Our cusp checker prints the whole fertile window so you can see the flip date instead of a mystery.',
+    },
+    {
+      q: 'Does disagreeing mean the chart is wrong?',
+      a: 'It means the conversions were wrong — and that is worth knowing. But even with perfect conversions, the chart is folklore: prediction accuracy at a coin-flip level. Human sex is decided by which sperm fertilizes the egg (X or Y chromosome), and obstetric bodies such as ACOG treat fetal sex determination as biology, not calendar math.',
+    },
+  ],
+  'chinese-gender-predictor-twins': [
+    {
+      q: 'Does the Chinese gender chart predict twins or triplets?',
+      a: 'No. The chart was designed for singleton folklore: one conception date in, one sex out. It has no row or column for multiplicity, so it cannot register that a pregnancy carries two or three babies at all.',
+    },
+    {
+      q: 'What does the chart say for boy-girl twins?',
+      a: 'Two different verdicts appear only when the twins\' conceptions (or the egg releases that led to them) fell on either side of a lunar month boundary — then one date reads in one column and the sibling in the next. Otherwise both twins share one cell and one answer. The split is calendar geometry, not prediction skill.',
+    },
+    {
+      q: 'How do you read the Chinese chart for IVF twins or vanishing twins?',
+      a: 'Read one cell per transferred embryo using the thaw-and-transfer date, not the retrieval date, if you want the implantation-perspective reading — or per retrieval date for the fertilization perspective. A vanishing twin is read by the same conception date as the survivor, since both embryo and sac began from one date.',
+    },
+    {
+      q: 'Can the Chinese calendar tell if twins are identical or fraternal?',
+      a: 'No. That distinction is set at fertilization (one zygote splitting versus two eggs) and weeks later is only detectable by ultrasound. The lunar table sees one date in and one sex out, and identical twins always share a sex anyway.',
+    },
+  ],
+};
 
 export async function getStaticPaths() {
   // EN posts only (bare ids); translated posts are served from /<locale>/blog/.
@@ -38,13 +79,16 @@ const dateStr = post.data.publishDate.toISOString().slice(0, 10);
   crumbs={[{ label: 'Blog', href: 'blog/' }, { label: post.data.title }]},
   type="article"
   publishedTime={new Date(post.data.publishDate).toISOString()}
-  schema={articleSchema({
-    title: post.data.title,
-    description: post.data.description,
-    slug: post.id,
-    publishDate: dateStr,
-    author: post.data.author,
-  })}
+  schema={[
+    articleSchema({
+      title: post.data.title,
+      description: post.data.description,
+      slug: post.id,
+      publishDate: dateStr,
+      author: post.data.author,
+    }),
+    ...(POST_FAQ[post.id] ? [faqPageSchema(POST_FAQ[post.id])] : []),
+  ]}
 >
   <article class="pt-10">
     <header class="section-shell max-w-3xl">

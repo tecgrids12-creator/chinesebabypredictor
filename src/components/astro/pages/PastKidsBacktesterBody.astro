@@ -9,13 +9,14 @@ import FaqAccordion from '@theme/components/FaqAccordion.astro';
 import RelatedTools from '@theme/components/RelatedTools.astro';
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 import { BACKTEST_STRINGS, BACKTEST_FAQ } from '@i18n/tools';
+import { toolStrings } from '@i18n/tools.locales';
 import { getDictionary } from '@i18n/translations';
 import type { Locale } from '@i18n/utils';
 
 interface Props { locale?: Locale; }
 const { locale = 'en' } = Astro.props;
 const t = getDictionary(locale);
-const S = BACKTEST_STRINGS;
+const S = toolStrings(BACKTEST_STRINGS, locale, 'backtest');
 ---
 
 <div class="pt-10">
@@ -23,12 +24,17 @@ const S = BACKTEST_STRINGS;
     <div>
       <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Multi-child accuracy test</p>
       <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
-        Was the <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span> Right for You? Multi-Child Backtester
+        {locale === 'en' ? (
+          <>Was the <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span> Right for You? Multi-Child Backtester</>
+        ) : (
+          <Fragment set:html={S.h1} />
+        )}
       </h1>
       <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
       <p class="mt-4 text-lg leading-relaxed text-plum-600">
-        Enter your children one by one — conception date, or birth/due date and we subtract the standard
-        266 days — and get an honest, family-sized hit-rate scorecard you can download and share.
+        {locale === 'en'
+          ? <>Enter your children one by one — conception date, or birth/due date and we subtract the standard 266 days — and get an honest, family-sized hit-rate scorecard you can download and share.</>
+          : <Fragment set:html={S.lead} />}
       </p>
 
       <GeoLeadLinks />

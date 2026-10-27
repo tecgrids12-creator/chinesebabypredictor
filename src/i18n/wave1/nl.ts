@@ -32,5 +32,15 @@ export const dic: PartialDictionary = {
     hub7Desc: 'Jaar van de Vuurgeit: complete maanmaandkaart, de Chinees-Nieuwjaarvalkuil van 6 februari en de geboortejaarmatrix.',
     hub8Label: 'Chinese geslachtstabel 2028',
     hub8Desc: 'Schrikkel-5e-maandeditie: alle 13 maanmaanden in kaart gebracht met exacte datumvensters.',
+    hub9Label: 'Cusp-datumchecker',
+    hub9Desc: 'Bevruchting nabij een maangrens? Leest elke dag van je vruchtbare venster (5–7 dagen) en noemt de exacte kanteldag.',
+  },
+  nav: {
+    toolsMenu: 'Voorspellers en tools',
+    menuCore: 'Kernvoorspellers',
+    menuPlanning: 'Planning en specialisaties',
+    menuAnnual: 'Jaarkalenders en quizzen',
+    guides: 'Gidsen en wetenschap',
+    homeCalc: 'Hoofdcalculator',
   },
 };

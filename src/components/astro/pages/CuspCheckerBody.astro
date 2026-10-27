@@ -1,0 +1,134 @@
+---
+/**
+ * Wave-2 spoke page body — Borderline & Cusp Conception Date Checker.
+ * Hero + interactive cusp island + GEO answer box + boundary deep-dives.
+ * UI strings come from `CUSP_STRINGS` (src/i18n/tools.ts) merged with the
+ * per-locale strip (src/i18n/tools.locales.ts); editorial prose keeps the
+ * site's English-editorial pattern. Localized routes pass `locale`.
+ */
+import CuspChecker from '@components/calculators/CuspChecker.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
+import { CUSP_STRINGS, CUSP_FAQ } from '@i18n/tools';
+import { toolStrings } from '@i18n/tools.locales';
+import { getDictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { locale?: Locale; }
+const { locale = 'en' } = Astro.props;
+const t = getDictionary(locale);
+const S = toolStrings(CUSP_STRINGS, locale, 'cusp');
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.05fr]">
+    <div>
+      <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Cusp dates · fertile-window boundary test</p>
+      <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
+        {locale === 'en' ? <>Borderline &amp; Cusp Conception Date <span class="bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text text-transparent">Chinese Baby Predictor</span></> : <Fragment set:html={S.h1} />}
+      </h1>
+      <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, var(--color-girl-500), var(--color-boy-500)); box-shadow: 0 4px 10px -3px rgba(221,33,117,.45);"></span>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-plum-600" set:html={S.lead} />
+
+      <GeoLeadLinks />
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#dd2175,#2c63e8)"></span>Free &amp; instant</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full" style="background-image:linear-gradient(120deg,#2c63e8,#f59e0b)"></span>Every window day tested</span>
+      </div>
+
+      {/* GEO answer box — direct answer for the cusp question */}
+      <div class="mt-8 rounded-3xl p-5" style="border: 1px solid transparent; background: linear-gradient(rgba(253,242,248,.65), rgba(253,242,248,.65)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.3)) border-box;">
+        <p class="font-display font-bold text-plum-800">⚡ Quick answer: why cusp dates disagree</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600">
+          The Qing Palace chart flips at <strong>every</strong> lunar boundary: a new moon (chart column) and Chinese New Year
+          (lunar-age row). Sperm survive up to 5 days and the egg is fertile just 12–24 hours, so a conception "around
+          June 30" is really a 5-day spread that can straddle two lunar months — and the chart column therefore two
+          different verdicts. Conceived within ~2 days of a boundary, treat the result as a <em>cusp split</em>: both
+          folklore answers were legitimately in play, and only the true fertilization day decides.
+        </p>
+      </div>
+
+      <div class="mt-5 rounded-3xl p-5" style="border: 1px solid transparent; background: linear-gradient(rgba(253,242,248,.65), rgba(253,242,248,.65)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.3)) border-box;">
+        <p class="font-display font-bold text-plum-800">🍼 {t.common.entertainment}</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-plum-600" set:html={S.disclaimer} />
+      </div>
+    </div>
+    <div class="lg:sticky lg:top-24 min-h-[520px]"><CuspChecker client:idle strings={S} locale={locale} /></div>
+  </div>
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom">
+      <h2>Sperm Lifespan (Up to 5 Days) vs. Egg Viability (12–24 Hours) vs. the New Moon Clock</h2>
+      <p>
+        Three clocks tick against each other in every cusp case. <strong>Sperm</strong>: viable up to five days after
+        intercourse, meaning sex on Saturday can fertilize an egg released the following Wednesday. <strong>The egg</strong>:
+        viable only 12–24 hours after ovulation, so the true fertilization moment is a moving target inside your window.
+        <strong>The new moon</strong>: the lunar calendar restarts on a lunar-phase cycle that lands on days of the
+        Gregorian month that drift every year. When ovulation timing falls near a new moon — or near Chinese New Year,
+        where the lunar <em>age</em> row also flips — the chart cell genuinely depends on which of your window's days
+        was the fertilization day, which is exactly what the checker above prints day by day.
+      </p>
+      <h2>How to Read a Split Cusp Result</h2>
+      <p>
+        A <strong>🔒 100% LUNAR LOCK</strong> means every day of your window reads the same chart cell — the folklore answer
+        is stable no matter which day fertilization actually happened. A <strong>⚡ CUSP SPLIT</strong> names the exact flip day:
+        before it the window's days read one verdict, after it the other. In a split, don't average or "round" — instead ask
+        which single day is most likely: intercourse closest to ovulation gets the most weight biologically (X/Y-sperm theories
+        notwithstanding, textbooks place conception within ~24 hours of ovulation), and that day's row in the table is the
+        honest folklore answer. If intercourse spanned both sides of the boundary, the tradition has no tiebreaker — the
+        chart simply says both.
+      </p>
+      <h2>The Three Boundary Types That Create Cusp Predictions</h2>
+      <div class="overflow-x-auto rounded-3xl bg-white/70 shadow-soft ring-1 ring-cream-200">
+        <table class="w-full min-w-[720px] border-collapse text-left text-sm">
+          <caption class="sr-only">Boundary types that make Chinese gender chart dates borderline</caption>
+          <thead>
+            <tr class="bg-plum-800 text-white">
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Boundary type</th>
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">What flips</th>
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Typical danger days</th>
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">How the tool reads it</th>
+            </tr>
+          </thead>
+          <tbody class="text-plum-700">
+            <tr class="border-t border-cream-200 bg-girl-50/60">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">New Moon (lunar month cusp)</th>
+              <td class="px-4 py-3">Chart column: lunar month 5 → month 6 overnight</td>
+              <td class="px-4 py-3">1–2 days either side of each new moon (~monthly)</td>
+              <td class="px-4 py-3">Each window day is converted through the real 1900–2100 lunisolar table — no "month 5.5" nonsense</td>
+            </tr>
+            <tr class="border-t border-cream-200">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Leap month (Runyue) Day 15 cusp</th>
+              <td class="px-4 py-3">Half-month rule: leap month days 1–15 read month N, days 16+ read N+1</td>
+              <td class="px-4 py-3">Roughly 7 times per 19 lunar years (e.g. leap 5th month 2028)</td>
+              <td class="px-4 py-3">The leap half-split is computed per day and flagged in the table</td>
+            </tr>
+            <tr class="border-t border-cream-200 bg-girl-50/60">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Chinese New Year (lunar-age cusp)</th>
+              <td class="px-4 py-3">Chart row: the mother's lunar age increments at CNY</td>
+              <td class="px-4 py-3">Late January – mid February (e.g. Jan 26, 2028 · Feb 6, 2027)</td>
+              <td class="px-4 py-3">Every day's lunar year is read individually, so pre-CNY and post-CNY days use different age rows</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>Cusp Dates Are Where “Two Calculators Disagree” the Most</h2>
+      <p>
+        If two Chinese gender predictor sites gave you different answers for the same date, the odds are high that one of
+        your dates sits on a boundary — and the two sites handled it differently (a fixed Gregorian-age shortcut versus a
+        genuine lunisolar conversion, or a leap month silently skipped). Rather than a disagreement to hide, we treat it as
+        information: the cusp checker shows the whole window so you can see the sensitivity yourself. For the full math of
+        why predictors disagree, read
+        <a href="/blog/why-chinese-gender-calculators-disagree/" class="font-semibold underline decoration-girl-400 decoration-2 underline-offset-2 hover:text-plum-800">why different Chinese baby predictors give different answers</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-shell mt-14" aria-labelledby="cusp-faq">
+    <h2 id="cusp-faq" class="section-title text-center">Cusp conception date FAQ</h2>
+    <div class="mt-6"><FaqAccordion items={CUSP_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="chinese-gender-predictor/" />
+</div>

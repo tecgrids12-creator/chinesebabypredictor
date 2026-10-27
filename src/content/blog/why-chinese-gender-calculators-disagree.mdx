@@ -1,0 +1,68 @@
+---
+title: "Why Different Chinese Baby Predictors Give Different Answers (6 Math Reasons)"
+description: "The 28×12 chart is one fixed grid — all disagreement lives in the inputs. Six documented conversion shortcuts, an interactive two-engine diagnostic, and the 60-second audit that separates honest calculators from sloppy ones."
+publishDate: 2026-10-12
+author: "Chinese Baby Predictor Team"
+category: "Accuracy Science"
+---
+
+import DisagreementDiagnostic from '../../components/calculators/DisagreementDiagnostic.tsx';
+
+If you pasted the same dates into two Chinese gender predictors and got **boy on one and girl on the other**, both sites were not lying to you — they were reading different numbers into the same grid. The Qing Palace chart is a fixed 28×12 table; *every* disagreement lives in the inputs, and there are only six documented ways those inputs get mangled.
+
+Run your case through the diagnostic below — it reads one mother + one conception date through **two engines at once**: the lazy Western-age shortcut that most simple sites use, and the authentic lunisolar conversion (exact 1900–2100 table, 虚岁 ages, leap months) that this site runs. When the verdicts differ, it tells you exactly which conversion separated them.
+
+<DisagreementDiagnostic client:visible />
+
+## Reason 1 — The age row: Gregorian-vs-lunar (虚岁) age
+
+The chart's rows are **lunar (虚岁) ages**, not birthday-counted ages. 虚岁 starts at 1 at birth and increments at every Chinese New Year — so your lunar age depends on where your birthday sits relative to CNY that year (Feb 17 in 2026, Feb 6 in 2027, Jan 26 in 2028). A "30" printed by a shortcut site can be 虚岁 31 or 32 depending on the birth month, which silently slides you into the wrong chart row. Shortcut sites compute `(calendar year − birth year) + 1` and never check the CNY cutoff — a one- to two-year row error, right there.
+
+## Reason 2 — The month column: "March = lunar month 3" theft
+
+The columns are lunar months 1–12, whose Gregorian boundaries drift across the calendar year and shift every year (lunar months run 29–30 days, and the year re-anchors each CNY). Sites that map Gregorian month → column number are often reading the wrong column by up to a full cell. The honest conversion requires a real solar-to-lunar table.
+
+## Reason 3 — Leap month (Runyue) handling
+
+About seven times per 19 lunar years, a 13th intercalary month is inserted. The chart only has 12 columns, so tradition folds the leap month in half: **days 1–15 read as month N, days 16–29 as month N+1** (the rule that governs the 2028 leap 5th month). Many calculators silently drop the leap month, others mislabel it "month 5" for the entire month — instant contradictions, especially for mid-2028 conceptions.
+
+## Reason 4 — Conception-date reconstruction: −266 vs −280−14
+
+If a site asks for your **due date**, it must subtract to a conception estimate — some subtract 266 days (true gestational length from conception), others apply the LMP-based 280 − 14 on the due date and call it the same thing. Mostly equivalent, but rounding conventions fork near boundaries: a due date of the 1st of the month can convert to conception dates a full lunar cell apart, and then Reason 2 applies to the *reconstructed* date.
+
+## Reason 5 — Different chart versions in circulation
+
+There is no single canonical grid: the widely circulated Qing/Peking-observatory-style tables differ subtly between printed sources, and some sites "improve" rows (ages 15–17 or 46–50) that the classical table doesn't even contain. Two honest engines reading two different physical tables can legitimately split — which is why we publish our exact grid and clamping behaviour (ages 18–45, months 1–12) openly.
+
+## Reason 6 — Time zones and UTC day boundaries
+
+A conception at 11 p.m. New York time is already tomorrow in Beijing. Calculators that convert dates in the browser's local zone vs UTC can read a *different lunar day* at the boundaries — fatal when the real date sits one day from a new moon or CNY. (This is the same sensitivity the <a href="/cusp-conception-date-checker/">cusp checker</a> measures day by day.)
+
+## How to audit any predictor in 60 seconds
+
+1. **Known-value probe**: your own born children. One hit proves nothing; a multi-child backtester gives you a family-sized scorecard (<a href="/test-past-pregnancies-calculator/">here's ours</a>).
+2. **Boundary probe**: re-run a date that sits ±2 days from a lunar month boundary or CNY. An honest tool changes column (and says so); a sloppy tool returns the identical unchanged verdict all week.
+3. **Leap probe**: test June 10 and July 10, 2028. If both read "month 5" with no half-month split, the tool is skipping Runyue.
+4. **Disclosure check**: does the tool state which lunar table, which age rule and which leap convention it uses? Silence is the tell.
+
+## The FAQ
+
+### Why do Chinese gender calculators give different results for the same date?
+
+Because they disagree on the inputs, not the grid. The two biggest forks are the mother's age row (Gregorian approximation versus authentic 虚岁 with the Chinese New Year cutoff) and the month column (Gregorian month mapped directly instead of converted through a real lunisolar table). Leap months, due-date reconstruction, chart variants and time-zone boundaries add four more documented forks.
+
+### Which Chinese gender predictor method is most authentic?
+
+The one that converts both the mother's date of birth and the conception date through an actual solar-to-lunar table (1900–2100), applies the traditional virtual-age (虚岁) rule with the true CNY cutoff for the conception year, and documents its leap-month treatment. Using the "authentic" engine matters for folklore fidelity — but note it does not make the prediction scientifically accurate; the chart is entertainment.
+
+### Can two calculators both be right and still disagree?
+
+Yes. If a conception date sits on a boundary — a new moon, a leap-month day-15 split, or Chinese New Year — the folklore answer genuinely depends on which exact day fertilization occurred, and two sites using different rounding can both be internally consistent. Our cusp checker prints the whole fertile window so you can see the flip date instead of a mystery.
+
+### Does disagreeing mean the chart is wrong?
+
+It means the *conversions* were wrong — and that is worth knowing. But even with perfect conversions, the chart is folklore: prediction accuracy at a coin-flip level. Human sex is decided by which sperm fertilizes the egg (X or Y chromosome), and obstetric bodies such as ACOG treat fetal sex determination as biology, not calendar math: <a href="https://www.acog.org/womens-health/faqs/how-your-fetus-grows-during-pregnancy" rel="nofollow noopener noreferrer">how your fetus grows during pregnancy (ACOG)</a>.
+
+---
+
+*Keep going:* our <a href="/blog/why-predictors-disagree/">shorter guide to the six usual suspects</a> covers the same problem from the user's point of view, and the <a href="/lunar-age-calculator/">lunar age calculator</a> shows your exact 虚岁 row to eliminate Reason 1 at the source.

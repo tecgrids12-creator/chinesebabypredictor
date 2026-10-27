@@ -60,6 +60,13 @@ export const LOCALE_NAMES: Record<Locale, { native: string; english: string; fla
  * switching locale; anything else (legal, EN-only spokes, blog posts, TTC)
  * gracefully falls back to the localized home so no dead clicks are possible.
  */
+/**
+ * Locale-aware tool slugs with fully localized page variants for every locale.
+ * Includes the Wave-1 specialized spokes and the Wave-2 cusp checker.
+ * These are the ONLY route segments the language switcher preserves when
+ * switching locale; anything else (legal pages, blog posts)
+ * gracefully falls back to the localized home so no dead clicks are possible.
+ */
 export const LOCALIZED_TOOL_SLUGS = [
   'chinese-gender-predictor',
   'chinese-gender-chart',
@@ -68,20 +75,17 @@ export const LOCALIZED_TOOL_SLUGS = [
   'mayan-gender-predictor',
   'due-date-calculator',
   'gender-quiz',
-] as const;
-
-/** Wave-1 specialized spokes: EN-only routes (registered in EN_ONLY_PATH). */
-export const EN_ONLY_TOOL_SLUGS = [
+  'cusp-conception-date-checker',
+  'chinese-gender-planner-ttc',
   'ivf-chinese-gender-predictor',
   'test-past-pregnancies-calculator',
   'chinese-gender-calendar-2027',
   'chinese-gender-calendar-2028',
 ] as const;
 
-/** All tool route segments (localized + EN-only) — single registry. */
-export const ALL_TOOL_SLUGS: Array<(typeof LOCALIZED_TOOL_SLUGS)[number] | (typeof EN_ONLY_TOOL_SLUGS)[number]> = [
+/** All tool route segments — single registry (every tool localizes). */
+export const ALL_TOOL_SLUGS: Array<(typeof LOCALIZED_TOOL_SLUGS)[number]> = [
   ...LOCALIZED_TOOL_SLUGS,
-  ...EN_ONLY_TOOL_SLUGS,
 ];
 
 /**
@@ -96,15 +100,15 @@ export function localizedPath(path: string, locale: Locale): string {
 }
 
 /**
- * Routes that exist only in EN (legal pages, the TTC planner, Wave-1 spokes).
- * A localized href to them would 404 — they always resolve to the EN canonical
- * URL so internal links stay do-follow, redirect-free and unbroken (GEO web).
+ * Footer/legal information routes exist only in EN. A localized href to one of
+ * these would 404, so they always resolve to the EN canonical URL.
+ * Every TOOL page now exists in every locale (Wave-2 locale-parity pass).
  * Blog listings and posts localize ONLY for locales with a translated blog
  * (src/content/blog/<lang>/); every other locale keeps EN blog links so no
  * internal href ever points at a page that is not rendered.
  */
 const EN_ONLY_PATH =
-  /^(about-us|contact-us|sitemap|privacy|terms|chinese-gender-planner-ttc|ivf-chinese-gender-predictor|test-past-pregnancies-calculator|chinese-gender-calendar-2027|chinese-gender-calendar-2028)\//;
+  /^(about-us|contact-us|sitemap|privacy|terms)\//;
 
 /** Locales whose blog is fully translated (16 posts under src/content/blog/<lang>/). */
 export const BLOG_FULL_LOCALES: Locale[] = ['es', 'fr', 'nl', 'ru', 'hi', 'it', 'pt', 'pl', 'ar', 'tr', 'id'];
@@ -122,14 +126,25 @@ export function safeLocalizedPath(path: string, locale: Locale): string {
  * List of canonical alternates for hreflang/sitemap use.
  * Blog posts exist for en + BLOG_FULL_LOCALES only; the blog listing and all
  * other pages exist for every locale.
+ * An `x-default` alternate (the canonical EN URL) is always appended — Google
+ * expects it for any hreflang set of a multilingual page.
  */
 export function alternatePaths(path: string): Array<{ hreflang: string; href: string }> {
   const clean = path.startsWith('/') ? path.slice(1) : path;
+  if (EN_ONLY_PATH.test(clean)) {
+    return [
+      { hreflang: 'en', href: localizedPath(clean, DEFAULT_LOCALE) },
+      { hreflang: 'x-default', href: localizedPath(clean, DEFAULT_LOCALE) },
+    ];
+  }
   const locales: Locale[] = /^blog\/.+/.test(clean)
     ? [DEFAULT_LOCALE, ...BLOG_FULL_LOCALES]
     : [...SUPPORTED_LOCALES];
-  return locales.map((loc) => ({
-    hreflang: loc,
-    href: localizedPath(path, loc),
-  }));
+  return [
+    ...locales.map((loc) => ({
+      hreflang: loc,
+      href: localizedPath(path, loc),
+    })),
+    { hreflang: 'x-default', href: localizedPath(path, DEFAULT_LOCALE) },
+  ];
 }

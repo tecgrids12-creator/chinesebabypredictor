@@ -16,10 +16,18 @@ import MayanBody from '@components/astro/pages/MayanBody.astro';
 import DueDateBody from '@components/astro/pages/DueDateBody.astro';
 import QuizBody from '@components/astro/pages/QuizBody.astro';
 import BlogListBody, { type PostCard } from '@components/astro/pages/BlogListBody.astro';
+import IvfPredictorBody from '@components/astro/pages/IvfPredictorBody.astro';
+import PastKidsBacktesterBody from '@components/astro/pages/PastKidsBacktesterBody.astro';
+import Calendar2027Body from '@components/astro/pages/Calendar2027Body.astro';
+import Calendar2028Body from '@components/astro/pages/Calendar2028Body.astro';
+import TtcPlannerBody from '@components/astro/pages/TtcPlannerBody.astro';
+import CuspCheckerBody from '@components/astro/pages/CuspCheckerBody.astro';
 import { getDictionary } from '@i18n/translations';
 import { SUPPORTED_LOCALES, alternatePaths, type Locale } from '@i18n/utils';
 import { webAppSchema, faqPageSchema, orgSchema } from '@utils/schema';
-import { HOME_FAQ, CHART_FAQ } from '@content/data/editorial';
+import { HOME_FAQ, CHART_FAQ, TTC_FAQ } from '@content/data/editorial';
+import { IVF_STRINGS, IVF_FAQ, BACKTEST_STRINGS, BACKTEST_FAQ, CALENDAR_STRINGS, CAL2027_FAQ, CAL2028_FAQ, TTC_STRINGS, CUSP_STRINGS, CUSP_FAQ } from '@i18n/tools';
+import { toolStrings } from '@i18n/tools.locales';
 
 export function getStaticPaths() {
   const LOCALE_TOOLS = [
@@ -30,6 +38,13 @@ export function getStaticPaths() {
     'mayan-gender-predictor',
     'due-date-calculator',
     'gender-quiz',
+    /* Wave-1 + Wave-2 specialized spokes — full locale parity routes. */
+    'cusp-conception-date-checker',
+    'chinese-gender-planner-ttc',
+    'ivf-chinese-gender-predictor',
+    'test-past-pregnancies-calculator',
+    'chinese-gender-calendar-2027',
+    'chinese-gender-calendar-2028',
     'blog',
   ];
   return SUPPORTED_LOCALES.filter((l) => l !== 'en').flatMap((locale: string) => [
@@ -89,6 +104,54 @@ const pageProps = {
   blog: { title: t.meta.blogTitle, description: t.meta.blogDesc, schema: [] },
 };
 
+/* Wave-1/Wave-2 spoke meta + schema, localized via per-locale tool strips. */
+const ivfS = toolStrings(IVF_STRINGS, locale, 'ivf');
+const backtestS = toolStrings(BACKTEST_STRINGS, locale, 'backtest');
+const calS = toolStrings(CALENDAR_STRINGS, locale, 'calendar');
+const ttcS = toolStrings(TTC_STRINGS, locale, 'ttc');
+const cuspS = toolStrings(CUSP_STRINGS, locale, 'cusp');
+const fillYear = (s: string, year: number) => s.replaceAll('{year}', String(year));
+
+pageProps['ivf-chinese-gender-predictor'] = {
+  title: ivfS.metaTitle,
+  description: ivfS.metaDesc,
+  schema: [webAppSchema({ name: 'IVF & FET Chinese Gender Predictor', path: 'ivf-chinese-gender-predictor/', description: ivfS.metaDesc }), faqPageSchema(IVF_FAQ)],
+};
+pageProps['test-past-pregnancies-calculator'] = {
+  title: backtestS.metaTitle,
+  description: backtestS.metaDesc,
+  schema: [webAppSchema({ name: 'Past Pregnancies Accuracy Tester', path: 'test-past-pregnancies-calculator/', description: backtestS.metaDesc }), faqPageSchema(BACKTEST_FAQ)],
+};
+pageProps['chinese-gender-calendar-2027'] = {
+  title: fillYear(calS.metaTitle, 2027),
+  description: fillYear(calS.metaDesc, 2027),
+  schema: [webAppSchema({ name: '2027 Chinese Gender Calendar', path: 'chinese-gender-calendar-2027/', description: fillYear(calS.metaDesc, 2027) }), faqPageSchema(CAL2027_FAQ)],
+};
+pageProps['chinese-gender-calendar-2028'] = {
+  title: fillYear(calS.metaTitle, 2028),
+  description: fillYear(calS.metaDesc, 2028),
+  schema: [webAppSchema({ name: '2028 Chinese Gender Calendar', path: 'chinese-gender-calendar-2028/', description: fillYear(calS.metaDesc, 2028) }), faqPageSchema(CAL2028_FAQ)],
+};
+pageProps['chinese-gender-planner-ttc'] = {
+  title: ttcS.metaTitle,
+  description: ttcS.metaDesc,
+  schema: [webAppSchema({ name: 'Chinese Gender Planner (TTC)', path: 'chinese-gender-planner-ttc/', description: ttcS.metaDesc }), faqPageSchema(TTC_FAQ)],
+};
+pageProps['cusp-conception-date-checker'] = {
+  title: cuspS.metaTitle,
+  description: cuspS.metaDesc,
+  schema: [webAppSchema({ name: 'Cusp Conception Date Chinese Baby Predictor', path: 'cusp-conception-date-checker/', description: cuspS.metaDesc }), faqPageSchema(CUSP_FAQ)],
+};
+
+const SPOKE_CRUMBS: Record<string, string> = {
+  'cusp-conception-date-checker': cuspS.metaTitle,
+  'chinese-gender-planner-ttc': t.nav.ttc ?? 'TTC Planner',
+  'ivf-chinese-gender-predictor': 'IVF & FET Gender Predictor',
+  'test-past-pregnancies-calculator': 'Past Pregnancies Accuracy Tester',
+  'chinese-gender-calendar-2027': '2027 Chinese Gender Calendar',
+  'chinese-gender-calendar-2028': '2028 Chinese Gender Calendar',
+};
+
 const NAV_KEY_BY_SLUG: Record<string, string> = {
   'chinese-gender-predictor': 'predictor',
   'chinese-gender-chart': 'chart',
@@ -101,7 +164,9 @@ const NAV_KEY_BY_SLUG: Record<string, string> = {
 };
 
 const current = !tool ? pageProps.home : pageProps[tool];
-const crumbs = tool ? [{ label: t.nav[NAV_KEY_BY_SLUG[tool] ?? 'blog'] }] : [];
+const crumbs = tool
+  ? [{ label: SPOKE_CRUMBS[tool] ?? t.nav[NAV_KEY_BY_SLUG[tool] ?? 'blog'] ?? tool }]
+  : [];
 ---
 
 <BaseLayout
@@ -166,4 +231,11 @@ const crumbs = tool ? [{ label: t.nav[NAV_KEY_BY_SLUG[tool] ?? 'blog'] }] : [];
       subtitle={t.meta.blogDesc}
     />
   )}
+
+  {tool === 'ivf-chinese-gender-predictor' && <IvfPredictorBody locale={locale} />}
+  {tool === 'test-past-pregnancies-calculator' && <PastKidsBacktesterBody locale={locale} />}
+  {tool === 'chinese-gender-calendar-2027' && <Calendar2027Body locale={locale} />}
+  {tool === 'chinese-gender-calendar-2028' && <Calendar2028Body locale={locale} />}
+  {tool === 'cusp-conception-date-checker' && <CuspCheckerBody locale={locale} />}
+  {tool === 'chinese-gender-planner-ttc' && <TtcPlannerBody t={t} locale={locale} />}
 </BaseLayout>

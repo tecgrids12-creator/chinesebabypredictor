@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import CuspCheckerBody from '@components/astro/pages/CuspCheckerBody.astro';
+import { CUSP_STRINGS, CUSP_FAQ } from '@i18n/tools';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+
+const locale = 'en';
+const title = 'Borderline & Cusp Conception Date Chinese Baby Predictor';
+const description = CUSP_STRINGS.metaDesc;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath="cusp-conception-date-checker/"
+  locale={locale}
+  crumbs={[{ label: 'Cusp Conception Date Checker' }]}
+  schema={[
+    webAppSchema({
+      name: 'Cusp Conception Date Chinese Baby Predictor',
+      path: 'cusp-conception-date-checker/',
+      description,
+    }),
+    faqPageSchema(CUSP_FAQ),
+  ]}
+>
+  <CuspCheckerBody locale={locale} />
+</BaseLayout>

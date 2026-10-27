@@ -32,5 +32,15 @@ export const dic: PartialDictionary = {
     hub7Desc: 'Rok Ognistej Kozy: pełna mapa miesięcy księżycowych, pułapka przekroju chińskiego Nowego Roku (6 lutego) i macierz roczników urodzenia.',
     hub8Label: 'Chiński kalendarz płci na 2028',
     hub8Desc: 'Edycja z przestępnym piątym miesiącem: wszystkie 13 miesięcy księżycowych mapowane z dokładnymi oknami dat.',
+    hub9Label: 'Kalkulator dat kusowych',
+    hub9Desc: 'Poczęcie blisko księżycowej granicy? Czyta każdy dzień płodnego okna 5–7 dni i wskazuje dokładny dzień odwrócenia.',
+  },
+  nav: {
+    toolsMenu: 'Predyktory i narzędzia',
+    menuCore: 'Główne predyktory',
+    menuPlanning: 'Planowanie i specjalistyczne',
+    menuAnnual: 'Kalendarze roczne i quizy',
+    guides: 'Poradniki i nauka',
+    homeCalc: 'Kalkulator główny',
   },
 };

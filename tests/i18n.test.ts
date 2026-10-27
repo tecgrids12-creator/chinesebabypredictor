@@ -42,11 +42,23 @@ describe('routing utilities', () => {
     expect(getDir('sv')).toBe('ltr');
   });
 
-  it('builds 19 hreflang alternates', () => {
+  it('builds 19 hreflang alternates + x-default', () => {
     const alts = alternatePaths('gender-quiz/');
-    expect(alts.length).toBe(19);
+    expect(alts.length).toBe(20); // 19 locales + EN x-default
     const map = Object.fromEntries(alts.map((a) => [a.hreflang, a.href]));
     expect(map.en).toBe('/gender-quiz/');
     expect(map.ar).toBe('/ar/gender-quiz/');
+    expect(map['x-default']).toBe('/gender-quiz/');
+
+    const cuspAlts = alternatePaths('cusp-conception-date-checker/');
+    expect(cuspAlts.length).toBe(20);
+    const cuspMap = Object.fromEntries(cuspAlts.map((a) => [a.hreflang, a.href]));
+    expect(cuspMap.en).toBe('/cusp-conception-date-checker/');
+    expect(cuspMap.es).toBe('/es/cusp-conception-date-checker/');
+
+    const privAlts = alternatePaths('privacy/');
+    expect(privAlts.length).toBe(2);
+    expect(privAlts[0].href).toBe('/privacy/');
+    expect(privAlts[1].href).toBe('/privacy/');
   });
 });

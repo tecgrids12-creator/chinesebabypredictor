@@ -3,7 +3,7 @@
  * SEO head manager: title, description, canonical, OG/Twitter,
  * hreflang alternates and JSON-LD structured data.
  */
-import { SUPPORTED_LOCALES, localizedPath, getLangTag, DEFAULT_LOCALE, type Locale } from '@i18n/utils';
+import { SUPPORTED_LOCALES, localizedPath, alternatePaths, getLangTag, DEFAULT_LOCALE, type Locale } from '@i18n/utils';
 
 export interface Props {
   title: string;
@@ -32,16 +32,11 @@ const canonicalPath = isDefault ? enPath : `${pageLocale}/${enPath}`;
 const canonical = new URL(canonicalPath, SITE).href;
 const ogImage = image ?? new URL('/og-default.png', SITE).href;
 
-// hreflang list: explicit alternates when provided (locale pages build the
-// full per-locale list); otherwise en + x-default pointing at this enPath.
-const selfUrl = new URL(enPath === '' ? '/' : `/${enPath}`, SITE).href;
-const fallbackAlternates = [
-  { hreflang: 'en', href: selfUrl },
-  { hreflang: 'x-default', href: selfUrl },
-];
+// hreflang list: explicit alternates when provided; otherwise full bidirectional
+// alternates generated via alternatePaths(enPath) (with EN_ONLY_PATH & blog awareness).
 const hreflangs = Astro.props.alternates && Astro.props.alternates.length > 0
   ? Astro.props.alternates
-  : fallbackAlternates;
+  : alternatePaths(enPath);
 
 const jsonLd = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 ---

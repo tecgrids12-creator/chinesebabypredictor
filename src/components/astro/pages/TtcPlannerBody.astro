@@ -4,40 +4,15 @@ import TtcPlanner from '@components/calculators/TtcPlanner.tsx';
 import FaqAccordion from '@theme/components/FaqAccordion.astro';
 import Breadcrumbs from '@theme/components/Breadcrumbs.astro';
 import type { Dictionary } from '@i18n/translations';
+import { TTC_STRINGS } from '@i18n/tools';
+import { toolStrings } from '@i18n/tools.locales';
 import { TTC_FAQ } from '@content/data/editorial';
+import { getDictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
 
-interface Props { t: Dictionary; }
-const { t } = Astro.props;
-
-const strings = {
-  dobLabel: 'Mother’s date of birth',
-  dobHint: 'Pick a date to see your live lunar age (虚岁) instantly.',
-  ageNow: 'Lunar age today',
-  ageInYear: 'age you’ll carry',
-  wantLabel: 'Desired baby gender',
-  boyLabel: '💙 Baby Boy',
-  girlLabel: '💖 Baby Girl',
-  bothLabel: '🌟 Overview',
-  yearLabel: 'Planning horizon',
-  compute: 'Show My Windows',
-  headline: 'Conception windows for',
-  optimalBoy: 'BOY MONTH · FOLKLORE',
-  optimalGirl: 'GIRL MONTH · FOLKLORE',
-  lunarMonth: 'Lunar Month',
-  lunarAgeLabel: 'Lunar age',
-  windowLabel: 'Window',
-  leapFirstHalf: 'leap · 1st half',
-  leapSecondHalf: 'leap · 2nd half',
-  skipLabel: 'try another month',
-  none: 'No windows calculated yet.',
-  newLunarYear: '老虎',
-  save: 'Save My Planning Calendar',
-  saved: 'CALENDAR SAVED!',
-  print: 'Print',
-  footnote: '',
-  invalid: 'Please pick the mother’s date of birth first.',
-  matrixNote: 'Authentic 1900–2100 lunisolar tables · Qing Palace 28×12 chart (lunar ages 18–45) · leap months (Runyue) follow the traditional half-month rule: days 1–15 → month N, days 16+ → month N+1.',
-};
+interface Props { t: Dictionary; locale?: Locale; }
+const { t, locale = 'en' } = Astro.props;
+const S = toolStrings(TTC_STRINGS, locale, 'ttc');
 import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
 ---
 
@@ -47,12 +22,16 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
     <div class="reveal">
       <p class="chip mb-4"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>Trying to Conceive · 2026–2028 planner</p>
       <h1 id="ttc-hero-title" class="font-display pt-2 text-[2.4rem] font-extrabold leading-[1.12] tracking-tight text-plum-900 sm:text-5xl">
-        The Chinese Gender Planner <span class="inline-block bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text pb-1 text-transparent">for TTC Parents</span>
+        {locale === 'en' ? (
+          <>The Chinese Gender Planner <span class="inline-block bg-gradient-to-r from-girl-500 via-girl-400 to-boy-500 bg-clip-text pb-1 text-transparent">for TTC Parents</span></>
+        ) : (
+          <Fragment set:html={S.h1} />
+        )}
       </h1>
       <p class="mt-5 max-w-xl text-lg leading-relaxed text-plum-600">
-        Pick your birthdate and the gender you're hoping for — the ancient lunar chart
-        returns <strong>exact conception windows</strong> with dates, lunar months and your
-        traditional lunar age for every month of 2026, 2027 and 2028.
+        {locale === 'en'
+          ? <>Pick your birthdate and the gender you're hoping for — the ancient lunar chart returns <strong>exact conception windows</strong> with dates, lunar months and your traditional lunar age for every month of 2026, 2027 and 2028.</>
+          : <Fragment set:html={S.lead} />}
       </p>
       <div class="mt-6 flex flex-wrap gap-2">
         <span class="chip">✅ 100% free &amp; instant</span>
@@ -60,7 +39,7 @@ import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
         <span class="chip">💙💖 Boy / Girl overview</span>
       </div>
     </div>
-    <div class="min-h-[480px]"><TtcPlanner client:idle strings={strings} /></div>
+    <div class="min-h-[480px]"><TtcPlanner client:idle strings={S} locale={locale} /></div>
   </section>
   <GeoLeadLinks />
 

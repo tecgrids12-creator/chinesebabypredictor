@@ -32,5 +32,15 @@ export const dic: PartialDictionary = {
     hub7Desc: 'Tahun Kambing Api: peta lengkap bulan qamari, jebakan persilangan Rok Baru Imlek 6 Februari, dan matriks tahun lahir.',
     hub8Label: 'Kalender Cina Jenis Kelamin 2028',
     hub8Desc: 'Edisi bulan kelima kabisat: seluruh 13 bulan qamari dipetakan dengan rentang tanggal yang tepat.',
+    hub9Label: 'Pemeriksa tanggal cusp',
+    hub9Desc: 'Pembuahan dekat batas qamari? Membaca setiap hari jendela subur 5–7 hari dan menunjukkan hari pembalikan yang persis.',
+  },
+  nav: {
+    toolsMenu: 'Prediktor dan alat',
+    menuCore: 'Prediktor utama',
+    menuPlanning: 'Perencanaan dan khusus',
+    menuAnnual: 'Kalender tahunan dan kuis',
+    guides: 'Panduan dan sains',
+    homeCalc: 'Kalkulator utama',
   },
 };

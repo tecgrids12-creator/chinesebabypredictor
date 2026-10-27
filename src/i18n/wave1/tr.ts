@@ -32,5 +32,15 @@ export const dic: PartialDictionary = {
     hub7Desc: 'Ateş Keçisi Yılı: tam ay ayı haritası, 6 Şubat Çin Yeni Yılı geçiş tuzağı ve doğum yılı matrisi.',
     hub8Label: '2028 Çin Cinsiyet Takvimi',
     hub8Desc: 'Artık 5. ay baskısı: tamamı 13 ay ayı, kesin tarih pencereleriyle haritalandı.',
+    hub9Label: 'Sınır (cusp) tarih kontrolcüsü',
+    hub9Desc: 'Tohumlanma ay sınırına yakın mı? 5–7 günlük doğurgan pencerenin her gününü okur, tam dönüş gününü gösterir.',
+  },
+  nav: {
+    toolsMenu: 'Tahmin araçları',
+    menuCore: 'Ana tahminciler',
+    menuPlanning: 'Planlama ve özel araçlar',
+    menuAnnual: 'Yıllık takvimler ve testler',
+    guides: 'Kılavuzlar ve bilim',
+    homeCalc: 'Ana hesaplayıcı',
   },
 };
