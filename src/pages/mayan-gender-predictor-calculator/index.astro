@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import MayanDualBody from '@components/astro/pages/MayanDualBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+import { MAYAN_DUAL_STRINGS, MAYAN_DUAL_FAQ } from '@i18n/tools';
+
+const locale = 'en';
+const t = getDictionary(locale);
+
+const title = MAYAN_DUAL_STRINGS.metaTitle;
+const description = MAYAN_DUAL_STRINGS.metaDesc;
+const enPath = 'mayan-gender-predictor-calculator/';
+
+const schema = [
+  webAppSchema({
+    name: 'Mayan vs Chinese Gender Predictor Dual Calculator',
+    path: enPath,
+    description,
+  }),
+  faqPageSchema(MAYAN_DUAL_FAQ),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath={enPath}
+  locale={locale}
+  crumbs={[{ label: 'Mayan vs Chinese Predictor' }]}
+  alternates={alternatePaths(enPath)}
+  schema={schema}
+>
+  <MayanDualBody locale={locale} />
+</BaseLayout>

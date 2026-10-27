@@ -1,0 +1,160 @@
+---
+/**
+ * Wave-3 spoke page body — Mayan vs. Chinese Gender Dual Calculator.
+ * Side-by-side ancient folklore comparisons, dual interactive predictor,
+ * mathematical parity vs. lunisolar matrix breakdown, and clinical genetics demarcation.
+ */
+import MayanDualPredictor from '@components/calculators/MayanDualPredictor.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
+import { MAYAN_DUAL_STRINGS, MAYAN_DUAL_FAQ } from '@i18n/tools';
+import { toolStrings } from '@i18n/tools.locales';
+import { getDictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { locale?: Locale; }
+const { locale = 'en' } = Astro.props;
+const t = getDictionary(locale);
+const S = toolStrings(MAYAN_DUAL_STRINGS, locale, 'mayanDual');
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.1fr]">
+    <div>
+      <p class="chip mb-4">
+        <span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-red-500 to-amber-500"></span>
+        Ancient civilizational showdown · China vs. Maya
+      </p>
+      <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
+        Mayan vs. Chinese Gender Predictor: <span class="bg-gradient-to-r from-red-600 via-girl-500 to-amber-600 bg-clip-text text-transparent">Dual Ancient Calculator</span>
+      </h1>
+      <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, #dc2626, #d97706); box-shadow: 0 4px 10px -3px rgba(220,38,38,.45);"></span>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-plum-600" set:html={S.lead} />
+
+      {/* SEO / GEO link equity funnel within first 100 words */}
+      <GeoLeadLinks />
+
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-red-500"></span>Qing Palace 28×12 Matrix</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-amber-500"></span>Mayan Parity Math</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-purple-500"></span>Synergy vs. Split Detection</span>
+      </div>
+
+      {/* Clinical & Scientific Demarcation Card */}
+      <div class="mt-8 rounded-3xl p-5" style="border: 1px solid transparent; background: linear-gradient(rgba(253,242,248,.65), rgba(253,242,248,.65)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(217,119,6,.3)) border-box;">
+        <p class="font-display font-bold text-plum-800">🔬 Medical &amp; Clinical Demarcation Notice</p>
+        <p class="mt-1.5 text-xs sm:text-sm leading-relaxed text-plum-600">
+          Biological sex is determined strictly at the moment of fertilization by whether the sperm cell delivers an
+          <strong>X chromosome</strong> (female, XX) or a <strong>Y chromosome</strong> (male, XY). A comprehensive
+          peer-reviewed epidemiological study of <strong>2.8 million Swedish births</strong> published by Villamor et al. (2010)
+          demonstrated conclusively that ancient calendar prediction methods match a random <strong>50% coin flip</strong>.
+          Neither chart possesses clinical predictive accuracy. For verified prenatal sex assessment, consult your OB/GYN regarding
+          <a href="https://medlineplus.gov/genetics/understanding/testing/nipt/" rel="nofollow noopener noreferrer" target="_blank" class="font-semibold underline decoration-girl-400 hover:text-plum-900">MedlinePlus NIPT screening</a>
+          or the <a href="https://www.acog.org/womens-health/faqs/routine-tests-during-pregnancy" rel="nofollow noopener noreferrer" target="_blank" class="font-semibold underline decoration-girl-400 hover:text-plum-900">ACOG guidelines for mid-pregnancy ultrasound</a>.
+        </p>
+      </div>
+    </div>
+
+    <div class="lg:sticky lg:top-24 min-h-[520px]">
+      <MayanDualPredictor client:idle strings={S} />
+    </div>
+  </div>
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom max-w-4xl">
+      <h2>How the Mayan Parity Engine Works vs. the Chinese Lunisolar Matrix</h2>
+      <p>
+        While modern folklore frequently groups ancient baby predictors together, the <strong>Ancient Mayan</strong> and
+        <strong>Imperial Chinese</strong> methods originated thousands of miles apart and operated on entirely different
+        cosmological, mathematical, and calendrical systems:
+      </p>
+      <ul>
+        <li>
+          <strong>The Mayan Parity System:</strong> The Maya civilization of Mesoamerica was renowned for advanced mathematical
+          vigesimal (base-20) arithmetic and the sacred 260-day <em>Tzolk’in</em> calendar. The popular gender folklore derived from
+          their traditions uses a modular parity calculation: take the mother's solar age at conception and the Gregorian conception
+          month. If both numbers share the same parity (both even or both odd), folklore predicts a <strong>Girl</strong>. If one is even
+          and the other is odd (mixed parity), folklore predicts a <strong>Boy</strong>.
+        </li>
+        <li>
+          <strong>The Chinese Lunisolar System:</strong> Originating from the Qing Dynasty imperial court, the Chinese gender chart
+          relies on an astronomical lunisolar calendar. It measures the mother's <em>Xūsuì</em> (virtual lunar age, where conception
+          in the womb counts as year one, incrementing each Chinese New Year) against the astronomical lunar month of conception,
+          reading a fixed 28-row by 12-column matrix preserved in Beijing archives.
+        </li>
+      </ul>
+
+      <h2>Why Ancient Cultures Disagree on ~50% of Dates (Folklore Split)</h2>
+      <p>
+        Because the Mayan calculation uses Western solar calendar years and Gregorian months, while the Chinese chart uses
+        astronomical lunisolar months and Chinese New Year cutoffs, the two systems track entirely divergent time cycles.
+        Around 50% of all conception dates yield a <strong>Folklore Split</strong> (one system predicts Boy while the other predicts Girl).
+        Neither system is "broken" when they disagree—they simply measure unrelated arithmetic patterns.
+      </p>
+
+      <h2>Ancient Civilizational Comparison: China vs. Maya</h2>
+      <div class="overflow-x-auto rounded-3xl bg-white/70 shadow-soft ring-1 ring-cream-200">
+        <table class="w-full min-w-[680px] border-collapse text-left text-sm">
+          <caption class="sr-only">Detailed comparison of Chinese vs Mayan baby gender predictors</caption>
+          <thead>
+            <tr class="bg-plum-800 text-white">
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Feature</th>
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">🇨🇳 Ancient Chinese Predictor</th>
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">🏺 Ancient Mayan Predictor</th>
+            </tr>
+          </thead>
+          <tbody class="text-plum-700">
+            <tr class="border-t border-cream-200 bg-red-50/30">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Historical Origin</th>
+              <td class="px-4 py-3">Qing Dynasty royal tomb / imperial palace (c. 1644–1912 CE)</td>
+              <td class="px-4 py-3">Pre-Columbian Mesoamerican civilization (c. 2000 BCE–1500 CE)</td>
+            </tr>
+            <tr class="border-t border-cream-200">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Calendar Baseline</th>
+              <td class="px-4 py-3">Chinese lunisolar calendar (astronomical new moons + leap months)</td>
+              <td class="px-4 py-3">Gregorian/solar months with Tzolk’in-inspired parity arithmetic</td>
+            </tr>
+            <tr class="border-t border-cream-200 bg-amber-50/30">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Mother's Age Formula</th>
+              <td class="px-4 py-3">Traditional Lunar Age (<em>Xūsuì</em>: birth year to conception year + 1)</td>
+              <td class="px-4 py-3">Western chronological age at conception (completed solar years)</td>
+            </tr>
+            <tr class="border-t border-cream-200">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Mathematical Logic</th>
+              <td class="px-4 py-3">Empirical 28×12 lookup matrix (ages 18–45 × months 1–12)</td>
+              <td class="px-4 py-3">Binary parity: even/even or odd/odd = Girl; mixed = Boy</td>
+            </tr>
+            <tr class="border-t border-cream-200 bg-red-50/30">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Scientific Accuracy</th>
+              <td class="px-4 py-3">~50% (equivalent to a coin toss, Swedish study 2010)</td>
+              <td class="px-4 py-3">~50% (mathematical parity has no biological mechanism)</td>
+            </tr>
+            <tr class="border-t border-cream-200">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Gold-Standard Clinical Test</th>
+              <td class="px-4 py-3" colspan="2">
+                NIPT (cell-free fetal DNA blood test, 99%+ accuracy from 10 weeks) or 18–20 week anatomy ultrasound
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Double Folklore Synergy: What Happens When Both Agree?</h2>
+      <p>
+        When both the Chinese and Mayan engines calculate the same sex, parents often ask whether the dual prediction
+        increases real-world probability. Mathematically and biologically, it does not: because neither folklore method has
+        any causal link to chromosomal fertilization, two independent 50% random variables still yield a 50% likelihood.
+        However, in the world of baby shower games, nursery theme planning, and lighthearted anticipation, a
+        <strong>Double Synergy verdict</strong> serves as a beloved historical curiosity!
+      </p>
+    </div>
+  </section>
+
+  <section class="section-shell mt-14" aria-labelledby="mayan-dual-faq">
+    <h2 id="mayan-dual-faq" class="section-title text-center">Frequently Asked Questions: Mayan vs. Chinese Gender Prediction</h2>
+    <div class="mt-6"><FaqAccordion items={MAYAN_DUAL_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="mayan-gender-predictor-calculator/" />
+</div>

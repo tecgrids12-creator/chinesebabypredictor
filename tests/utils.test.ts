@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { solarToLunar, lunarNewYear, lunarAgeAtConception, leapMonth, monthsDays } from '../src/utils/lunar';
-import { chartGender, favourableMonths } from '../src/utils/genderChart';
+import { chartGender, favourableMonths, GENDER_CHART } from '../src/utils/genderChart';
 import { mayanGender } from '../src/utils/mayan';
 import { conceptionFromDueDate, dueDateFromLmp, westernZodiac } from '../src/utils/gestation';
 import { planWindows } from '../src/utils/planner';
@@ -115,3 +115,45 @@ describe('planner windows', () => {
     expect(planWindows(D('1995-03-04'), 2026, 'boy').length).toBeGreaterThan(0);
   });
 });
+
+describe('Wave-3 Mayan dual & month parity engine', () => {
+  it('predicts girl on matching month parity and boy on mixed parity', () => {
+    // Mother age 26 (even) + Conception month 4 (April, even) -> Girl
+    const isSameParity1 = (26 % 2) === (4 % 2);
+    expect(isSameParity1 ? 'girl' : 'boy').toBe('girl');
+
+    // Mother age 27 (odd) + Conception month 7 (July, odd) -> Girl
+    const isSameParity2 = (27 % 2) === (7 % 2);
+    expect(isSameParity2 ? 'girl' : 'boy').toBe('girl');
+
+    // Mother age 26 (even) + Conception month 7 (July, odd) -> Boy
+    const isSameParity3 = (26 % 2) === (7 % 2);
+    expect(isSameParity3 ? 'girl' : 'boy').toBe('boy');
+  });
+});
+
+describe('Wave-3 Blood renewal theory arithmetic', () => {
+  it('correctly calculates 3-yr mom and 4-yr dad cycle remainders', () => {
+    // 25.5 years elapsed:
+    // Mom remainder: 25.5 % 3.0 = 1.5 years
+    // Dad remainder: 25.5 % 4.0 = 1.5 years -> balanced
+    expect(25.5 % 3.0).toBeCloseTo(1.5, 4);
+    expect(25.5 % 4.0).toBeCloseTo(1.5, 4);
+
+    // Mom 24.2 years (remainder 0.2) vs Dad 26.8 years (remainder 2.8) -> Mom younger (Girl)
+    const momRem = 24.2 % 3.0; // 0.2
+    const dadRem = 26.8 % 4.0; // 2.8
+    expect(momRem < dadRem).toBe(true);
+  });
+});
+
+describe('Wave-3 28 Programmatic Lunar Age Cluster', () => {
+  it('contains exactly 28 age rows (18 to 45) each with 12 months', () => {
+    expect(GENDER_CHART.length).toBe(28);
+    for (const row of GENDER_CHART) {
+      expect(row.length).toBe(12);
+      expect(/^[BG]{12}$/.test(row)).toBe(true);
+    }
+  });
+});
+

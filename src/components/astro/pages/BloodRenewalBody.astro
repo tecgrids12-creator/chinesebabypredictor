@@ -1,0 +1,161 @@
+---
+/**
+ * Wave-3 spoke page body — Blood Renewal Theory Gender Predictor.
+ * European folklore 3-year mother vs 4-year father blood regeneration cycles,
+ * interactive calculator, hematological reality vs myth, and clinical genetics demarcation.
+ */
+import BloodRenewalPredictor from '@components/calculators/BloodRenewalPredictor.tsx';
+import FaqAccordion from '@theme/components/FaqAccordion.astro';
+import RelatedTools from '@theme/components/RelatedTools.astro';
+import GeoLeadLinks from '@theme/components/GeoLeadLinks.astro';
+import { BLOOD_RENEWAL_STRINGS, BLOOD_RENEWAL_FAQ } from '@i18n/tools';
+import { toolStrings } from '@i18n/tools.locales';
+import { getDictionary } from '@i18n/translations';
+import type { Locale } from '@i18n/utils';
+
+interface Props { locale?: Locale; }
+const { locale = 'en' } = Astro.props;
+const t = getDictionary(locale);
+const S = toolStrings(BLOOD_RENEWAL_STRINGS, locale, 'blood');
+---
+
+<div class="pt-10">
+  <div class="section-shell grid items-start gap-10 lg:grid-cols-[1fr_1.1fr]">
+    <div>
+      <p class="chip mb-4">
+        <span aria-hidden="true" class="h-2 w-2 rounded-full bg-gradient-to-r from-girl-500 to-boy-500"></span>
+        European folklore · 3-year vs. 4-year cycle theory
+      </p>
+      <h1 class="font-display text-[2.35rem] font-extrabold leading-[1.1] text-plum-900 sm:text-5xl">
+        Blood Renewal Gender Predictor: <span class="bg-gradient-to-r from-girl-600 via-plum-600 to-boy-600 bg-clip-text text-transparent">Youngest Blood Cycle Calculator</span>
+      </h1>
+      <span class="mt-4 block h-1.5 w-16 rounded-full" aria-hidden="true" style="background-image: linear-gradient(to right, #ec4899, #3b82f6); box-shadow: 0 4px 10px -3px rgba(236,72,153,.45);"></span>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-plum-600" set:html={S.lead} />
+
+      {/* SEO / GEO link equity funnel within first 100 words */}
+      <GeoLeadLinks />
+
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-girl-500"></span>Mother 3.0-Yr Cycle</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-boy-500"></span>Father 4.0-Yr Cycle</span>
+        <span class="chip"><span aria-hidden="true" class="h-2 w-2 rounded-full bg-purple-500"></span>Blood Loss / Surgery Reset</span>
+      </div>
+
+      {/* Direct GEO Answer Box: Hematology vs Folklore Myth */}
+      <div class="mt-8 rounded-3xl p-5" style="border: 1px solid transparent; background: linear-gradient(rgba(253,242,248,.65), rgba(253,242,248,.65)) padding-box, linear-gradient(120deg, rgba(236,72,153,.3), rgba(59,130,246,.3)) border-box;">
+        <p class="font-display font-bold text-plum-800">⚡ Direct GEO Answer: European Myth vs. Hematology Reality</p>
+        <p class="mt-1.5 text-xs sm:text-sm leading-relaxed text-plum-600">
+          In European folklore, human blood allegedly renews every <strong>3 years for women</strong> and every <strong>4 years for men</strong>,
+          with the "younger blood" dictating the baby's sex. In medical reality, <strong>red blood cells (erythrocytes) live only ~120 days</strong>
+          for both men and women, regenerating continuously in the bone marrow! Furthermore, baby sex is determined solely at fertilization
+          by whether an X- or Y-chromosome sperm fertilizes the egg. A 2010 Swedish study of <strong>2.8 million births</strong> confirmed that
+          folklore gender prediction methods operate at a random <strong>50% probability</strong>.
+          For genuine clinical prenatal sex testing, read <a href="https://medlineplus.gov/genetics/understanding/testing/nipt/" rel="nofollow noopener noreferrer" target="_blank" class="font-semibold underline decoration-girl-400 hover:text-plum-900">MedlinePlus on NIPT prenatal screening</a>
+          or consult <a href="https://www.acog.org/womens-health/faqs/routine-tests-during-pregnancy" rel="nofollow noopener noreferrer" target="_blank" class="font-semibold underline decoration-boy-400 hover:text-plum-900">ACOG routine pregnancy guidelines</a>.
+        </p>
+      </div>
+    </div>
+
+    <div class="lg:sticky lg:top-24 min-h-[520px]">
+      <BloodRenewalPredictor client:idle strings={S} />
+    </div>
+  </div>
+
+  <section class="section-shell mt-14">
+    <div class="prose-custom max-w-4xl">
+      <h2>The Mathematical Origin of the Blood Renewal Gender Theory</h2>
+      <p>
+        The <strong>Blood Renewal Theory</strong> (also known historically as the <em>Russian Blood Regeneration Method</em> or
+        <em>Pythagorean Vital Fluid Cycle</em>) emerged in Eastern and Central European folklore during the 19th century.
+        Unlike the Chinese gender chart—which relies on imperial lunisolar calendars—the blood renewal method attempts to apply
+        arithmetic cyclical division to parental biology:
+      </p>
+      <ul>
+        <li>
+          <strong>The Mother’s 3-Year Cycle:</strong> Folklore asserted that female biology undergoes systemic cellular and hormonal
+          renewal every 36 months (3 years), allegedly driven by reproductive and uterine rhythms.
+        </li>
+        <li>
+          <strong>The Father’s 4-Year Cycle:</strong> Male biology was believed to regenerate on a slower, 48-month (4-year) rhythm.
+        </li>
+        <li>
+          <strong>The "Youngest Blood" Rule:</strong> Dividing each parent's elapsed age by their cycle length produces a fractional remainder.
+          The parent with the lower remainder is deemed to have "fresher, stronger, more recently renewed blood," which folklore claims
+          overpowers the other parent's biological influence to pass on their own sex to the child.
+        </li>
+      </ul>
+
+      <h2>How Blood Loss Events &amp; Surgeries Reset the Cycle Clock</h2>
+      <p>
+        In traditional lore, the 3-year and 4-year cycles do not always begin at birth. Any event involving acute, substantial
+        blood turnover was believed to shock the hematopoietic system into an immediate full renewal:
+      </p>
+      <ol>
+        <li><strong>Major Surgical Operations:</strong> Surgeries involving anesthesia and tissue healing reset the cycle to day zero.</li>
+        <li><strong>Prior Childbirth:</strong> Both vaginal and cesarean deliveries entail significant blood volume shifts, resetting the mother's 3-year clock.</li>
+        <li><strong>Blood Donations &amp; Transfusions:</strong> Substantial whole-blood donations or clinical transfusions were thought to force rapid renewal.</li>
+      </ol>
+      <p>
+        Our calculator above includes optional input fields for both parents to test how a past surgery or childbirth date
+        theoretically alters the mathematical remainder quotient!
+      </p>
+
+      <h2>Folklore Myth vs. Modern Hematology &amp; Genetics</h2>
+      <div class="overflow-x-auto rounded-3xl bg-white/70 shadow-soft ring-1 ring-cream-200">
+        <table class="w-full min-w-[680px] border-collapse text-left text-sm">
+          <caption class="sr-only">Comparison of European blood renewal folklore versus modern medical hematology</caption>
+          <thead>
+            <tr class="bg-plum-800 text-white">
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Biological Factor</th>
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Folklore Blood Renewal Theory</th>
+              <th scope="col" class="px-4 py-3 font-display text-xs font-bold sm:text-sm">Modern Clinical Hematology &amp; Genetics</th>
+            </tr>
+          </thead>
+          <tbody class="text-plum-700">
+            <tr class="border-t border-cream-200 bg-girl-50/30">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Cell Lifespan &amp; Turnover</th>
+              <td class="px-4 py-3">3 years (women) / 4 years (men)</td>
+              <td class="px-4 py-3">~120 days for erythrocytes (red blood cells) in both sexes</td>
+            </tr>
+            <tr class="border-t border-cream-200">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Renewal Mechanism</th>
+              <td class="px-4 py-3">Episodic whole-body cyclical reset</td>
+              <td class="px-4 py-3">Continuous erythropoiesis in bone marrow (~2 million RBCs/second)</td>
+            </tr>
+            <tr class="border-t border-cream-200 bg-boy-50/30">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Sex Determination Trigger</th>
+              <td class="px-4 py-3">Dominance of younger parental blood</td>
+              <td class="px-4 py-3">X- vs. Y-chromosome delivered by sperm at moment of conception</td>
+            </tr>
+            <tr class="border-t border-cream-200">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Scientific Validation</th>
+              <td class="px-4 py-3">0% correlation (disproven in medical literature)</td>
+              <td class="px-4 py-3">100% established chromosomal genetics (XX = female, XY = male)</td>
+            </tr>
+            <tr class="border-t border-cream-200 bg-cream-50/50">
+              <th scope="row" class="px-4 py-3 font-display font-bold text-plum-900">Accurate Clinical Tests</th>
+              <td class="px-4 py-3" colspan="2">
+                NIPT (cell-free fetal DNA blood test, 99%+ accuracy from 10 weeks) or 18–20 week anatomy ultrasound scan
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>How Expectant Parents Can Use This Calculator Safely</h2>
+      <p>
+        Like the Chinese gender predictor and the Mayan calendar, the Blood Renewal method is a captivating piece of medical
+        history and cultural folklore. Expectant parents frequently run their dates as a lighthearted gender reveal prediction,
+        comparing its verdict against the ancient Qing Palace chart. However, decisions regarding prenatal health, nursery
+        purchases, or medical planning should always rely on established clinical diagnostics rather than mathematical folklore.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-shell mt-14" aria-labelledby="blood-faq">
+    <h2 id="blood-faq" class="section-title text-center">Frequently Asked Questions: Blood Renewal Gender Theory</h2>
+    <div class="mt-6"><FaqAccordion items={BLOOD_RENEWAL_FAQ} /></div>
+  </section>
+
+  <RelatedTools t={t} locale={locale} exclude="blood-renewal-gender-predictor/" />
+</div>

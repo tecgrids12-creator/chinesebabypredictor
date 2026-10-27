@@ -22,11 +22,13 @@ import Calendar2027Body from '@components/astro/pages/Calendar2027Body.astro';
 import Calendar2028Body from '@components/astro/pages/Calendar2028Body.astro';
 import TtcPlannerBody from '@components/astro/pages/TtcPlannerBody.astro';
 import CuspCheckerBody from '@components/astro/pages/CuspCheckerBody.astro';
+import MayanDualBody from '@components/astro/pages/MayanDualBody.astro';
+import BloodRenewalBody from '@components/astro/pages/BloodRenewalBody.astro';
 import { getDictionary } from '@i18n/translations';
 import { SUPPORTED_LOCALES, alternatePaths, type Locale } from '@i18n/utils';
 import { webAppSchema, faqPageSchema, orgSchema } from '@utils/schema';
 import { HOME_FAQ, CHART_FAQ, TTC_FAQ } from '@content/data/editorial';
-import { IVF_STRINGS, IVF_FAQ, BACKTEST_STRINGS, BACKTEST_FAQ, CALENDAR_STRINGS, CAL2027_FAQ, CAL2028_FAQ, TTC_STRINGS, CUSP_STRINGS, CUSP_FAQ } from '@i18n/tools';
+import { IVF_STRINGS, IVF_FAQ, BACKTEST_STRINGS, BACKTEST_FAQ, CALENDAR_STRINGS, CAL2027_FAQ, CAL2028_FAQ, TTC_STRINGS, CUSP_STRINGS, CUSP_FAQ, MAYAN_DUAL_STRINGS, MAYAN_DUAL_FAQ, BLOOD_RENEWAL_STRINGS, BLOOD_RENEWAL_FAQ } from '@i18n/tools';
 import { toolStrings } from '@i18n/tools.locales';
 
 export function getStaticPaths() {
@@ -38,13 +40,15 @@ export function getStaticPaths() {
     'mayan-gender-predictor',
     'due-date-calculator',
     'gender-quiz',
-    /* Wave-1 + Wave-2 specialized spokes — full locale parity routes. */
+    /* Wave-1 + Wave-2 + Wave-3 specialized spokes — full locale parity routes. */
     'cusp-conception-date-checker',
     'chinese-gender-planner-ttc',
     'ivf-chinese-gender-predictor',
     'test-past-pregnancies-calculator',
     'chinese-gender-calendar-2027',
     'chinese-gender-calendar-2028',
+    'mayan-gender-predictor-calculator',
+    'blood-renewal-gender-predictor',
     'blog',
   ];
   return SUPPORTED_LOCALES.filter((l) => l !== 'en').flatMap((locale: string) => [
@@ -110,6 +114,8 @@ const backtestS = toolStrings(BACKTEST_STRINGS, locale, 'backtest');
 const calS = toolStrings(CALENDAR_STRINGS, locale, 'calendar');
 const ttcS = toolStrings(TTC_STRINGS, locale, 'ttc');
 const cuspS = toolStrings(CUSP_STRINGS, locale, 'cusp');
+const mayanS = toolStrings(MAYAN_DUAL_STRINGS, locale, 'mayanDual');
+const bloodS = toolStrings(BLOOD_RENEWAL_STRINGS, locale, 'blood');
 const fillYear = (s: string, year: number) => s.replaceAll('{year}', String(year));
 
 pageProps['ivf-chinese-gender-predictor'] = {
@@ -142,6 +148,16 @@ pageProps['cusp-conception-date-checker'] = {
   description: cuspS.metaDesc,
   schema: [webAppSchema({ name: 'Cusp Conception Date Chinese Baby Predictor', path: 'cusp-conception-date-checker/', description: cuspS.metaDesc }), faqPageSchema(CUSP_FAQ)],
 };
+pageProps['mayan-gender-predictor-calculator'] = {
+  title: mayanS.metaTitle,
+  description: mayanS.metaDesc,
+  schema: [webAppSchema({ name: 'Mayan vs Chinese Gender Predictor Dual Calculator', path: 'mayan-gender-predictor-calculator/', description: mayanS.metaDesc }), faqPageSchema(MAYAN_DUAL_FAQ)],
+};
+pageProps['blood-renewal-gender-predictor'] = {
+  title: bloodS.metaTitle,
+  description: bloodS.metaDesc,
+  schema: [webAppSchema({ name: 'Blood Renewal Gender Predictor', path: 'blood-renewal-gender-predictor/', description: bloodS.metaDesc }), faqPageSchema(BLOOD_RENEWAL_FAQ)],
+};
 
 const SPOKE_CRUMBS: Record<string, string> = {
   'cusp-conception-date-checker': cuspS.metaTitle,
@@ -150,6 +166,8 @@ const SPOKE_CRUMBS: Record<string, string> = {
   'test-past-pregnancies-calculator': 'Past Pregnancies Accuracy Tester',
   'chinese-gender-calendar-2027': '2027 Chinese Gender Calendar',
   'chinese-gender-calendar-2028': '2028 Chinese Gender Calendar',
+  'mayan-gender-predictor-calculator': 'Mayan vs Chinese Predictor',
+  'blood-renewal-gender-predictor': 'Blood Renewal Predictor',
 };
 
 const NAV_KEY_BY_SLUG: Record<string, string> = {
@@ -238,4 +256,6 @@ const crumbs = tool
   {tool === 'chinese-gender-calendar-2028' && <Calendar2028Body locale={locale} />}
   {tool === 'cusp-conception-date-checker' && <CuspCheckerBody locale={locale} />}
   {tool === 'chinese-gender-planner-ttc' && <TtcPlannerBody t={t} locale={locale} />}
+  {tool === 'mayan-gender-predictor-calculator' && <MayanDualBody locale={locale} />}
+  {tool === 'blood-renewal-gender-predictor' && <BloodRenewalBody locale={locale} />}
 </BaseLayout>

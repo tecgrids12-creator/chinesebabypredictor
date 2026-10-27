@@ -73,6 +73,8 @@ export const LOCALIZED_TOOL_SLUGS = [
   'gender-planner',
   'lunar-age-calculator',
   'mayan-gender-predictor',
+  'mayan-gender-predictor-calculator',
+  'blood-renewal-gender-predictor',
   'due-date-calculator',
   'gender-quiz',
   'cusp-conception-date-checker',
@@ -100,15 +102,15 @@ export function localizedPath(path: string, locale: Locale): string {
 }
 
 /**
- * Footer/legal information routes exist only in EN. A localized href to one of
- * these would 404, so they always resolve to the EN canonical URL.
- * Every TOOL page now exists in every locale (Wave-2 locale-parity pass).
+ * Footer/legal information routes and English cluster pages exist only in EN.
+ * A localized href to one of these would 404, so they always resolve to the EN canonical URL.
+ * Every TOOL page now exists in every locale (Wave-2 and Wave-3 locale-parity pass).
  * Blog listings and posts localize ONLY for locales with a translated blog
  * (src/content/blog/<lang>/); every other locale keeps EN blog links so no
  * internal href ever points at a page that is not rendered.
  */
 const EN_ONLY_PATH =
-  /^(about-us|contact-us|sitemap|privacy|terms)\//;
+  /^(about-us|contact-us|sitemap|privacy|terms|lunar-age-\d+)\//;
 
 /** Locales whose blog is fully translated (16 posts under src/content/blog/<lang>/). */
 export const BLOG_FULL_LOCALES: Locale[] = ['es', 'fr', 'nl', 'ru', 'hi', 'it', 'pt', 'pl', 'ar', 'tr', 'id'];

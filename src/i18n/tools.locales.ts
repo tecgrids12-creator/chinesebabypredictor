@@ -8,9 +8,9 @@
  * React island (Astro serialization would null them).
  */
 import type { Locale } from './utils';
-import type { IvfStrings, BacktestStrings, CalendarStrings, CuspStrings, TtcToolStrings } from './tools';
+import type { IvfStrings, BacktestStrings, CalendarStrings, CuspStrings, TtcToolStrings, MayanDualToolStrings, BloodRenewalToolStrings } from './tools';
 
-export type ToolKey = 'cusp' | 'ivf' | 'backtest' | 'calendar' | 'ttc';
+export type ToolKey = 'cusp' | 'ivf' | 'backtest' | 'calendar' | 'ttc' | 'mayanDual' | 'blood';
 
 /** Each strip is checked against its tool's EN string interface. */
 type StripFor<K extends ToolKey> = K extends 'cusp'
@@ -21,7 +21,11 @@ type StripFor<K extends ToolKey> = K extends 'cusp'
       ? Partial<BacktestStrings>
       : K extends 'calendar'
         ? Partial<CalendarStrings>
-        : Partial<TtcToolStrings>;
+        : K extends 'ttc'
+          ? Partial<TtcToolStrings>
+          : K extends 'mayanDual'
+            ? Partial<MayanDualToolStrings>
+            : Partial<BloodRenewalToolStrings>;
 
 const STRIPS: Partial<Record<Locale, { [K in ToolKey]?: StripFor<K> }>> = {
   /* ───────────────── Spanish ───────────────── */

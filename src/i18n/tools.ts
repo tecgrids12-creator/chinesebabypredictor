@@ -445,3 +445,149 @@ export const TTC_STRINGS: TtcToolStrings & Record<string, string> = {
   invalid: 'Please pick the mother’s date of birth first.',
   matrixNote: 'Authentic 1900–2100 lunisolar tables · Qing Palace 28×12 chart (lunar ages 18–45) · leap months (Runyue) follow the traditional half-month rule: days 1–15 → month N, days 16+ → month N+1.',
 };
+
+/* ───────────────────────── Phase 1 · Mayan vs Chinese Dual ───────────────────────── */
+
+export interface MayanDualToolStrings {
+  metaTitle: string; metaDesc: string;
+  h1: string; h1Accent: string; lead: string;
+  motherDobLabel: string;
+  conceptionMethodLabel: string;
+  methodExact: string; methodLmp: string; methodDueDate: string;
+  conceptionDateLabel: string; lmpDateLabel: string; dueDateLabel: string;
+  calculateBtn: string; resetBtn: string;
+  chinaTitle: string; mayaTitle: string;
+  lunarAgeLabel: string; lunarMonthLabel: string;
+  westernAgeLabel: string; gregorianMonthLabel: string; parityLabel: string;
+  agreeBanner: string; splitBanner: string;
+  agreeText: string; splitText: string;
+  evenWord: string; oddWord: string;
+  sameParityRule: string; diffParityRule: string;
+  boyWord: string; girlWord: string;
+  invalidDates: string; futureDateError: string; disclaimer: string;
+}
+
+export const MAYAN_DUAL_STRINGS: MayanDualToolStrings & Record<string, string> = {
+  metaTitle: 'Mayan vs Chinese Gender Predictor: Dual Ancient Calculator & Comparison',
+  metaDesc: 'Compare the Ancient Mayan parity method and the Qing Dynasty Chinese lunar chart side-by-side. See if ancient folklore agrees on boy or girl for your conception dates.',
+  h1: 'Mayan vs. Chinese Gender Predictor',
+  h1Accent: 'Dual Ancient Calculator',
+  lead: 'Compare history’s two most famous folklore baby gender systems side-by-side: the Qing Dynasty Lunisolar Palace chart and the Ancient Mayan parity calendar, with live agreement and split detection.',
+  motherDobLabel: '🎂 Mother’s Date of Birth',
+  conceptionMethodLabel: 'Date Calculation Method',
+  methodExact: 'Conception Date',
+  methodLmp: 'Last Period (LMP)',
+  methodDueDate: 'Due Date',
+  conceptionDateLabel: 'Estimated Conception Date',
+  lmpDateLabel: 'First Day of Last Period (LMP)',
+  dueDateLabel: 'Estimated Baby Due Date',
+  calculateBtn: '🔮 Predict with Both Ancient Systems',
+  resetBtn: '↻ Test Other Dates',
+  chinaTitle: 'Ancient China',
+  mayaTitle: 'Ancient Maya',
+  lunarAgeLabel: 'Mother’s Lunar Age (虚岁)',
+  lunarMonthLabel: 'Conception Lunar Month',
+  westernAgeLabel: 'Western Age at Conception',
+  gregorianMonthLabel: 'Conception Month',
+  parityLabel: 'Parity Combination',
+  agreeBanner: '🌟 ANCIENT CULTURES AGREE: {gender} (DOUBLE FOLKLORE SYNERGY)',
+  splitBanner: '⚔️ FOLKLORE SPLIT: China says {chinese} · Maya says {mayan}',
+  agreeText: 'Both the Chinese lunisolar palace chart and the Mayan mathematical parity system predict {gender}. In ancient folklore, dual civilizational agreement is celebrated as a double harmony sign!',
+  splitText: 'The ancient traditions diverge for your dates: Chinese lunisolar math points to {chinese}, while the Mayan solar parity system indicates {mayan}. Because both systems rely on different calendrical clocks, split verdicts occur in roughly 50% of dates.',
+  evenWord: 'Even',
+  oddWord: 'Odd',
+  sameParityRule: 'Both Even / Both Odd → Girl',
+  diffParityRule: 'One Even + One Odd → Boy',
+  boyWord: 'BOY',
+  girlWord: 'GIRL',
+  invalidDates: 'Please enter valid dates to calculate your predictions.',
+  futureDateError: 'Mother’s birth date must be in the past and before the conception date.',
+  disclaimer: 'For entertainment only. Fetal sex is determined chromosomally by sperm at fertilization (~50% odds) — neither ancient chart has clinical predictive power.',
+};
+
+export const MAYAN_DUAL_FAQ: FaqItem[] = [
+  {
+    q: 'How does the Mayan gender predictor work compared to the Chinese gender chart?',
+    a: 'The Mayan gender system is based on mathematical parity (odd vs. even numbers): compare the mother’s Western age at conception with the Gregorian conception month. If both numbers are even (e.g., 28 and April) or both are odd (e.g., 27 and July), the prediction is a girl. If one is even and one is odd (e.g., 28 and July), it predicts a boy. In contrast, the Chinese gender chart relies on an astronomical lunisolar calendar that converts both dates into Mother’s Lunar Age (虚岁) and the lunar month of conception, reading a 28×12 imperial palace matrix.',
+  },
+  {
+    q: 'Why do the Mayan and Chinese predictors give different results for the same conception date?',
+    a: 'The two ancient civilizations developed entirely independent mathematical and calendrical frameworks. The Maya tracked solar and ceremonial Tzolk’in cycles with simple parity arithmetic, whereas the Chinese court tracked lunisolar new moons, intercalary leap months, and Chinese New Year cutoffs. Because their underlying timing cycles do not align, the two calculators disagree on approximately 50% of conception dates.',
+  },
+  {
+    q: 'What does it mean when both the Mayan and Chinese predictors agree (Ancient Synergy)?',
+    a: 'When both systems produce the same gender verdict, folklore enthusiasts call it "Ancient Cultural Synergy" or a "Double Folklore Lock." While exciting for expectant parents planning gender reveals, statistical studies confirm that double agreement still carries the exact same ~50/50 biological probability as a single chart or a coin toss.',
+  },
+  {
+    q: 'Is there any clinical medical evidence supporting either the Mayan or Chinese baby predictor?',
+    a: 'No. Clinical obstetrics and genetics conclusively prove that baby gender is determined at the instant of fertilization by whether the father’s fertilizing sperm carries an X or Y chromosome. A landmark 2010 Swedish registry study analyzing over 2.8 million births by Villamor et al. demonstrated that Chinese gender chart predictions perform at exactly 50% (chance levels). The only reliable methods to determine fetal sex are clinical: NIPT cell-free fetal DNA blood testing from 10 weeks, or mid-pregnancy ultrasound anatomy scans from 18–20 weeks.',
+  },
+];
+
+/* ───────────────────────── Phase 2 · Blood Renewal Theory ───────────────────────── */
+
+export interface BloodRenewalToolStrings {
+  metaTitle: string; metaDesc: string;
+  h1: string; h1Accent: string; lead: string;
+  momDobLabel: string; dadDobLabel: string;
+  momBloodLossLabel: string; dadBloodLossLabel: string;
+  momBloodLossHint: string; dadBloodLossHint: string;
+  conceptionDateLabel: string;
+  calculateBtn: string; resetBtn: string;
+  momTitle: string; dadTitle: string;
+  verdictGirl: string; verdictBoy: string; verdictBalanced: string;
+  boyWord: string; girlWord: string;
+  cycleLengthMom: string; cycleLengthDad: string;
+  bloodAgeLabel: string; cycleCompletedLabel: string;
+  invalidDates: string; invalidSequence: string; disclaimer: string;
+}
+
+export const BLOOD_RENEWAL_STRINGS: BloodRenewalToolStrings & Record<string, string> = {
+  metaTitle: 'Blood Renewal Gender Predictor: Youngest Blood Cycle Calculator',
+  metaDesc: 'Calculate baby gender using the European blood renewal theory (3-year mother cycle vs 4-year father cycle). Compare blood regeneration ages and discover the hematology facts.',
+  h1: 'Blood Renewal Gender Predictor',
+  h1Accent: 'Youngest Blood Cycle Calculator',
+  lead: 'Explore the traditional European "youngest blood" gender theory: calculate each parent’s cellular regeneration cycle (3 years for women, 4 years for men) at conception, with live progress bars and hematology facts.',
+  momDobLabel: '👩 Mother’s Date of Birth',
+  dadDobLabel: '👨 Father’s Date of Birth',
+  momBloodLossLabel: 'Mother’s Last Major Blood Loss (Optional)',
+  dadBloodLossLabel: 'Father’s Last Major Blood Loss (Optional)',
+  momBloodLossHint: 'Prior childbirth, surgery, or major trauma resets the 3-year cycle in folklore.',
+  dadBloodLossHint: 'Major surgery, donation, or trauma resets the 4-year cycle in folklore.',
+  conceptionDateLabel: 'Estimated Conception Date',
+  calculateBtn: '🩸 Calculate Blood Renewal Ages',
+  resetBtn: '↻ Reset Calculator',
+  momTitle: 'Mother’s 3-Year Cycle',
+  dadTitle: 'Father’s 4-Year Cycle',
+  verdictGirl: '💖 GIRL PREDICTED (Mother’s Blood Is Younger)',
+  verdictBoy: '💙 BOY PREDICTED (Father’s Blood Is Younger)',
+  verdictBalanced: '⚖️ BALANCED EQUAL BLOOD (50/50 RANDOM CHANCE)',
+  boyWord: 'BOY',
+  girlWord: 'GIRL',
+  cycleLengthMom: '3.0 Years Cycle',
+  cycleLengthDad: '4.0 Years Cycle',
+  bloodAgeLabel: 'Blood Regeneration Age at Conception',
+  cycleCompletedLabel: 'Current Cycle Progress',
+  invalidDates: 'Please enter both mother’s DOB, father’s DOB, and conception date.',
+  invalidSequence: 'Conception date must take place after both parents’ birth dates.',
+  disclaimer: 'Folklore theory only. Hematology fact: human red blood cells live ~120 days in both sexes; fetal sex is determined chromosomally by sperm at fertilization.',
+};
+
+export const BLOOD_RENEWAL_FAQ: FaqItem[] = [
+  {
+    q: 'How does the Blood Renewal Gender Theory calculate baby gender?',
+    a: 'According to European folklore dating back centuries, human blood undergoes periodic total renewal: every 3 years for women and every 4 years for men. The theory divides each parent’s age at conception by their cycle length (Mother’s age ÷ 3, Father’s age ÷ 4). The parent with the smaller mathematical remainder has "younger, more renewed blood," which folklore claims dictates the baby’s sex: younger maternal blood predicts a girl, while younger paternal blood predicts a boy.',
+  },
+  {
+    q: 'How do surgeries, blood donations, or prior childbirth affect the calculation?',
+    a: 'In traditional folklore variations, significant blood loss events—such as surgical procedures, blood transfusions, substantial donations, or prior vaginal or cesarean childbirth—are believed to trigger a complete blood renewal prematurely. When such an event occurs, practitioners reset the 3- or 4-year cycle clock to the date of that event rather than using the parent’s original date of birth.',
+  },
+  {
+    q: 'Is there any medical or biological truth to the Blood Renewal theory?',
+    a: 'No. Modern hematology has disproved the 3-year and 4-year cycle myth. Human red blood cells (erythrocytes) have an average lifespan of approximately 120 days (4 months) regardless of sex, continuously synthesized in bone marrow through erythropoiesis. Furthermore, human sex determination is purely chromosomal: it depends entirely on whether an X-bearing or Y-bearing sperm fertilizes the ovum, which is unrelated to parental blood age.',
+  },
+  {
+    q: 'What are the only clinically validated methods to find out my baby’s sex?',
+    a: 'To confirm fetal sex with medical certainty, clinicians utilize non-invasive prenatal testing (NIPT cell-free fetal DNA screening from maternal blood at 10+ weeks, >99% accuracy), mid-trimester ultrasound anatomy evaluation (typically at 18–20 weeks of gestation), or diagnostic genetic testing such as chorionic villus sampling (CVS) or amniocentesis.',
+  },
+];

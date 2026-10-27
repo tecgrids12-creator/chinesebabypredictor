@@ -28,7 +28,7 @@ const H = (p: string) => safeLocalizedPath(p, locale);
 /* Helper to strip any raw HTML entities like &amp; so strings never render entities literally */
 const clean = (s?: string) => (s ? s.replaceAll('&amp;', '&') : '');
 
-/* ── Mega-menu schedule: 3 grouped columns per the Wave-2 brief ── */
+/* ── Mega-menu schedule: 3 grouped columns per the Wave-2 & Wave-3 brief ── */
 const menuSections: Array<{ key: string; heading: string; items: Array<{ icon: string; label: string; desc?: string; href: string; html?: boolean }> }> = [
   {
     key: 'core',
@@ -37,7 +37,8 @@ const menuSections: Array<{ key: string; heading: string; items: Array<{ icon: s
       { icon: '🔮', label: clean(g.geo?.hub1Label) || clean(g.nav.predictor) || 'Chinese Baby Predictor', desc: clean(g.geo?.hub1Desc), href: H('chinese-gender-predictor/'), html: true },
       { icon: '📊', label: clean(g.nav.chart) || 'Gender Chart', desc: clean(g.geo?.hub3Desc), href: H('chinese-gender-chart/'), html: true },
       { icon: '🧮', label: clean(g.nav.lunarAge) || 'Lunar Age', desc: 'Exact 虚岁 converter — born-before-CNY aware', href: H('lunar-age-calculator/') },
-      { icon: '⚖️', label: clean(g.geo?.hub9Label) || 'Cusp Conception Date Checker', desc: clean(g.geo?.hub9Desc) || '5-day fertile window boundary test (NEW)', href: H('cusp-conception-date-checker/'), html: true },
+      { icon: '⚖️', label: clean(g.geo?.hub9Label) || 'Cusp Conception Date Checker', desc: clean(g.geo?.hub9Desc) || '5-day fertile window boundary test', href: H('cusp-conception-date-checker/'), html: true },
+      { icon: '📑', label: 'Ages 18–45 Chart Hub', desc: 'Qing Palace matrix breakdown for ages 18–45', href: H('lunar-age-25/') },
     ],
   },
   {
@@ -50,9 +51,11 @@ const menuSections: Array<{ key: string; heading: string; items: Array<{ icon: s
     ],
   },
   {
-    key: 'annual',
-    heading: clean(g.nav.menuAnnual) || 'Annual Calendars & Quizzes',
+    key: 'folklore',
+    heading: 'Folklore & Calendars',
     items: [
+      { icon: '🏺', label: 'Mayan vs. Chinese Predictor', desc: 'Dual ancient calculator & synergy detector', href: H('mayan-gender-predictor-calculator/') },
+      { icon: '🩸', label: 'Blood Renewal Predictor', desc: '3-yr mom vs 4-yr dad regeneration cycle', href: H('blood-renewal-gender-predictor/') },
       { icon: '🐐', label: clean(g.geo?.hub7Label) || '2027 Fire Goat Calendar', desc: clean(g.geo?.hub7Desc), href: H('chinese-gender-calendar-2027/'), html: true },
       { icon: '🐵', label: clean(g.geo?.hub8Label) || '2028 Earth Monkey Calendar', desc: clean(g.geo?.hub8Desc), href: H('chinese-gender-calendar-2028/'), html: true },
       { icon: '💍', label: clean(g.nav.quiz) || 'Old Wives’ Tales Quiz', desc: '12-clue folklore showdown', href: H('gender-quiz/') },

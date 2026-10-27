@@ -97,13 +97,13 @@ for (const file of pages) {
     }
   }
 
-  // ── cluster hub module ── (7-pillar GEO funnel: Wave-1 + cusp checker)
+  // ── cluster hub module ── (9-pillar GEO funnel: Wave-1 + cusp + Wave-3 lateral tools)
   if (!home) {
     const hub = html.includes('id="cluster-hub"');
-    const HUB_KEYS = ['data-hub="root"','data-hub="ttc"','data-hub="ivf"','data-hub="backtest"','data-hub="c2027"','data-hub="c2028"','data-hub="cusp"'];
-    const seven = hub && HUB_KEYS.every((k) => html.includes(k));
+    const HUB_KEYS = ['data-hub="root"','data-hub="ttc"','data-hub="ivf"','data-hub="backtest"','data-hub="c2027"','data-hub="c2028"','data-hub="cusp"','data-hub="mayan"','data-hub="blood"'];
+    const nine = hub && HUB_KEYS.every((k) => html.includes(k));
     if (!hub) failures.push(`${page}: cluster hub missing`);
-    else if (!seven) failures.push(`${page}: cluster hub incomplete (needs root/ttc/ivf/backtest/c2027/c2028/cusp cards)`);
+    else if (!nine) failures.push(`${page}: cluster hub incomplete (needs root/ttc/ivf/backtest/c2027/c2028/cusp/mayan/blood cards)`);
   }
 
   // ── language switcher validity: every <option> locale maps to a built home ──

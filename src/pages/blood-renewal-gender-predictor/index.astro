@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import BloodRenewalBody from '@components/astro/pages/BloodRenewalBody.astro';
+import { getDictionary } from '@i18n/translations';
+import { alternatePaths } from '@i18n/utils';
+import { webAppSchema, faqPageSchema } from '@utils/schema';
+import { BLOOD_RENEWAL_STRINGS, BLOOD_RENEWAL_FAQ } from '@i18n/tools';
+
+const locale = 'en';
+const t = getDictionary(locale);
+
+const title = BLOOD_RENEWAL_STRINGS.metaTitle;
+const description = BLOOD_RENEWAL_STRINGS.metaDesc;
+const enPath = 'blood-renewal-gender-predictor/';
+
+const schema = [
+  webAppSchema({
+    name: 'Blood Renewal Gender Predictor',
+    path: enPath,
+    description,
+  }),
+  faqPageSchema(BLOOD_RENEWAL_FAQ),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  enPath={enPath}
+  locale={locale}
+  crumbs={[{ label: 'Blood Renewal Predictor' }]}
+  alternates={alternatePaths(enPath)}
+  schema={schema}
+>
+  <BloodRenewalBody locale={locale} />
+</BaseLayout>
