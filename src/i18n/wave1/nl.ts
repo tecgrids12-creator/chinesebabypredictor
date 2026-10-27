@@ -24,7 +24,7 @@ export const dic: PartialDictionary = {
     medlineLinkText: 'MedlinePlus: prenatale testen',
   },
   geo: {
-    hub5Label: 'IVF- &amp; FET-geslachtspredictor',
+    hub5Label: 'IVF- & FET-geslachtspredictor',
     hub5Desc: 'Tabellezels voor bevroren embryo-overdracht, verse IVF en eiceldonatie — beide data vergeleken.',
     hub6Label: 'Nauwkeurigheidstester voor eerdere zwangerschappen',
     hub6Desc: 'Leg de tabel naast je echte kinderen — ontdek je maan-scorekaart voor het gezin.',

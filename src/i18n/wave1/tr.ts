@@ -24,7 +24,7 @@ export const dic: PartialDictionary = {
     medlineLinkText: 'MedlinePlus: Prenatal Test',
   },
   geo: {
-    hub5Label: 'Tüp Bebek (IVF &amp; FET) Cinsiyet Tahmincisi',
+    hub5Label: 'Tüp Bebek (IVF & FET) Cinsiyet Tahmincisi',
     hub5Desc: 'Dondurulmuş embriyo transferi, taze IVF ve donör yumurta için tablo okumaları — iki tarih de karşılaştırılır.',
     hub6Label: 'Geçmiş Gebelik Doğruluk Testi',
     hub6Desc: 'Tabloyu gerçek çocuklarınızla test edin — ailenizin ay skor kartını alın.',

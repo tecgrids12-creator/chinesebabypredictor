@@ -24,7 +24,7 @@ export const dic: PartialDictionary = {
     medlineLinkText: 'MedlinePlus: Tes Prenatal',
   },
   geo: {
-    hub5Label: 'Prediktor Jenis Kelamin Bayi Tabung (IVF &amp; FET)',
+    hub5Label: 'Prediktor Jenis Kelamin Bayi Tabung (IVF & FET)',
     hub5Desc: 'Pembacaan grafik untuk transfer embrio beku, IVF segar, dan sel telur donor — kedua tanggal dibandingkan.',
     hub6Label: 'Penguji Akurasi Kehamilan Sebelumnya',
     hub6Desc: 'Uji grafik pada anak-anak Anda yang nyata — dapatkan kartu skor qamari keluarga.',

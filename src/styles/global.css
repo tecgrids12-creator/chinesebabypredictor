@@ -193,11 +193,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   box-shadow: 0 4px 10px -3px rgba(221, 33, 117, 0.45);
 }
 
-/* ─── Floating frosted-glass navbar (fixed pill, 65% opacity) ──────────────── */
+/* ─── Floating frosted-glass navbar (fixed pill, 70% opacity) ──────────────── */
 #site-header {
   border: 1px solid transparent;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.65)) padding-box,
+    linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)) padding-box,
     linear-gradient(120deg, rgba(238, 90, 151, 0.5), rgba(126, 169, 249, 0.55), rgba(251, 191, 36, 0.35)) border-box;
   backdrop-filter: blur(16px) saturate(1.5);
   -webkit-backdrop-filter: blur(16px) saturate(1.5);

@@ -1,6 +1,6 @@
 ---
 /**
- * Accessible sticky site header with mega-menu ("Predictors & Tools"),
+ * Accessible sticky site header with single-row layout, mega-menu ("Predictors & Tools"),
  * mobile accordion drawer and language switcher that routes to the exact
  * equivalent tool page in the chosen locale.
  */
@@ -25,188 +25,186 @@ const SWITCHER_TOOLS = [...LOCALIZED_TOOL_SLUGS, 'blog']; // blog list localizes
 const NON_EN_LOCALES = SUPPORTED_LOCALES.filter((l) => l !== 'en');
 const H = (p: string) => safeLocalizedPath(p, locale);
 
+/* Helper to strip any raw HTML entities like &amp; so strings never render entities literally */
+const clean = (s?: string) => (s ? s.replaceAll('&amp;', '&') : '');
+
 /* ── Mega-menu schedule: 3 grouped columns per the Wave-2 brief ── */
 const menuSections: Array<{ key: string; heading: string; items: Array<{ icon: string; label: string; desc?: string; href: string; html?: boolean }> }> = [
   {
     key: 'core',
-    heading: g.nav.menuCore ?? 'Core Predictors',
+    heading: clean(g.nav.menuCore) || 'Core Predictors',
     items: [
-      { icon: '🔮', label: g.geo?.hub1Label ?? g.nav.predictor ?? 'Chinese Baby Predictor', desc: g.geo?.hub1Desc, href: H('chinese-gender-predictor/'), html: true },
-      { icon: '📊', label: g.nav.chart, desc: g.geo?.hub3Desc, href: H('chinese-gender-chart/'), html: true },
-      { icon: '🧮', label: g.nav.lunarAge, desc: 'Exact 虚岁 converter — born-before-CNY aware', href: H('lunar-age-calculator/') },
-      { icon: '⚖️', label: g.geo?.hub9Label ?? 'Cusp Conception Date Checker', desc: g.geo?.hub9Desc ?? '5-day fertile window boundary test (NEW)', href: H('cusp-conception-date-checker/'), html: true },
+      { icon: '🔮', label: clean(g.geo?.hub1Label) || clean(g.nav.predictor) || 'Chinese Baby Predictor', desc: clean(g.geo?.hub1Desc), href: H('chinese-gender-predictor/'), html: true },
+      { icon: '📊', label: clean(g.nav.chart) || 'Gender Chart', desc: clean(g.geo?.hub3Desc), href: H('chinese-gender-chart/'), html: true },
+      { icon: '🧮', label: clean(g.nav.lunarAge) || 'Lunar Age', desc: 'Exact 虚岁 converter — born-before-CNY aware', href: H('lunar-age-calculator/') },
+      { icon: '⚖️', label: clean(g.geo?.hub9Label) || 'Cusp Conception Date Checker', desc: clean(g.geo?.hub9Desc) || '5-day fertile window boundary test (NEW)', href: H('cusp-conception-date-checker/'), html: true },
     ],
   },
   {
     key: 'planning',
-    heading: g.nav.menuPlanning ?? 'Planning & Specialized',
+    heading: clean(g.nav.menuPlanning) || 'Planning & Specialized',
     items: [
-      { icon: '🗓️', label: g.nav.ttc ?? 'TTC Gender Planner', desc: g.geo?.hub2Desc, href: H('chinese-gender-planner-ttc/'), html: true },
-      { icon: '🧬', label: g.geo?.hub5Label ?? 'IVF & FET Predictor', desc: g.geo?.hub5Desc, href: H('ivf-chinese-gender-predictor/'), html: true },
-      { icon: '🎯', label: g.geo?.hub6Label ?? 'Past Kids Accuracy Tester', desc: g.geo?.hub6Desc, href: H('test-past-pregnancies-calculator/'), html: true },
+      { icon: '🗓️', label: clean(g.nav.ttc) || 'TTC Gender Planner', desc: clean(g.geo?.hub2Desc), href: H('chinese-gender-planner-ttc/'), html: true },
+      { icon: '🧬', label: clean(g.geo?.hub5Label) || 'IVF & FET Predictor', desc: clean(g.geo?.hub5Desc), href: H('ivf-chinese-gender-predictor/'), html: true },
+      { icon: '🎯', label: clean(g.geo?.hub6Label) || 'Past Kids Accuracy Tester', desc: clean(g.geo?.hub6Desc), href: H('test-past-pregnancies-calculator/'), html: true },
     ],
   },
   {
     key: 'annual',
-    heading: g.nav.menuAnnual ?? 'Annual Calendars & Quizzes',
+    heading: clean(g.nav.menuAnnual) || 'Annual Calendars & Quizzes',
     items: [
-      { icon: '🐐', label: g.geo?.hub7Label ?? '2027 Fire Goat Calendar', desc: g.geo?.hub7Desc, href: H('chinese-gender-calendar-2027/'), html: true },
-      { icon: '🐵', label: g.geo?.hub8Label ?? '2028 Earth Monkey Calendar', desc: g.geo?.hub8Desc, href: H('chinese-gender-calendar-2028/'), html: true },
-      { icon: '💍', label: g.nav.quiz, desc: '12-clue folklore showdown', href: H('gender-quiz/') },
+      { icon: '🐐', label: clean(g.geo?.hub7Label) || '2027 Fire Goat Calendar', desc: clean(g.geo?.hub7Desc), href: H('chinese-gender-calendar-2027/'), html: true },
+      { icon: '🐵', label: clean(g.geo?.hub8Label) || '2028 Earth Monkey Calendar', desc: clean(g.geo?.hub8Desc), href: H('chinese-gender-calendar-2028/'), html: true },
+      { icon: '💍', label: clean(g.nav.quiz) || 'Old Wives’ Tales Quiz', desc: '12-clue folklore showdown', href: H('gender-quiz/') },
     ],
   },
 ];
 
 const topNav = [
-  { label: g.nav.homeCalc ?? 'Home Calculator', href: safeLocalizedPath('', locale) },
-  { label: g.nav.toolsMenu ?? 'Predictors & Tools', href: H('chinese-gender-predictor/'), mega: true },
-  { label: g.nav.guides ?? 'Guides & Science', href: safeLocalizedPath('blog/', locale) },
+  { label: clean(g.nav.homeCalc) || 'Home Calculator', href: safeLocalizedPath('', locale) },
+  { label: clean(g.nav.toolsMenu) || 'Predictors & Tools', href: H('chinese-gender-predictor/'), mega: true },
+  { label: clean(g.nav.guides) || 'Guides & Science', href: safeLocalizedPath('blog/', locale) },
 ];
 ---
 
-{/* Floating frosted glass bar: fixed, centered pill, 65%-opacity white glass.
-    (Glass styling lives in global.css #site-header; layout classes here.) */}
-<header id="site-header" class="fixed inset-x-0 top-2 z-50 mx-auto max-w-7xl rounded-[1.75rem] px-2 pt-0.5 pb-1 sm:px-3 lg:pb-1">
-  {/* ── Line 1: centered logo ─────────────────────────────────────────────── */}
-  <div class="section-shell">
-    <div class="grid h-14 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 lg:h-12">
-      {/* left slot: language switcher */}
-      <div class="flex items-center gap-2">
-        <script is:inline define:vars={{ switcherTools: SWITCHER_TOOLS, nonEnLocales: NON_EN_LOCALES }}>
-  /* Language switcher routing: global, hydration-free, defined before any select renders.
-     Tool + blog-list route segments come from the shared i18n registry (utils.ts). */
-  window.__cbpLangTo = function (next) {
-    try {
-      var TOOLS = switcherTools.map(function (s) { return s + '/'; });
-      var LANGS = nonEnLocales;
-      var path = window.location.pathname;
-      var segs = path.split('/').filter(Boolean);
-      var current = segs.length && LANGS.indexOf(segs[0]) !== -1 ? segs[0] : 'en';
-      var rest = current !== 'en' ? segs.slice(1) : segs;
-      /* Localized home/tool/blog-list pages exist for every locale; anything
-         else (legal pages, blog posts) falls back to the localized home —
-         never a 404, never a dead click. */
-      var first = rest[0] || '';
-      var suffix = TOOLS.indexOf(first + '/') !== -1 && !(first === 'blog' && rest.length > 1) ? first + '/' : '';
-      var target = next === 'en' ? '/' + suffix : '/' + next + '/' + suffix;
-      if (target && target !== window.location.pathname) window.location.assign(target);
-    } catch (e) { /* never block real navigation */ }
-  };
-</script>
-        <form data-lang-switcher class="relative hidden sm:block">
-          <label class="sr-only" for="lang-select">{t.common.language}</label>
-          <select id="lang-select" data-current-locale={locale} data-current-path={Astro.url.pathname} onchange="__cbpLangTo(this.value)"
-                  class="focusable cursor-pointer appearance-none rounded-full py-2 pl-8 pr-3 text-sm font-semibold text-plum-700 transition hover:-translate-y-px"
-                  style="border: 1px solid transparent; background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)) padding-box, linear-gradient(120deg, rgba(238,90,151,.4), rgba(126,169,249,.45)) border-box; box-shadow: 0 4px 14px -6px rgba(122,47,136,.18); max-width: 9.5rem;">
-            {SUPPORTED_LOCALES.map((loc) => (
-              <option value={loc} selected={loc === locale}>{LOCALE_NAMES[loc].native}</option>
-            ))}
-          </select>
-          <span aria-hidden="true" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2">
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" class="text-girl-500">
-              <circle cx="10" cy="10" r="7.4"></circle>
-              <path d="M2.6 10h14.8M10 2.6c-4.8 4.6-4.8 10.2 0 14.8M10 2.6c4.8 4.6 4.8 10.2 0 14.8"></path>
-            </svg>
-          </span>
-        </form>
-      </div>
+{/* Floating frosted glass bar: fixed, centered pill, 70%-opacity white glass.
+    Single-row layout with logo on left, primary nav in center, and actions on right. */}
+<header id="site-header" class="fixed inset-x-0 top-2 z-50 mx-auto max-w-7xl rounded-[1.75rem] px-3 sm:px-5">
+  <div class="flex h-14 items-center justify-between gap-3 sm:gap-4 lg:h-16">
+    {/* Left slot: Brand logo */}
+    <a href={safeLocalizedPath('', locale)} class="focusable group flex items-center gap-2 sm:gap-2.5 shrink-0" aria-label="Chinese Baby Predictor — home">
+      <span class="transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110 group-active:scale-95">
+        <Logo size={40} uid="header" class="h-8 w-8 sm:h-9 sm:w-9" />
+      </span>
+      <span class="font-display text-base font-extrabold leading-none tracking-tight text-plum-900 sm:text-lg">
+        Chinese<span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent"> Baby</span> Predictor
+      </span>
+    </a>
 
-      {/* centered brand */}
-      <a href={safeLocalizedPath('', locale)} class="focusable group flex items-center gap-2 sm:gap-2.5" aria-label="Chinese Baby Predictor — home">
-        <span class="transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110 group-active:scale-95">
-          <Logo size={42} uid="header" class="h-9 w-9 sm:h-10 sm:w-10" />
-        </span>
-        <span class="font-display text-base font-extrabold leading-none tracking-tight text-plum-900 sm:text-xl">
-          Chinese<span class="bg-gradient-to-r from-girl-500 to-boy-500 bg-clip-text text-transparent"> Baby</span> Predictor
-        </span>
-      </a>
-
-      {/* right slot: quiz CTA + mobile burger */}
-      <div class="flex items-center justify-end gap-2">
-        <div class="hidden md:block">
-          <a href={safeLocalizedPath('gender-quiz/', locale)} class="focusable rounded-full btn-md font-semibold transition btn-secondary text-xs lg:text-sm">
-            {t.nav.quiz}
-          </a>
-        </div>
-        <button type="button" id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden"
-                class="group/menu focusable inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-plum-700 transition hover:-translate-y-0.5 hover:text-girl-600"
-                style="border: 1px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(120deg, rgba(238,90,151,.35), rgba(126,169,249,.4)) border-box; box-shadow: 0 4px 14px -6px rgba(122,47,136,.18);">
-          <span class="sr-only">{t.nav.menu}</span>
-          <span aria-hidden="true" class="burger-icon block h-4 w-5">
-            <span class="absolute left-0 top-0 block h-0.5 w-5 rounded bg-current transition-all duration-300 group-aria-expanded/menu:translate-y-1.5 group-aria-expanded/menu:rotate-45"></span>
-            <span class="absolute left-0 top-1.5 block h-0.5 w-5 rounded bg-current transition-all duration-300 group-aria-expanded/menu:opacity-0"></span>
-            <span class="absolute left-0 top-3 block h-0.5 w-5 rounded bg-current transition-all duration-300 group-aria-expanded/menu:-translate-y-1.5 group-aria-expanded/menu:-rotate-45"></span>
-          </span>
-        </button>
-      </div>
-    </div>
-
-    {/* ── Line 2: centered primary nav + mega-menu ──────────────────────────── */}
-    <nav aria-label="Primary" class="relative hidden justify-center gap-1 pb-1 lg:flex">
+    {/* Center slot: Primary desktop navigation (single row) */}
+    <nav aria-label="Primary" class="hidden items-center justify-center gap-1.5 lg:flex">
       {topNav.map((item) => (
         item.mega ? (
-          <div class="relative" data-mega-wrapper>
+          <div>
             <button
               type="button"
               id="mega-trigger"
               aria-expanded="false"
               aria-controls="mega-menu"
               data-mega-trigger
-              class="focusable nav-link flex items-center gap-1 rounded-full px-3.5 py-1 text-sm font-semibold text-plum-700 transition-colors hover:text-girl-600"
+              class="focusable nav-link flex items-center gap-1 rounded-full px-3.5 py-1.5 text-sm font-semibold text-plum-700 transition-colors hover:text-girl-600"
             >
-              {item.label}
+              <span>{item.label}</span>
               <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" class="mega-caret transition-transform duration-300">
                 <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
             </button>
-            {/* Desktop mega dropdown (fade + slide, CSS-only motion) */}
-            <div
-              id="mega-menu"
-              data-mega-panel
-              role="region"
-              aria-label={item.label}
-              class="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition-[opacity,transform,visibility] duration-300 ease-out translate-y-2"
-            >
-              <div class="mega-glass w-[min(58rem,88vw)] rounded-3xl p-5"
-                   style="border: 1px solid transparent; background: linear-gradient(rgba(255,255,255,.92), rgba(255,255,255,.92)) padding-box, linear-gradient(120deg, rgba(238,90,151,.4), rgba(126,169,249,.4)) border-box; box-shadow: 0 30px 60px -20px rgba(69,2,79,.35); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
-                <div class="grid gap-5 md:grid-cols-3">
-                  {menuSections.map((section) => (
-                    <div>
-                      <p class="mb-2 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-girl-600" set:html={section.heading} />
-                      <ul class="space-y-0.5">
-                        {section.items.map((entry) => (
-                          <li>
-                            <a href={entry.href} class="focusable group/item flex gap-2.5 rounded-2xl px-2.5 py-2 transition-colors hover:bg-girl-50">
-                              <span aria-hidden="true" class="mt-0.5 text-base">{entry.icon}</span>
-                              <span class="min-w-0">
-                                <span class="block truncate font-display text-[0.8rem] font-bold text-plum-800 transition-colors group-hover/item:text-girl-600" set:html={entry.label} />
-                                {entry.desc && (
-                                  <span class="mt-0.5 block text-[0.7rem] leading-snug text-plum-500" set:html={entry.desc} />
-                                )}
-                              </span>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
         ) : (
-          <a href={item.href} class="focusable nav-link rounded-full px-3.5 py-1 text-sm font-semibold text-plum-700 transition-colors hover:text-girl-600">
+          <a href={item.href} class="focusable nav-link rounded-full px-3.5 py-1.5 text-sm font-semibold text-plum-700 transition-colors hover:text-girl-600">
             {item.label}
           </a>
         )
       ))}
     </nav>
+
+    {/* Right slot: Language switcher + Quiz button + Mobile burger */}
+    <div class="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
+      <script is:inline define:vars={{ switcherTools: SWITCHER_TOOLS, nonEnLocales: NON_EN_LOCALES }}>
+        /* Language switcher routing: global, hydration-free, defined before any select renders.
+           Tool + blog-list route segments come from the shared i18n registry (utils.ts). */
+        window.__cbpLangTo = function (next) {
+          try {
+            var TOOLS = switcherTools.map(function (s) { return s + '/'; });
+            var LANGS = nonEnLocales;
+            var path = window.location.pathname;
+            var segs = path.split('/').filter(Boolean);
+            var current = segs.length && LANGS.indexOf(segs[0]) !== -1 ? segs[0] : 'en';
+            var rest = current !== 'en' ? segs.slice(1) : segs;
+            var first = rest[0] || '';
+            var suffix = TOOLS.indexOf(first + '/') !== -1 && !(first === 'blog' && rest.length > 1) ? first + '/' : '';
+            var target = next === 'en' ? '/' + suffix : '/' + next + '/' + suffix;
+            if (target && target !== window.location.pathname) window.location.assign(target);
+          } catch (e) { /* never block real navigation */ }
+        };
+      </script>
+
+      <form data-lang-switcher class="relative hidden sm:block">
+        <label class="sr-only" for="lang-select">{t.common.language}</label>
+        <select id="lang-select" data-current-locale={locale} data-current-path={Astro.url.pathname} onchange="__cbpLangTo(this.value)"
+                class="focusable cursor-pointer appearance-none rounded-full py-1.5 pl-7 pr-3 text-xs sm:text-sm font-semibold text-plum-700 transition hover:-translate-y-px"
+                style="border: 1px solid transparent; background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)) padding-box, linear-gradient(120deg, rgba(238,90,151,.4), rgba(126,169,249,.45)) border-box; box-shadow: 0 4px 14px -6px rgba(122,47,136,.18); max-width: 9rem;">
+          {SUPPORTED_LOCALES.map((loc) => (
+            <option value={loc} selected={loc === locale}>{LOCALE_NAMES[loc].native}</option>
+          ))}
+        </select>
+        <span aria-hidden="true" class="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" class="text-girl-500">
+            <circle cx="10" cy="10" r="7.4"></circle>
+            <path d="M2.6 10h14.8M10 2.6c-4.8 4.6-4.8 10.2 0 14.8M10 2.6c4.8 4.6 4.8 10.2 0 14.8"></path>
+          </svg>
+        </span>
+      </form>
+
+      <div class="hidden md:block">
+        <a href={safeLocalizedPath('gender-quiz/', locale)} class="focusable rounded-full btn-md font-semibold transition btn-secondary text-xs sm:text-sm py-1.5 px-3.5">
+          {t.nav.quiz}
+        </a>
+      </div>
+
+      <button type="button" id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden"
+              class="group/menu focusable inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-plum-700 transition hover:-translate-y-0.5 hover:text-girl-600"
+              style="border: 1px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(120deg, rgba(238,90,151,.35), rgba(126,169,249,.4)) border-box; box-shadow: 0 4px 14px -6px rgba(122,47,136,.18);">
+        <span class="sr-only">{t.nav.menu}</span>
+        <span aria-hidden="true" class="burger-icon block h-4 w-5">
+          <span class="absolute left-0 top-0 block h-0.5 w-5 rounded bg-current transition-all duration-300 group-aria-expanded/menu:translate-y-1.5 group-aria-expanded/menu:rotate-45"></span>
+          <span class="absolute left-0 top-1.5 block h-0.5 w-5 rounded bg-current transition-all duration-300 group-aria-expanded/menu:opacity-0"></span>
+          <span class="absolute left-0 top-3 block h-0.5 w-5 rounded bg-current transition-all duration-300 group-aria-expanded/menu:-translate-y-1.5 group-aria-expanded/menu:-rotate-45"></span>
+        </span>
+      </button>
+    </div>
   </div>
 
-  {/* mobile menu */}
+  {/* Desktop mega dropdown: centered horizontally on the #site-header container,
+      so it is guaranteed to never overflow the screen edges. */}
+  <div
+    id="mega-menu"
+    data-mega-panel
+    role="region"
+    aria-label={clean(g.nav.toolsMenu) || 'Predictors & Tools'}
+    class="mega-panel"
+  >
+    <div class="mega-glass w-[min(56rem,calc(100vw-2.5rem))] rounded-3xl p-5"
+         style="border: 1px solid transparent; background: linear-gradient(rgba(255,255,255,.94), rgba(255,255,255,.94)) padding-box, linear-gradient(120deg, rgba(238,90,151,.4), rgba(126,169,249,.4)) border-box; box-shadow: 0 30px 60px -20px rgba(69,2,79,.35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);">
+      <div class="grid gap-5 md:grid-cols-3">
+        {menuSections.map((section) => (
+          <div>
+            <p class="mb-2 text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-girl-600">{section.heading}</p>
+            <ul class="space-y-0.5">
+              {section.items.map((entry) => (
+                <li>
+                  <a href={entry.href} class="focusable group/item flex gap-2.5 rounded-2xl px-2.5 py-2 transition-colors hover:bg-girl-50">
+                    <span aria-hidden="true" class="mt-0.5 text-base">{entry.icon}</span>
+                    <span class="min-w-0">
+                      <span class="block truncate font-display text-[0.8rem] font-bold text-plum-800 transition-colors group-hover/item:text-girl-600">{entry.label}</span>
+                      {entry.desc && (
+                        <span class="mt-0.5 block text-[0.7rem] leading-snug text-plum-500">{entry.desc}</span>
+                      )}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* Mobile navigation drawer */}
   <div id="mobile-menu" hidden class="lg:hidden">
-    <div class="mx-3 mb-3 rounded-3xl p-3 sm:mx-6"
-         style="border: 1px solid transparent; background: linear-gradient(rgba(255,255,255,.82), rgba(255,255,255,.82)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.35)) border-box; box-shadow: 0 24px 50px -20px rgba(69,2,79,.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+    <div class="mb-3 rounded-3xl p-3"
+         style="border: 1px solid transparent; background: linear-gradient(rgba(255,255,255,.88), rgba(255,255,255,.88)) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.35)) border-box; box-shadow: 0 24px 50px -20px rgba(69,2,79,.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
       {/* Home + Guides shortcuts */}
       <nav aria-label="Mobile" class="grid grid-cols-2 gap-2">
         {topNav.filter((i) => !i.mega).map((item) => (
@@ -223,7 +221,7 @@ const topNav = [
            style="border: 1px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(120deg, rgba(238,90,151,.3), rgba(126,169,249,.35)) border-box; box-shadow: 0 4px 14px -6px rgba(122,47,136,.12);">
         <button type="button" data-accordion-trigger aria-expanded="false" aria-controls="mobile-mega"
                 class="focusable flex w-full items-center justify-between px-4 py-3 font-semibold text-plum-800">
-          {g.nav.toolsMenu ?? 'Predictors & Tools'}
+          {clean(g.nav.toolsMenu) || 'Predictors & Tools'}
           <svg aria-hidden="true" width="14" height="14" viewBox="0 0 12 12" class="mega-caret transition-transform duration-300">
             <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
@@ -231,11 +229,11 @@ const topNav = [
         <div id="mobile-mega" data-accordion-panel class="hidden px-3 pb-3 pt-1">
           {menuSections.map((section) => (
             <div class="mb-2">
-              <p class="px-2 pb-1 text-[0.66rem] font-extrabold uppercase tracking-[0.14em] text-girl-600" set:html={section.heading} />
+              <p class="px-2 pb-1 text-[0.66rem] font-extrabold uppercase tracking-[0.14em] text-girl-600">{section.heading}</p>
               {section.items.map((entry) => (
                 <a href={entry.href} class="focusable flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-semibold text-plum-700 transition-colors hover:bg-girl-50">
                   <span aria-hidden="true">{entry.icon}</span>
-                  <span class="truncate" set:html={entry.label} />
+                  <span class="truncate">{entry.label}</span>
                 </a>
               ))}
             </div>
@@ -259,14 +257,26 @@ const topNav = [
 
 <style>
   .btn-md { padding-inline: 1rem; padding-block: 0.5rem; }
-  /* Mega-panel open state (desktop): JS flips [data-open]; CSS animates.
-     Covers both Tailwind v3 (transform) and v4 (translate) positioning. */
-  [data-mega-panel][data-open] {
+
+  /* Desktop mega-panel: positioned relative to #site-header pill, centered horizontally */
+  .mega-panel {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 0.5rem);
+    z-index: 50;
+    transform: translate(-50%, 8px);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out, visibility 0.25s ease-out;
+  }
+  .mega-panel[data-open] {
     visibility: visible;
     opacity: 1;
-    transform: translateY(0);
-    translate: 0 0;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
   }
+
   .mega-caret { color: currentColor; }
   .group:active .mega-caret,
   #mega-trigger[aria-expanded='true'] .mega-caret { rotate: 180deg; }
@@ -300,7 +310,8 @@ const topNav = [
     if (open) panel?.setAttribute('data-open', '');
     else panel?.removeAttribute('data-open');
   };
-  trigger?.addEventListener('click', () => {
+  trigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
     setMega(trigger.getAttribute('aria-expanded') !== 'true');
   });
   trigger?.addEventListener('keydown', (e) => {
@@ -317,7 +328,9 @@ const topNav = [
   });
   document.addEventListener('click', (e) => {
     if (!trigger || !panel) return;
-    if (!trigger.contains(e.target as Node) && !panel.contains(e.target as Node)) setMega(false);
+    if (!trigger.contains(e.target as Node) && !panel.contains(e.target as Node)) {
+      setMega(false);
+    }
   });
 
   // ── Mobile accordion (Predictors & Tools) ────────────────────────────────

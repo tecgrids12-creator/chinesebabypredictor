@@ -37,15 +37,15 @@ const en: PartialDictionary = {
     medlineLinkText: 'Learn about prenatal genetic screening on MedlinePlus',
   },
   nav: {
-    toolsMenu: 'Predictors &amp; Tools',
+    toolsMenu: 'Predictors & Tools',
     menuCore: 'Core Predictors',
-    menuPlanning: 'Planning &amp; Specialized',
-    menuAnnual: 'Annual Calendars &amp; Quizzes',
-    guides: 'Guides &amp; Science',
+    menuPlanning: 'Planning & Specialized',
+    menuAnnual: 'Annual Calendars & Quizzes',
+    guides: 'Guides & Science',
     homeCalc: 'Home Calculator',
   },
   geo: {
-    hub5Label: 'IVF &amp; FET Gender Predictor',
+    hub5Label: 'IVF & FET Gender Predictor',
     hub5Desc: 'Frozen embryo transfer, fresh IVF and donor-egg chart readings — both dates compared.',
     hub6Label: 'Past Pregnancies Accuracy Tester',
     hub6Desc: 'Test the chart against your actual children — get your family lunar scorecard.',
@@ -82,7 +82,7 @@ const de: PartialDictionary = {
     medlineLinkText: 'MedlinePlus: Pränataldiagnostik',
   },
   geo: {
-    hub5Label: 'IVF &amp; FET Geschlechtsrechner',
+    hub5Label: 'IVF & FET Geschlechtsrechner',
     hub5Desc: 'Kryotransfer, frische IVF und Donor-Egg-Tabellenablesung — beide Daten im Vergleich.',
     hub6Label: 'Tester für frühere Schwangerschaften',
     hub6Desc: 'Prüfen Sie die Tabelle an Ihren echten Kindern — mit Familien-Mondpunktestand.',
@@ -222,7 +222,7 @@ const ms: PartialDictionary = {
     medlineLinkText: 'MedlinePlus: Ujian Pranatal',
   },
   geo: {
-    hub5Label: 'Peramal Jantina IVF &amp; FET',
+    hub5Label: 'Peramal Jantina IVF & FET',
     hub5Desc: 'Pemindahan embrio beku, kitaran IVF segar dan telur penderma — kedua-dua tarikh dibanding.',
     hub6Label: 'Penguji Tepatan Kehamilan Lepas',
     hub6Desc: 'Uji carta dengan anak-anak sebenar anda — dapatkan skor karterik keluarga.',
